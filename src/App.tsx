@@ -1,15 +1,13 @@
-import { Button } from "./components/ui/button"
+import "@aws-amplify/ui-react/styles.css";
 
-const App = () => {
+import { RouterProvider } from "react-router-dom";
+import router from "./navigation/routes";
+import { AuthProvider } from "./hooks/useAuth";
+
+export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center text-red-500">
-      <h1 className="text-4xl font-bold">Hello, World!</h1>
-      <Button
-        variant={"outline"}
-        className="mt-4"
-      >Click me</Button>
-    </div>
-  )
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
-
-export default App
