@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3fixmyhealthstoragecbb23afd",
+  "bucketName": "fixmyhealth-storage-cbb23afd",
+  "policyUUID": "693d7f14",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ",
+    "CREATE_AND_UPDATE",
+    "DELETE"
+  ]
+}

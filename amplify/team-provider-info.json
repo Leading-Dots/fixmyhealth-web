@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fixmyhealth-staging-2ace6-authRole",
+      "UnauthRoleArn": "arn:aws:iam::517223944896:role/amplify-fixmyhealth-staging-2ace6-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::517223944896:role/amplify-fixmyhealth-staging-2ace6-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-fixmyhealth-staging-2ace6-deployment",
+      "UnauthRoleName": "amplify-fixmyhealth-staging-2ace6-unauthRole",
+      "StackName": "amplify-fixmyhealth-staging-2ace6",
+      "StackId": "arn:aws:cloudformation:ap-south-1:517223944896:stack/amplify-fixmyhealth-staging-2ace6/108edc40-f81e-11ef-af9c-0aa416ae35a3",
+      "AmplifyAppId": "d3n87vl8plsdvd"
+    },
+    "categories": {
+      "auth": {
+        "Fixmyhealth": {}
+      },
+      "storage": {
+        "s3fixmyhealthstoragecbb23afd": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+type Review @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  responseId: String!
+  rating: Float!
+  feedback: String
+  createdAt: AWSDateTime
+  userID: ID! @index(name: "byUser")
+  expertID: ID! @index(name: "byExpert")
+}
+
+enum ResponseStatus {
+  DRAFT
+  SUBMITTED
+  REVIEWED
+}
+
+type Response @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  responseText: String
+  responseStatus: ResponseStatus
+  createdAt: AWSDateTime
+  healthconcernID: ID! @index(name: "byHealthConcern")
+  expertID: ID! @index(name: "byExpert")
+  ResponseReview: Review @hasOne
+}
+
+type Expert @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: AWSEmail!
+  mobile: String!
+  education: String
+  introduction: String
+  profilePictureUrl: String
+  experience: String
+  averageRating: Float
+  totalReviews: Int
+  ExpertResponse: [Response] @hasMany(indexName: "byExpert", fields: ["id"])
+  ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
+}
+
+enum ConcernStatus {
+  PENDING
+  ANSWERED
+  CLOSED
+}
+
+type HealthConcern @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  description: String!
+  concernStatus: ConcernStatus
+  attachments: String
+  createdAt: AWSDateTime
+  userID: ID! @index(name: "byUser")
+  HealthConcernResponses: [Response] @hasMany(indexName: "byHealthConcern", fields: ["id"])
+}
+
+type FamilyMember @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  weight: Float
+  height: Float
+  dob: AWSDate
+  relation: String
+  userID: ID! @index(name: "byUser")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: AWSEmail
+  dob: AWSDate
+  mobile: String
+  address: String
+  height: Float
+  weight: Float
+  subscriptionStatus: SubscriptionStatus
+  UserFamilyMembers: [FamilyMember] @hasMany(indexName: "byUser", fields: ["id"])
+  UserHealthConcerns: [HealthConcern] @hasMany(indexName: "byUser", fields: ["id"])
+  UserReviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
+  profilePictureUrl: String
+}
+ 

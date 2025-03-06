@@ -1,0 +1,5 @@
+{
+  "AppSyncApiName": "Fixmyhealth",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false
+}
