@@ -78,10 +78,10 @@ export default function ExpertCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    firstName: [{ type: "Required" }],
-    lastName: [{ type: "Required" }],
+    firstName: [],
+    lastName: [],
     email: [{ type: "Required" }, { type: "Email" }],
-    mobile: [{ type: "Required" }],
+    mobile: [],
     education: [],
     introduction: [],
     profilePictureUrl: [],
@@ -182,7 +182,7 @@ export default function ExpertCreateForm(props) {
     >
       <TextField
         label="First name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={firstName}
         onChange={(e) => {
@@ -216,7 +216,7 @@ export default function ExpertCreateForm(props) {
       ></TextField>
       <TextField
         label="Last name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={lastName}
         onChange={(e) => {
@@ -284,7 +284,7 @@ export default function ExpertCreateForm(props) {
       ></TextField>
       <TextField
         label="Mobile"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={mobile}
         onChange={(e) => {

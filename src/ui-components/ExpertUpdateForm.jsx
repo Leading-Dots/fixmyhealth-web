@@ -99,10 +99,10 @@ export default function ExpertUpdateForm(props) {
   }, [idProp, expertModelProp]);
   React.useEffect(resetStateValues, [expertRecord]);
   const validations = {
-    firstName: [{ type: "Required" }],
-    lastName: [{ type: "Required" }],
+    firstName: [],
+    lastName: [],
     email: [{ type: "Required" }, { type: "Email" }],
-    mobile: [{ type: "Required" }],
+    mobile: [],
     education: [],
     introduction: [],
     profilePictureUrl: [],
@@ -137,10 +137,10 @@ export default function ExpertUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          firstName,
-          lastName,
+          firstName: firstName ?? null,
+          lastName: lastName ?? null,
           email,
-          mobile,
+          mobile: mobile ?? null,
           education: education ?? null,
           introduction: introduction ?? null,
           profilePictureUrl: profilePictureUrl ?? null,
@@ -201,7 +201,7 @@ export default function ExpertUpdateForm(props) {
     >
       <TextField
         label="First name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={firstName}
         onChange={(e) => {
@@ -235,7 +235,7 @@ export default function ExpertUpdateForm(props) {
       ></TextField>
       <TextField
         label="Last name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={lastName}
         onChange={(e) => {
@@ -303,7 +303,7 @@ export default function ExpertUpdateForm(props) {
       ></TextField>
       <TextField
         label="Mobile"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={mobile}
         onChange={(e) => {

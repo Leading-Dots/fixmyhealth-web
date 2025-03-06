@@ -32,10 +32,10 @@ type Response @model @auth(rules: [{allow: public}]) {
 
 type Expert @model @auth(rules: [{allow: public}]) {
   id: ID!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   email: AWSEmail!
-  mobile: String!
+  mobile: String
   education: String
   introduction: String
   profilePictureUrl: String
@@ -83,8 +83,8 @@ enum SubscriptionStatus {
 
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   email: AWSEmail
   dob: AWSDate
   mobile: String

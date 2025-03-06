@@ -95,8 +95,8 @@ export default function UserUpdateForm(props) {
   }, [idProp, userModelProp]);
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
-    firstName: [{ type: "Required" }],
-    lastName: [{ type: "Required" }],
+    firstName: [],
+    lastName: [],
     email: [{ type: "Email" }],
     dob: [],
     mobile: [],
@@ -133,8 +133,8 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          firstName,
-          lastName,
+          firstName: firstName ?? null,
+          lastName: lastName ?? null,
           email: email ?? null,
           dob: dob ?? null,
           mobile: mobile ?? null,
@@ -197,7 +197,7 @@ export default function UserUpdateForm(props) {
     >
       <TextField
         label="First name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={firstName}
         onChange={(e) => {
@@ -231,7 +231,7 @@ export default function UserUpdateForm(props) {
       ></TextField>
       <TextField
         label="Last name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={lastName}
         onChange={(e) => {
