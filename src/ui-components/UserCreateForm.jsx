@@ -39,6 +39,7 @@ export default function UserCreateForm(props) {
     weight: "",
     subscriptionStatus: "",
     profilePictureUrl: "",
+    profileStatus: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -54,6 +55,9 @@ export default function UserCreateForm(props) {
   const [profilePictureUrl, setProfilePictureUrl] = React.useState(
     initialValues.profilePictureUrl
   );
+  const [profileStatus, setProfileStatus] = React.useState(
+    initialValues.profileStatus
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
@@ -66,6 +70,7 @@ export default function UserCreateForm(props) {
     setWeight(initialValues.weight);
     setSubscriptionStatus(initialValues.subscriptionStatus);
     setProfilePictureUrl(initialValues.profilePictureUrl);
+    setProfileStatus(initialValues.profileStatus);
     setErrors({});
   };
   const validations = {
@@ -79,6 +84,7 @@ export default function UserCreateForm(props) {
     weight: [],
     subscriptionStatus: [],
     profilePictureUrl: [],
+    profileStatus: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -116,6 +122,7 @@ export default function UserCreateForm(props) {
           weight,
           subscriptionStatus,
           profilePictureUrl,
+          profileStatus,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -188,6 +195,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -221,6 +229,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -254,6 +263,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -288,6 +298,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.dob ?? value;
@@ -321,6 +332,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.mobile ?? value;
@@ -354,6 +366,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.address ?? value;
@@ -391,6 +404,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.height ?? value;
@@ -428,6 +442,7 @@ export default function UserCreateForm(props) {
               weight: value,
               subscriptionStatus,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -461,6 +476,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus: value,
               profilePictureUrl,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.subscriptionStatus ?? value;
@@ -512,6 +528,7 @@ export default function UserCreateForm(props) {
               weight,
               subscriptionStatus,
               profilePictureUrl: value,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.profilePictureUrl ?? value;
@@ -528,6 +545,56 @@ export default function UserCreateForm(props) {
         hasError={errors.profilePictureUrl?.hasError}
         {...getOverrideProps(overrides, "profilePictureUrl")}
       ></TextField>
+      <SelectField
+        label="Profile status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={profileStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              dob,
+              mobile,
+              address,
+              height,
+              weight,
+              subscriptionStatus,
+              profilePictureUrl,
+              profileStatus: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.profileStatus ?? value;
+          }
+          if (errors.profileStatus?.hasError) {
+            runValidationTasks("profileStatus", value);
+          }
+          setProfileStatus(value);
+        }}
+        onBlur={() => runValidationTasks("profileStatus", profileStatus)}
+        errorMessage={errors.profileStatus?.errorMessage}
+        hasError={errors.profileStatus?.hasError}
+        {...getOverrideProps(overrides, "profileStatus")}
+      >
+        <option
+          children="Pending"
+          value="PENDING"
+          {...getOverrideProps(overrides, "profileStatusoption0")}
+        ></option>
+        <option
+          children="Published"
+          value="PUBLISHED"
+          {...getOverrideProps(overrides, "profileStatusoption1")}
+        ></option>
+        <option
+          children="Rejected"
+          value="REJECTED"
+          {...getOverrideProps(overrides, "profileStatusoption2")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

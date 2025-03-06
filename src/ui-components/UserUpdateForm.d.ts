@@ -6,6 +6,7 @@
 
 import * as React from "react";
 import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { User } from "../API.ts";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -32,6 +33,7 @@ export declare type UserUpdateFormInputValues = {
     weight?: number;
     subscriptionStatus?: string;
     profilePictureUrl?: string;
+    profileStatus?: string;
 };
 export declare type UserUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -44,6 +46,7 @@ export declare type UserUpdateFormValidationValues = {
     weight?: ValidationFunction<number>;
     subscriptionStatus?: ValidationFunction<string>;
     profilePictureUrl?: ValidationFunction<string>;
+    profileStatus?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserUpdateFormOverridesProps = {
@@ -58,12 +61,13 @@ export declare type UserUpdateFormOverridesProps = {
     weight?: PrimitiveOverrideProps<TextFieldProps>;
     subscriptionStatus?: PrimitiveOverrideProps<SelectFieldProps>;
     profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
+    profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    user?: any;
+    user?: User;
     onSubmit?: (fields: UserUpdateFormInputValues) => UserUpdateFormInputValues;
     onSuccess?: (fields: UserUpdateFormInputValues) => void;
     onError?: (fields: UserUpdateFormInputValues, errorMessage: string) => void;

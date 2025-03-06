@@ -5,7 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { Expert } from "../API.ts";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -32,6 +33,7 @@ export declare type ExpertUpdateFormInputValues = {
     experience?: string;
     averageRating?: number;
     totalReviews?: number;
+    profileStatus?: string;
 };
 export declare type ExpertUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -44,6 +46,7 @@ export declare type ExpertUpdateFormValidationValues = {
     experience?: ValidationFunction<string>;
     averageRating?: ValidationFunction<number>;
     totalReviews?: ValidationFunction<number>;
+    profileStatus?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ExpertUpdateFormOverridesProps = {
@@ -58,12 +61,13 @@ export declare type ExpertUpdateFormOverridesProps = {
     experience?: PrimitiveOverrideProps<TextFieldProps>;
     averageRating?: PrimitiveOverrideProps<TextFieldProps>;
     totalReviews?: PrimitiveOverrideProps<TextFieldProps>;
+    profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type ExpertUpdateFormProps = React.PropsWithChildren<{
     overrides?: ExpertUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    expert?: any;
+    expert?: Expert;
     onSubmit?: (fields: ExpertUpdateFormInputValues) => ExpertUpdateFormInputValues;
     onSuccess?: (fields: ExpertUpdateFormInputValues) => void;
     onError?: (fields: ExpertUpdateFormInputValues, errorMessage: string) => void;

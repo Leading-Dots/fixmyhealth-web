@@ -1,3 +1,9 @@
+enum ProfileStatus {
+  PENDING
+  PUBLISHED
+  REJECTED
+}
+
 type Review @model @auth(rules: [{allow: public}]) {
   id: ID!
   responseId: String!
@@ -38,6 +44,7 @@ type Expert @model @auth(rules: [{allow: public}]) {
   totalReviews: Int
   ExpertResponse: [Response] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
+  profileStatus: ProfileStatus
 }
 
 enum ConcernStatus {
@@ -89,5 +96,6 @@ type User @model @auth(rules: [{allow: public}]) {
   UserHealthConcerns: [HealthConcern] @hasMany(indexName: "byUser", fields: ["id"])
   UserReviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
   profilePictureUrl: String
+  profileStatus: ProfileStatus
 }
  
