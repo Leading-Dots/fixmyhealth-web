@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createExpert } from "../graphql/mutations";
@@ -33,6 +39,7 @@ export default function ExpertCreateForm(props) {
     experience: "",
     averageRating: "",
     totalReviews: "",
+    profileStatus: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -52,6 +59,9 @@ export default function ExpertCreateForm(props) {
   const [totalReviews, setTotalReviews] = React.useState(
     initialValues.totalReviews
   );
+  const [profileStatus, setProfileStatus] = React.useState(
+    initialValues.profileStatus
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
@@ -64,6 +74,7 @@ export default function ExpertCreateForm(props) {
     setExperience(initialValues.experience);
     setAverageRating(initialValues.averageRating);
     setTotalReviews(initialValues.totalReviews);
+    setProfileStatus(initialValues.profileStatus);
     setErrors({});
   };
   const validations = {
@@ -77,6 +88,7 @@ export default function ExpertCreateForm(props) {
     experience: [],
     averageRating: [],
     totalReviews: [],
+    profileStatus: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -114,6 +126,7 @@ export default function ExpertCreateForm(props) {
           experience,
           averageRating,
           totalReviews,
+          profileStatus,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -186,6 +199,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -219,6 +233,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -252,6 +267,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -285,6 +301,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.mobile ?? value;
@@ -318,6 +335,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.education ?? value;
@@ -351,6 +369,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.introduction ?? value;
@@ -384,6 +403,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.profilePictureUrl ?? value;
@@ -419,6 +439,7 @@ export default function ExpertCreateForm(props) {
               experience: value,
               averageRating,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.experience ?? value;
@@ -456,6 +477,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating: value,
               totalReviews,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.averageRating ?? value;
@@ -493,6 +515,7 @@ export default function ExpertCreateForm(props) {
               experience,
               averageRating,
               totalReviews: value,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.totalReviews ?? value;
@@ -507,6 +530,56 @@ export default function ExpertCreateForm(props) {
         hasError={errors.totalReviews?.hasError}
         {...getOverrideProps(overrides, "totalReviews")}
       ></TextField>
+      <SelectField
+        label="Profile status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={profileStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              profileStatus: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.profileStatus ?? value;
+          }
+          if (errors.profileStatus?.hasError) {
+            runValidationTasks("profileStatus", value);
+          }
+          setProfileStatus(value);
+        }}
+        onBlur={() => runValidationTasks("profileStatus", profileStatus)}
+        errorMessage={errors.profileStatus?.errorMessage}
+        hasError={errors.profileStatus?.hasError}
+        {...getOverrideProps(overrides, "profileStatus")}
+      >
+        <option
+          children="Pending"
+          value="PENDING"
+          {...getOverrideProps(overrides, "profileStatusoption0")}
+        ></option>
+        <option
+          children="Published"
+          value="PUBLISHED"
+          {...getOverrideProps(overrides, "profileStatusoption1")}
+        ></option>
+        <option
+          children="Rejected"
+          value="REJECTED"
+          {...getOverrideProps(overrides, "profileStatusoption2")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

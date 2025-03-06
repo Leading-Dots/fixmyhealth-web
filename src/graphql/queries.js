@@ -234,6 +234,7 @@ export const getExpert = /* GraphQL */ `
         nextToken
         __typename
       }
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -259,6 +260,7 @@ export const listExperts = /* GraphQL */ `
         experience
         averageRating
         totalReviews
+        profileStatus
         createdAt
         updatedAt
         __typename
@@ -442,6 +444,7 @@ export const getUser = /* GraphQL */ `
         __typename
       }
       profilePictureUrl
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -467,6 +470,7 @@ export const listUsers = /* GraphQL */ `
         weight
         subscriptionStatus
         profilePictureUrl
+        profileStatus
         createdAt
         updatedAt
         __typename

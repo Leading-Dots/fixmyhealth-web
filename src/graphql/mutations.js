@@ -167,6 +167,7 @@ export const createExpert = /* GraphQL */ `
         nextToken
         __typename
       }
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -198,6 +199,7 @@ export const updateExpert = /* GraphQL */ `
         nextToken
         __typename
       }
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -229,6 +231,7 @@ export const deleteExpert = /* GraphQL */ `
         nextToken
         __typename
       }
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -390,6 +393,7 @@ export const createUser = /* GraphQL */ `
         __typename
       }
       profilePictureUrl
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -425,6 +429,7 @@ export const updateUser = /* GraphQL */ `
         __typename
       }
       profilePictureUrl
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -460,6 +465,7 @@ export const deleteUser = /* GraphQL */ `
         __typename
       }
       profilePictureUrl
+      profileStatus
       createdAt
       updatedAt
       __typename

@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -32,6 +32,7 @@ export declare type ExpertCreateFormInputValues = {
     experience?: string;
     averageRating?: number;
     totalReviews?: number;
+    profileStatus?: string;
 };
 export declare type ExpertCreateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -44,6 +45,7 @@ export declare type ExpertCreateFormValidationValues = {
     experience?: ValidationFunction<string>;
     averageRating?: ValidationFunction<number>;
     totalReviews?: ValidationFunction<number>;
+    profileStatus?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ExpertCreateFormOverridesProps = {
@@ -58,6 +60,7 @@ export declare type ExpertCreateFormOverridesProps = {
     experience?: PrimitiveOverrideProps<TextFieldProps>;
     averageRating?: PrimitiveOverrideProps<TextFieldProps>;
     totalReviews?: PrimitiveOverrideProps<TextFieldProps>;
+    profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type ExpertCreateFormProps = React.PropsWithChildren<{
     overrides?: ExpertCreateFormOverridesProps | undefined | null;

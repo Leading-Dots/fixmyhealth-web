@@ -32,6 +32,7 @@ export declare type UserCreateFormInputValues = {
     weight?: number;
     subscriptionStatus?: string;
     profilePictureUrl?: string;
+    profileStatus?: string;
 };
 export declare type UserCreateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -44,6 +45,7 @@ export declare type UserCreateFormValidationValues = {
     weight?: ValidationFunction<number>;
     subscriptionStatus?: ValidationFunction<string>;
     profilePictureUrl?: ValidationFunction<string>;
+    profileStatus?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
@@ -58,6 +60,7 @@ export declare type UserCreateFormOverridesProps = {
     weight?: PrimitiveOverrideProps<TextFieldProps>;
     subscriptionStatus?: PrimitiveOverrideProps<SelectFieldProps>;
     profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
+    profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
     overrides?: UserCreateFormOverridesProps | undefined | null;
