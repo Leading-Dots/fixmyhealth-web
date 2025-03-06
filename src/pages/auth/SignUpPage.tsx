@@ -33,7 +33,7 @@ const signUpSchema = z
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
-    role: z.enum(["mentee", "mentor"] as const),
+    role: z.enum(["patient", "doctor"] as const),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -52,7 +52,7 @@ export default function SignUpPage() {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "mentee",
+      role: "patient",
     },
   });
 

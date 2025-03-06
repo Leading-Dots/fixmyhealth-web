@@ -1,50 +1,37 @@
-import {
-  listChatRooms,
-  listMentees,
-  listMentors,
-  listReviews,
-} from "@/graphql/queries";
+import {listExperts, listUsers} from "@/graphql/queries";
 import client from "./apiClient";
 import {
-  createChatRoom,
-  createMentee,
-  createMentor,
+  createExpert,
+  createUser,
 } from "@/graphql/mutations";
 import { ProfileStatus } from "@/API";
-import { UserRole } from "types";
-type ROLE = "mentor" | "mentee";
+// import { UserRole } from "types";
+type ROLE = "patient" | "doctor";
 
-interface IntiateChatRoom {
-  mentorId: string;
-  menteeId: string;
-  mentorName: string;
-  menteeName: string;
-}
-
-export const createUser = async (role: ROLE, email: string, userId: string) => {
-  if (role === "mentor") {
-    return await addMentor(email, userId);
+export const createUsers = async (role: ROLE, email: string, userId: string) => {
+  if (role === "patient") {
+    return await addPatient(email, userId);
   } else {
-    return await addMentee(email, userId);
+    return await addExpert(email, userId);
   }
 };
 
 export const getUser = async (userId: string, role: ROLE) => {
-  if (role === "mentor") {
-    return await findMentor(userId);
+  if (role === "patient") {
+    return await findPatient(userId);
   } else {
-    return await findMentee(userId);
+    return await findExpert(userId);
   }
 };
 
-const addMentor = async (email: string, userId: string) => {
+const addExpert = async (email: string, userId: string) => {
   try {
     const { data, errors } = await client.graphql({
-      query: createMentor,
+      query: createExpert,
       variables: {
         input: {
           email: email,
-          mentorId: userId,
+          id: userId,
           profileStatus: ProfileStatus.PENDING,
         },
       },
@@ -53,19 +40,19 @@ const addMentor = async (email: string, userId: string) => {
     if (errors) {
       console.error(errors);
     }
-    return data.createMentor;
+    return data.createExpert;
   } catch (error) {
     console.error(error);
   }
 };
 
-const addMentee = async (email: string, userId: string) => {
+const addPatient = async (email: string, userId: string) => {
   try {
     const { data, errors } = await client.graphql({
-      query: createMentee,
+      query: createUser,
       variables: {
         input: {
-          menteeId: userId,
+          id: userId,
           email: email,
           profileStatus: ProfileStatus.PENDING,
         },
@@ -75,19 +62,19 @@ const addMentee = async (email: string, userId: string) => {
     if (errors) {
       console.error(errors);
     }
-    return data.createMentee;
+    return data.createUser;
   } catch (error) {
     console.error(error);
   }
 };
 
-const findMentor = async (userId: string) => {
+const findPatient = async (userId: string) => {
   try {
     const { data, errors } = await client.graphql({
-      query: listMentors,
+      query: listUsers,
       variables: {
         filter: {
-          mentorId: {
+          id: {
             eq: userId,
           },
         },
@@ -98,19 +85,19 @@ const findMentor = async (userId: string) => {
       console.error(errors);
     }
     console.log(data);
-    return data.listMentors.items[0];
+    return data.listUsers.items[0];
   } catch (error) {
     console.error(error);
   }
 };
 
-const findMentee = async (userId: string) => {
+const findExpert = async (userId: string) => {
   try {
     const { data, errors } = await client.graphql({
-      query: listMentees,
+      query: listExperts,
       variables: {
         filter: {
-          menteeId: {
+          id: {
             eq: userId,
           },
         },
@@ -121,114 +108,10 @@ const findMentee = async (userId: string) => {
       console.error(errors);
     }
     console.log(data);
-    return data.listMentees.items[0];
+    return data.listExperts.items[0];
   } catch (error) {
     console.error(error);
   }
 };
 
-export const intiateChat = async ({
-  mentorId,
-  menteeId,
-  mentorName,
-  menteeName,
-}: IntiateChatRoom) => {
-  try {
-    //bascially we run action when user clicks on chat button if there no chatrrrom between mentor and mentee we create one otherwise we just redirect to chatroom
-    //we return chatroom id
 
-    const { data, errors } = await client.graphql({
-      query: listChatRooms,
-      variables: {
-        filter: {
-          and: [
-            {
-              mentorID: {
-                eq: mentorId,
-              },
-              menteeID: {
-                eq: menteeId,
-              },
-            },
-          ],
-        },
-      },
-    });
-
-    if (data.listChatRooms && data.listChatRooms.items.length > 0) {
-      return data.listChatRooms.items[0].id;
-    }
-    // if chatroom does not exist we create one
-
-    const { data: chatRoomData, errors: chatRoomErrors } = await client.graphql(
-      {
-        query: createChatRoom,
-        variables: {
-          input: {
-            name: `${mentorName} - ${menteeName}`,
-            mentorID: mentorId,
-            menteeID: menteeId,
-          },
-        },
-      }
-    );
-
-    if (chatRoomErrors) {
-      console.error(chatRoomErrors);
-    }
-
-    return chatRoomData.createChatRoom.id;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const getSessionReview = async (
-  sessionID: string,
-  userRole: UserRole
-) => {
-  try {
-    const { data } = await client.graphql({
-      query: listReviews,
-      variables: {
-        limit: 1,
-        filter: {
-          sessionID: {
-            eq: sessionID,
-          },
-          reviewerRole: {
-            eq: userRole,
-          },
-        },
-      },
-    });
-    if (data.listReviews.items.length > 0) {
-      return data.listReviews.items[0];
-    }
-    return null;
-  } catch (error) {
-    console.error("Error fetching reviews", error);
-  }
-};
-
-//get reviews done on user
-export const getUserReviews = async (userId: string) => {
-  try {
-    const { data } = await client.graphql({
-      query: listReviews,
-      variables: {
-        filter: {
-          reviewedID: {
-            eq: userId,
-          }
-        },
-      },
-    });
-    if (data.listReviews.items.length > 0) {
-      return data.listReviews.items;
-    }
-    return [];
-  } catch (error) {
-    console.error("Error fetching reviews", error);
-  }
-};

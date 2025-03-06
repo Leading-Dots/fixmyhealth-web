@@ -12,7 +12,7 @@ import {
 
 import { useLocalStorage } from "./useLocalStorage";
 
-import { createUser, getUser } from "@/lib/dbActions";
+import { createUsers, getUser } from "@/lib/dbActions";
 import { UserRole } from "types";
 import { getCurrentUser } from "aws-amplify/auth";
 import { Loader } from "@/components/common/Loader";
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const existingUser = await getUser(userId, role);
 
       if (!existingUser) {
-        const newUser = await createUser(role, email, userId);
+        const newUser = await createUsers(role, email, userId);
         if (!newUser) {
           await signOut();
           throw new Error("Failed to create new user");
@@ -113,7 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { isSignUpComplete } = await handleConfirmSignUp(email, code);
 
       if (isSignUpComplete) {
-        const newUser = await createUser(role, email, userId);
+        const newUser = await createUsers(role, email, userId);
         if (!newUser) {
           await signOut();
           throw new Error("User not created");
@@ -182,7 +182,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       setLoading(true);
       const currentUser = await getCurrentUser();
-      const role = user.role === "mentor" ? "mentee" : "mentor";
+      const role = user.role === "patient" ? "doctor" : "patient";
       if (currentUser) {
         const existingUser = await getUser(currentUser.userId, role);
         if (!existingUser) {

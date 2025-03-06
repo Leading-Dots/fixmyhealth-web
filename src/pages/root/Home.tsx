@@ -1,7 +1,7 @@
 import { DialogLoader } from "@/components/common/DialogLoader";
-import ListComponent from "@/components/home/ListComponent";
-import SessionRequestComponent from "@/components/home/SessionRequestComponent";
-import SessionsComponent from "@/components/home/SessionsComponent";
+// import ListComponent from "@/components/home/ListComponent";
+// import SessionRequestComponent from "@/components/home/SessionRequestComponent";
+// import SessionsComponent from "@/components/home/SessionsComponent";
 import React from "react";
 
 const Home = () => {
@@ -12,7 +12,8 @@ const Home = () => {
   }
   return (
     <main className="container p-2 space-y-5">
-      <div className="max-w-3xl space-y-4">
+      <div>Welcome</div>
+      {/* <div className="max-w-3xl space-y-4">
         <div className="flex items-center justify-between"></div>
         <SessionsComponent  />
       </div>
@@ -21,7 +22,7 @@ const Home = () => {
       </div>
       <div className="flex items-center justify-between">
         <ListComponent  />
-      </div>
+      </div> */}
     </main>
   );
 };

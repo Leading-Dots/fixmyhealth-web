@@ -2,13 +2,14 @@ projects:
   Fixmyhealth:
     schemaPath: amplify/backend/api/Fixmyhealth/build/schema.graphql
     includes:
-      - src/graphql/**/*.js
+      - src/graphql/**/*.ts
     excludes:
       - ./amplify/**
+      - src/API.ts
     extensions:
       amplify:
-        codeGenTarget: javascript
-        generatedFileName: ''
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
         docsFilePath: src/graphql
         region: ap-south-1
         apiId: null

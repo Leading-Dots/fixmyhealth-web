@@ -25,20 +25,20 @@ export function RoleSelect({ onRoleChange }: RoleSelectProps) {
       className="relative rounded-lg p-1"
     >
       <ToggleGroupItem
-        value="mentee"
-        aria-label="Mentee"
+        value="patient"
+        aria-label="Patient"
         className="relative w-[50%] data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       >
         <School2 className="mr-2 h-4 w-4" />
-        Mentee
+        Patient
       </ToggleGroupItem>
       <ToggleGroupItem
-        value="mentor"
-        aria-label="Mentor"
+        value="doctor"
+        aria-label="Doctor"
         className="relative w-[50%] data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
       >
         <LucideUniversity className="mr-2 h-4 w-4" />
-        Mentor
+        Doctor
       </ToggleGroupItem>
     </ToggleGroup>
   );
