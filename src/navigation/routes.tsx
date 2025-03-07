@@ -8,6 +8,7 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 
 import HomeRouter from "./HomeRouter";
 import AuthLayout from "@/layouts/AuthLayout";
+import ProfilePage from "@/pages/root/ProfilePage";
 const routes = [
   {
     path: "/",
@@ -42,6 +43,14 @@ const routes = [
     element: (
       <DashboardLayout isProtected={false}>
         <Home />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <DashboardLayout>
+        <ProfilePage />
       </DashboardLayout>
     ),
   },

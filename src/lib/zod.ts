@@ -1,71 +1,74 @@
 import * as z from "zod";
 
-export const MentorProfileFormSchema = z.object({
+export const DoctorProfileFormSchema = z.object({
   // Step 1
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  bio: z.string().min(10, "Bio must be at least 10 characters"),
+  introduction: z.string().min(10, "Introduction must be at least 10 characters"),
   profilePictureUrl: z.string().url("Unable to upload image").optional(),
 
   // Step 2
-  expertise: z.array(z.string()).min(1, "Select at least one expertise"),
-  yearsOfExperience: z.number().min(0).max(50),
-  hourlyRate: z.number().min(0),
+  experience: z.string(),
 });
 
-export const MenteeProfileFormSchema = z.object({
+export const PatientProfileFormSchema = z.object({
   // Step 1
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  bio: z.string().min(10, "Bio must be at least 10 characters"),
+  mobile: z.string().min(10, "Mobile number must be at least 10 characters"),
   profilePictureUrl: z.string().url("Unable to upload image").optional(),
-
-
+  address: z.string().min(4, "Address must be at least 4 characters"),
+  
   //Step 2
-  goals: z.array(z.string()).min(1, "Select at least one expertise"),
-  preferredMentorExperience: z
-    .number()
-    .min(0, "Preferred mentor experience must be at least 0"),
+  dob: z.string().min(4,"Date of birth must be at least 4 characters"),
+  height: z.number().min(2, "Height must be at least 2 characters"),
+  weight: z.number().min(2, "Weight must be at least 2 characters"),
 });
 
-const getZodSchema = (role: "mentor" | "mentee") => {
-  if (role === "mentor") {
-    return MentorProfileFormSchema;
+const getZodSchema = (role: "doctor" | "patient") => {
+  if (role === "doctor") {
+    return DoctorProfileFormSchema;
   } else {
-    return MenteeProfileFormSchema;
+    return PatientProfileFormSchema;
   }
 };
-const getInitialValues = (role: "mentor" | "mentee") => {
-  if (role === "mentor") {
+const getInitialValues = (role: "doctor" | "patient") => {
+  if (role === "doctor") {
     return {
       firstName: "",
       lastName: "",
       email: "",
-      bio: "",
+      dob: "",
+      mobile: "",
+      education: "",
+      introduction: "",
       profilePictureUrl: "",
-      expertise: [],
-      yearsOfExperience: 0,
-      hourlyRate: 0,
+      experience: "",
+      averageRating:0.0,
+      totalReviws: 0,
     };
   } else {
     return {
       firstName: "",
       lastName: "",
       email: "",
-      bio: "",
+      dob: "",
+      mobile:"",
+      address: "",
+      height: 0,
+      weight: 0,
+      subscriptionStatus: "",  
       profilePictureUrl: "",
-      goals: [],
-      preferredMentorExperience: 0,
     };
   }
 };
 
-export type MentorProfileFormValues = z.infer<typeof MentorProfileFormSchema>;
-export type MenteeProfileFormValues = z.infer<typeof MenteeProfileFormSchema>;
+export type DoctorProfileFormValues = z.infer<typeof DoctorProfileFormSchema>;
+export type PatientProfileFormValues = z.infer<typeof PatientProfileFormSchema>;
 
-export const getProfileFormSchema = (role: "mentor" | "mentee") => {
+export const getProfileFormSchema = (role: "doctor" | "patient") => {
   return {
     schema: getZodSchema(role),
     initialValues: getInitialValues(role),

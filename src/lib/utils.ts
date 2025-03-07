@@ -6,34 +6,29 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-import { MenteeProfileFormValues, MentorProfileFormValues } from "@/lib/zod";
+import { DoctorProfileFormValues, PatientProfileFormValues } from "@/lib/zod";
 
-type ProfileData = MentorProfileFormValues | MenteeProfileFormValues | null;
+type ProfileData = DoctorProfileFormValues | PatientProfileFormValues | null;
 
-export const transformNullValues = (data: any, role: "mentor" | "mentee"): ProfileData => {
+export const transformNullValues = (data: any, role: "doctor" | "patient"): ProfileData => {
   if (!data) return null;
 
   const baseTransform = {
     firstName: data.firstName || "",
     lastName: data.lastName || "",
     email: data.email || "",
-    bio: data.bio || "",
   };
 
-  if (role === "mentor") {
+  if (role === "doctor") {
     return {
       ...baseTransform,
-      expertise: data.expertise || [],
-      yearsOfExperience: data.yearsOfExperience || 0,
-      hourlyRate: data.hourlyRate || 0,
-    } as MentorProfileFormValues;
+      experience: data.experience || 0,
+    } as DoctorProfileFormValues;
   }
 
   return {
     ...baseTransform,
-    goals: data.goals || [],
-    preferredMentorExperience: data.preferredMentorExperience || 0,
-  } as MenteeProfileFormValues;
+  } as PatientProfileFormValues;
 };
 
 export const getInitials = (firstName?: string | null, lastName?: string | null) => {

@@ -1,0 +1,3 @@
+Background gradient:#23408e, #385fc7
+color:#23408e,
+Font-family:raleway

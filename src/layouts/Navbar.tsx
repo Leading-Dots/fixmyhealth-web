@@ -3,21 +3,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
-  BookOpenText,
-  GaugeCircle,
   HomeIcon,
   LogIn,
   LogOut,
   Menu,
-  MessagesSquare,
-  School2,
   Settings,
   User2,
   UserCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
-import { ProfileStatus } from "@/API";
 
 type NavItem = {
   title: string;
@@ -46,18 +41,22 @@ const Navbar = () => {
     },
   ];
 
-  const mentorNavItems: NavItem[] = [
+  const doctorNavItems: NavItem[] = [
     {
       title: "Home",
       url: "/home",
       icon: <HomeIcon className="h-5 w-5" />,
     },
-
     {
-      title: "Sessions",
-      url: "/sessions",
-      icon: <BookOpenText className="h-5 w-5" />,
+      title: "Profile",
+      url: "/profile",
+      icon: <User2 className="h-5 w-5"/>,
     },
+    // {
+    //   title: "Sessions",
+    //   url: "/sessions",
+    //   icon: <BookOpenText className="h-5 w-5" />,
+    // },
     {
       title: "Settings",
       url: "/settings",
@@ -65,22 +64,27 @@ const Navbar = () => {
     },
   ];
 
-  const menteeNavItems: NavItem[] = [
+  const patientNavItems: NavItem[] = [
     {
       title: "Home",
       url: "/home",
       icon: <HomeIcon className="h-5 w-5" />,
     },
     {
-      title: "Search Mentors",
-      url: "/search-mentors",
+      title: "Profile",
+      url: "/profile",
+      icon: <User2 className="h-5 w-5"/>,
+    },
+    {
+      title: "Search Experts",
+      url: "/search-experts",
       icon: <UserCircle2 className="h-5 w-5" />,
     },
-    {
-      title: "Sessions",
-      url: "/sessions",
-      icon: <BookOpenText className="h-5 w-5" />,
-    },
+    // {
+    //   title: "Sessions",
+    //   url: "/sessions",
+    //   icon: <BookOpenText className="h-5 w-5" />,
+    // },
 
     {
       title: "Settings",
@@ -89,7 +93,7 @@ const Navbar = () => {
     },
   ];
 
-  const navItems = user?.role === "mentor" ? mentorNavItems : menteeNavItems;
+  const navItems = user?.role === "doctor" ? doctorNavItems : patientNavItems;
   const isPublished = user?.profileStatus === "PUBLISHED";
 
   const NavContent = () => {
@@ -122,13 +126,11 @@ const Navbar = () => {
     }
 
     // For logged in users
-    const displayNavItems = !isPublished
-      ? navItems.filter((item) => item.title === "Profile")
-      : navItems;
+    // const displayNavItems = navItems;
 
     return (
       <nav className="space-y-4 my-4">
-        {displayNavItems.map((item) => {
+        { isPublished && navItems.map((item) => {
           const isActive = location.pathname === item.url;
 
           return (
@@ -137,9 +139,9 @@ const Navbar = () => {
               key={item.title}
               to={item.url}
               className={cn(
-                "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors",
+                "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-[#23408e] ",
                 isActive
-                  ? "bg-muted text-secondary-foreground"
+                  ? "bg-muted text-secondary-foreground text-[#23408e]"
                   : "hover:bg-secondary/80"
               )}
               {...(item?.isExternal && {
@@ -148,7 +150,7 @@ const Navbar = () => {
               })}
             >
               {item.icon}
-              <span>{item.title}</span>
+              <span className="text-sky-500">{item.title}</span>
             </Link>
           );
         })}
@@ -156,11 +158,11 @@ const Navbar = () => {
           <Link
             to="/profile"
             className={cn(
-              "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-yellow-600",
+              "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-sky-500",
               "hover:bg-secondary/80"
             )}
           >
-            <User2 className="h-5 w-5" />
+            <img src="images/icons/home/user.png" alt="user_icon" height={20} width={20}/>
             <span>Complete your profile</span>
           </Link>
         )}
@@ -174,9 +176,9 @@ const Navbar = () => {
       <div className="hidden md:flex h-screen w-64 flex-col border-r bg-background p-6 gap-6">
         <div className="flex flex-col items-center my-2">
           <Link to="/home" className="flex flex-col items-center gap-2">
-            <School2 className="h-10 w-10 text-primary" />
-            <span className="font-semibold text-xl text-primary">
-              Mentor Platform
+            <img src="images/logo.png"  alt="Logo" width={80} height={80} />
+            <span className="font-semibold text-xl text-[#23408e]">
+              Fix My Health
             </span>
           </Link>
         </div>
@@ -185,10 +187,10 @@ const Navbar = () => {
 
         {/* Only show logout for logged in users */}
         {user && (
-          <div className="flex flex-col items-start gap-2 mt-auto">
+          <div className="flex flex-col items-start gap-2 mt-auto ">
             <Button onClick={signOut} variant="ghost" size="sm">
-              <LogOut className="h-4 w-4" />
-              <span>Logout</span>
+              <LogOut className="h-4 w-4 text-[#23408e]" />
+              <span className="text-sky-500">Logout</span>
             </Button>
           </div>
         )}
@@ -205,15 +207,15 @@ const Navbar = () => {
         <SheetContent side="left" className="w-64 p-6">
           <div className="flex flex-col items-center">
             <Link to="/home">
-              <School2 className="h-8 w-8 text-primary" />
+              <img src="images/logo.png" alt="Logo" width={80} height={80} />
             </Link>
           </div>
           <NavContent />
           {user && (
           <div className="flex flex-col items-start gap-2 mt-auto">
             <Button onClick={signOut} variant="ghost" size="sm">
-              <LogOut className="h-4 w-4" />
-              <span>Logout</span>
+              <LogOut className="h-4 w-4 text-[#23408e]" />
+              <span className="text-sky-500">Logout</span>
             </Button>
           </div>
         )}

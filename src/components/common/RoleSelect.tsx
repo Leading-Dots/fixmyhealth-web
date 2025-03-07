@@ -27,17 +27,17 @@ export function RoleSelect({ onRoleChange }: RoleSelectProps) {
       <ToggleGroupItem
         value="patient"
         aria-label="Patient"
-        className="relative w-[50%] data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+        className="relative w-[50%] data-[state=on]:bg-[#23408e] data-[state=on]:text-primary-foreground"
       >
-        <School2 className="mr-2 h-4 w-4" />
+        <img src="/images/icons/home/user.png" alt="logo" height={25} width={25}/>
         Patient
       </ToggleGroupItem>
       <ToggleGroupItem
         value="doctor"
         aria-label="Doctor"
-        className="relative w-[50%] data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+        className="relative w-[50%] data-[state=on]:bg-[#23408e]  data-[state=on]:text-primary-foreground"
       >
-        <LucideUniversity className="mr-2 h-4 w-4" />
+        <img src="/images/icons/home/small-logo.png" alt="logo" height={40} width={40}/>
         Doctor
       </ToggleGroupItem>
     </ToggleGroup>
