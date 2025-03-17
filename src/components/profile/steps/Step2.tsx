@@ -25,6 +25,24 @@ function DoctorFields() {
   const form = useFormContext();
 
   return (
+    <>
+    <FormField
+      control={form.control}
+      name="education"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Qualification</FormLabel>
+          <FormControl>
+            <Input
+              {...field}
+              type="text"
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
     <FormField
       control={form.control}
       name="experience"
@@ -42,6 +60,8 @@ function DoctorFields() {
         </FormItem>
       )}
     />
+    </>
+    
   );
 }
 

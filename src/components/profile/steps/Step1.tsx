@@ -44,7 +44,7 @@ export function StepOne() {
             <FormItem>
               <FormControl>
                 <ImageUpload
-                  value={field.value}
+                  value={preview || field.value}
                   onChange={(url) => {
                     console.log("Image URL", url);
                     field.onChange(url);
@@ -155,7 +155,7 @@ export function StepOne() {
               <FormLabel>Mobile</FormLabel>
               <FormControl>
                 <Input
-                  type="tel"
+                  type="text"
                   placeholder="Enter your mobile number"
                   {...field}
                 />

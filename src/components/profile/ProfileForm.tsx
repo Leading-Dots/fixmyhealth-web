@@ -59,6 +59,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               email: doctorData.email,
               introduction: doctorData.introduction,
               experience: doctorData.experience,
+              education: doctorData.education,
               profilePictureUrl: doctorData.profilePictureUrl || null,
               profileStatus: ProfileStatus.PUBLISHED,
             },

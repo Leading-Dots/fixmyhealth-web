@@ -17,17 +17,25 @@ export const transformNullValues = (data: any, role: "doctor" | "patient"): Prof
     firstName: data.firstName || "",
     lastName: data.lastName || "",
     email: data.email || "",
+    profilePictureUrl: data.profilePictureUrl || "",
   };
 
   if (role === "doctor") {
     return {
       ...baseTransform,
-      experience: data.experience || 0,
+      introduction: data.introduction || "",
+      experience: data.experience || "",
+      education: data.education || "",
     } as DoctorProfileFormValues;
   }
 
   return {
     ...baseTransform,
+    mobile: data.mobile || "",
+    address: data.address || "",
+    dob: data.dob || "",
+    height: data.height || 0,
+    weight: data.weight || 0,
   } as PatientProfileFormValues;
 };
 
