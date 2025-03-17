@@ -2,27 +2,26 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateReviewInput = {
+export type CreateArticleInput = {
   id?: string | null,
-  responseId: string,
-  rating: number,
-  feedback?: string | null,
+  title?: string | null,
+  content?: string | null,
+  imageUrl?: string | null,
   createdAt?: string | null,
-  userID: string,
-  expertID: string,
+  updatedAt?: string | null,
+  expertID?: string | null,
 };
 
-export type ModelReviewConditionInput = {
-  responseId?: ModelStringInput | null,
-  rating?: ModelFloatInput | null,
-  feedback?: ModelStringInput | null,
+export type ModelArticleConditionInput = {
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  imageUrl?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  userID?: ModelIDInput | null,
-  expertID?: ModelIDInput | null,
-  and?: Array< ModelReviewConditionInput | null > | null,
-  or?: Array< ModelReviewConditionInput | null > | null,
-  not?: ModelReviewConditionInput | null,
   updatedAt?: ModelStringInput | null,
+  expertID?: ModelIDInput | null,
+  and?: Array< ModelArticleConditionInput | null > | null,
+  or?: Array< ModelArticleConditionInput | null > | null,
+  not?: ModelArticleConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -65,18 +64,6 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
@@ -91,6 +78,66 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type Article = {
+  __typename: "Article",
+  id: string,
+  title?: string | null,
+  content?: string | null,
+  imageUrl?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  expertID?: string | null,
+};
+
+export type UpdateArticleInput = {
+  id: string,
+  title?: string | null,
+  content?: string | null,
+  imageUrl?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  expertID?: string | null,
+};
+
+export type DeleteArticleInput = {
+  id: string,
+};
+
+export type CreateReviewInput = {
+  id?: string | null,
+  responseId: string,
+  rating: number,
+  feedback?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  expertID: string,
+};
+
+export type ModelReviewConditionInput = {
+  responseId?: ModelStringInput | null,
+  rating?: ModelFloatInput | null,
+  feedback?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
+  and?: Array< ModelReviewConditionInput | null > | null,
+  or?: Array< ModelReviewConditionInput | null > | null,
+  not?: ModelReviewConditionInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type Review = {
@@ -255,6 +302,7 @@ export type Expert = {
   ExpertResponse?: ModelResponseConnection | null,
   ExpertReview?: ModelReviewConnection | null,
   profileStatus?: ProfileStatus | null,
+  ExpertArticles?: ModelArticleConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -268,6 +316,12 @@ export type ModelResponseConnection = {
 export type ModelReviewConnection = {
   __typename: "ModelReviewConnection",
   items:  Array<Review | null >,
+  nextToken?: string | null,
+};
+
+export type ModelArticleConnection = {
+  __typename: "ModelArticleConnection",
+  items:  Array<Article | null >,
   nextToken?: string | null,
 };
 
@@ -505,6 +559,25 @@ export type DeleteUserInput = {
   id: string,
 };
 
+export type ModelArticleFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  imageUrl?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  expertID?: ModelIDInput | null,
+  and?: Array< ModelArticleFilterInput | null > | null,
+  or?: Array< ModelArticleFilterInput | null > | null,
+  not?: ModelArticleFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelReviewFilterInput = {
   id?: ModelIDInput | null,
   responseId?: ModelStringInput | null,
@@ -518,12 +591,6 @@ export type ModelReviewFilterInput = {
   or?: Array< ModelReviewFilterInput | null > | null,
   not?: ModelReviewFilterInput | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelResponseFilterInput = {
   id?: ModelIDInput | null,
@@ -621,17 +688,16 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
-export type ModelSubscriptionReviewFilterInput = {
+export type ModelSubscriptionArticleFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  responseId?: ModelSubscriptionStringInput | null,
-  rating?: ModelSubscriptionFloatInput | null,
-  feedback?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  content?: ModelSubscriptionStringInput | null,
+  imageUrl?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  expertID?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionReviewFilterInput | null > | null,
-  or?: Array< ModelSubscriptionReviewFilterInput | null > | null,
+  expertID?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionArticleFilterInput | null > | null,
+  or?: Array< ModelSubscriptionArticleFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -662,6 +728,19 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionReviewFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  responseId?: ModelSubscriptionStringInput | null,
+  rating?: ModelSubscriptionFloatInput | null,
+  feedback?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  userID?: ModelSubscriptionIDInput | null,
+  expertID?: ModelSubscriptionIDInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionReviewFilterInput | null > | null,
+  or?: Array< ModelSubscriptionReviewFilterInput | null > | null,
 };
 
 export type ModelSubscriptionFloatInput = {
@@ -765,6 +844,60 @@ export type ModelSubscriptionUserFilterInput = {
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+};
+
+export type CreateArticleMutationVariables = {
+  input: CreateArticleInput,
+  condition?: ModelArticleConditionInput | null,
+};
+
+export type CreateArticleMutation = {
+  createArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
+};
+
+export type UpdateArticleMutationVariables = {
+  input: UpdateArticleInput,
+  condition?: ModelArticleConditionInput | null,
+};
+
+export type UpdateArticleMutation = {
+  updateArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
+};
+
+export type DeleteArticleMutationVariables = {
+  input: DeleteArticleInput,
+  condition?: ModelArticleConditionInput | null,
+};
+
+export type DeleteArticleMutation = {
+  deleteArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
 };
 
 export type CreateReviewMutationVariables = {
@@ -942,6 +1075,10 @@ export type CreateExpertMutation = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -975,6 +1112,10 @@ export type UpdateExpertMutation = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1008,6 +1149,10 @@ export type DeleteExpertMutation = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1256,6 +1401,71 @@ export type DeleteUserMutation = {
   } | null,
 };
 
+export type GetArticleQueryVariables = {
+  id: string,
+};
+
+export type GetArticleQuery = {
+  getArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
+};
+
+export type ListArticlesQueryVariables = {
+  filter?: ModelArticleFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListArticlesQuery = {
+  listArticles?:  {
+    __typename: "ModelArticleConnection",
+    items:  Array< {
+      __typename: "Article",
+      id: string,
+      title?: string | null,
+      content?: string | null,
+      imageUrl?: string | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      expertID?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ArticlesByExpertIDQueryVariables = {
+  expertID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelArticleFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ArticlesByExpertIDQuery = {
+  articlesByExpertID?:  {
+    __typename: "ModelArticleConnection",
+    items:  Array< {
+      __typename: "Article",
+      id: string,
+      title?: string | null,
+      content?: string | null,
+      imageUrl?: string | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      expertID?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetReviewQueryVariables = {
   id: string,
 };
@@ -1482,6 +1692,10 @@ export type GetExpertQuery = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1729,6 +1943,57 @@ export type ListUsersQuery = {
   } | null,
 };
 
+export type OnCreateArticleSubscriptionVariables = {
+  filter?: ModelSubscriptionArticleFilterInput | null,
+};
+
+export type OnCreateArticleSubscription = {
+  onCreateArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
+};
+
+export type OnUpdateArticleSubscriptionVariables = {
+  filter?: ModelSubscriptionArticleFilterInput | null,
+};
+
+export type OnUpdateArticleSubscription = {
+  onUpdateArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
+};
+
+export type OnDeleteArticleSubscriptionVariables = {
+  filter?: ModelSubscriptionArticleFilterInput | null,
+};
+
+export type OnDeleteArticleSubscription = {
+  onDeleteArticle?:  {
+    __typename: "Article",
+    id: string,
+    title?: string | null,
+    content?: string | null,
+    imageUrl?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    expertID?: string | null,
+  } | null,
+};
+
 export type OnCreateReviewSubscriptionVariables = {
   filter?: ModelSubscriptionReviewFilterInput | null,
 };
@@ -1897,6 +2162,10 @@ export type OnCreateExpertSubscription = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1929,6 +2198,10 @@ export type OnUpdateExpertSubscription = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1961,6 +2234,10 @@ export type OnDeleteExpertSubscription = {
       nextToken?: string | null,
     } | null,
     profileStatus?: ProfileStatus | null,
+    ExpertArticles?:  {
+      __typename: "ModelArticleConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,

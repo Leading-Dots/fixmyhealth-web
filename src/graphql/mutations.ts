@@ -8,6 +8,63 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createArticle = /* GraphQL */ `mutation CreateArticle(
+  $input: CreateArticleInput!
+  $condition: ModelArticleConditionInput
+) {
+  createArticle(input: $input, condition: $condition) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateArticleMutationVariables,
+  APITypes.CreateArticleMutation
+>;
+export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
+  $input: UpdateArticleInput!
+  $condition: ModelArticleConditionInput
+) {
+  updateArticle(input: $input, condition: $condition) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateArticleMutationVariables,
+  APITypes.UpdateArticleMutation
+>;
+export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
+  $input: DeleteArticleInput!
+  $condition: ModelArticleConditionInput
+) {
+  deleteArticle(input: $input, condition: $condition) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteArticleMutationVariables,
+  APITypes.DeleteArticleMutation
+>;
 export const createReview = /* GraphQL */ `mutation CreateReview(
   $input: CreateReviewInput!
   $condition: ModelReviewConditionInput
@@ -186,6 +243,10 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -220,6 +281,10 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -254,6 +319,10 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename

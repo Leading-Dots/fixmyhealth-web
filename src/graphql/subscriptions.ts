@@ -8,6 +8,54 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
+  onCreateArticle(filter: $filter) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateArticleSubscriptionVariables,
+  APITypes.OnCreateArticleSubscription
+>;
+export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
+  onUpdateArticle(filter: $filter) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateArticleSubscriptionVariables,
+  APITypes.OnUpdateArticleSubscription
+>;
+export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
+  onDeleteArticle(filter: $filter) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteArticleSubscriptionVariables,
+  APITypes.OnDeleteArticleSubscription
+>;
 export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter: ModelSubscriptionReviewFilterInput) {
   onCreateReview(filter: $filter) {
     id
@@ -165,6 +213,10 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -196,6 +248,10 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -227,6 +283,10 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename

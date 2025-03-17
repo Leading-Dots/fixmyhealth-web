@@ -1,6 +1,6 @@
 import { uploadData, getUrl } from "aws-amplify/storage";
 
-export type FolderType = "profile" | "post" | "comment";
+export type FolderType = "profile" | "article" | "comment";
 
 const BASE_URL = import.meta.env.VITE_REACT_APP_STORAGE_URL;
 
@@ -56,3 +56,12 @@ export const uploadProfileImage = async (file: File, userId: string) => {
 export const getProfileImageUrl = async (fileCode: string) => {
   return getFileFromS3(fileCode);
 };
+
+export const uploadArticleImage = async (file: File, userId: string) => {
+  return uploadFileToS3(file, "article", userId, "article.png");
+};
+
+export const getArticleImageUrl = async (fileCode: string) => {
+  return getFileFromS3(fileCode);
+};
+

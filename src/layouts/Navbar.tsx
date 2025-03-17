@@ -7,6 +7,7 @@ import {
   LogIn,
   LogOut,
   Menu,
+  Newspaper,
   Settings,
   User2,
   UserCircle2,
@@ -52,11 +53,11 @@ const Navbar = () => {
       url: "/profile",
       icon: <User2 className="h-5 w-5"/>,
     },
-    // {
-    //   title: "Sessions",
-    //   url: "/sessions",
-    //   icon: <BookOpenText className="h-5 w-5" />,
-    // },
+    {
+      title: "Your Articles",
+      url: "/articles",
+      icon: <Newspaper className="h-5 w-5" />,
+    },
     {
       title: "Settings",
       url: "/settings",

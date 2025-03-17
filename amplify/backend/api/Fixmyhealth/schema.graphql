@@ -1,3 +1,13 @@
+type Article @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  content: String
+  imageUrl: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  expertID: ID @index(name: "byExpert")
+}
+
 enum ProfileStatus {
   PENDING
   PUBLISHED
@@ -45,6 +55,7 @@ type Expert @model @auth(rules: [{allow: public}]) {
   ExpertResponse: [Response] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
   profileStatus: ProfileStatus
+  ExpertArticles: [Article] @hasMany(indexName: "byExpert", fields: ["id"])
 }
 
 enum ConcernStatus {

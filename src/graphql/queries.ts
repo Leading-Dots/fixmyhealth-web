@@ -8,6 +8,78 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
+  getArticle(id: $id) {
+    id
+    title
+    content
+    imageUrl
+    createdAt
+    updatedAt
+    expertID
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetArticleQueryVariables,
+  APITypes.GetArticleQuery
+>;
+export const listArticles = /* GraphQL */ `query ListArticles(
+  $filter: ModelArticleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      content
+      imageUrl
+      createdAt
+      updatedAt
+      expertID
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListArticlesQueryVariables,
+  APITypes.ListArticlesQuery
+>;
+export const articlesByExpertID = /* GraphQL */ `query ArticlesByExpertID(
+  $expertID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelArticleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  articlesByExpertID(
+    expertID: $expertID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      content
+      imageUrl
+      createdAt
+      updatedAt
+      expertID
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ArticlesByExpertIDQueryVariables,
+  APITypes.ArticlesByExpertIDQuery
+>;
 export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
   getReview(id: $id) {
     id
@@ -254,6 +326,10 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
       __typename
     }
     profileStatus
+    ExpertArticles {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename

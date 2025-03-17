@@ -9,6 +9,8 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import HomeRouter from "./HomeRouter";
 import AuthLayout from "@/layouts/AuthLayout";
 import ProfilePage from "@/pages/root/ProfilePage";
+import CreateArticle from "@/pages/root/CreateArticle";
+import ExpertArticles from "@/pages/root/ExpertArticles";
 const routes = [
   {
     path: "/",
@@ -51,6 +53,22 @@ const routes = [
     element: (
       <DashboardLayout>
         <ProfilePage />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/articles",
+    element: (
+      <DashboardLayout>
+        <ExpertArticles/>
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/create-article",
+    element: (
+      <DashboardLayout>
+        <CreateArticle/>
       </DashboardLayout>
     ),
   },
