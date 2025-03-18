@@ -9,8 +9,11 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import HomeRouter from "./HomeRouter";
 import AuthLayout from "@/layouts/AuthLayout";
 import ProfilePage from "@/pages/root/ProfilePage";
-import CreateArticle from "@/pages/root/CreateArticle";
-import ExpertArticles from "@/pages/root/ExpertArticles";
+import CreateArticle from "@/pages/Article/CreateArticle";
+import ExpertArticles from "@/pages/Article/ExpertArticles";
+import ArticleDetail from "@/pages/Article/ArticleDetail";
+import AllArticles from "@/pages/Article/AllArticles";
+import SearchExperts from "@/pages/Expert/SearchExperts";
 const routes = [
   {
     path: "/",
@@ -60,7 +63,23 @@ const routes = [
     path: "/articles",
     element: (
       <DashboardLayout>
-        <ExpertArticles/>
+        <ExpertArticles />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/all-articles",
+    element: (
+      <DashboardLayout>
+        <AllArticles />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/article/:id",
+    element: (
+      <DashboardLayout>
+        <ArticleDetail />
       </DashboardLayout>
     ),
   },
@@ -68,7 +87,15 @@ const routes = [
     path: "/create-article",
     element: (
       <DashboardLayout>
-        <CreateArticle/>
+        <CreateArticle />
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/search-experts",
+    element: (
+      <DashboardLayout>
+        <SearchExperts/>
       </DashboardLayout>
     ),
   },

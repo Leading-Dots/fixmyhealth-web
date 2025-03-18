@@ -134,7 +134,7 @@ export default function LoginPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="bg-[#23408e] " disabled={form.formState.isSubmitting}>
+                <Button type="submit" className="bg-primary hover:bg-secondary " disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting ? "Logging in..." : "Login"}
                 </Button>
               </form>

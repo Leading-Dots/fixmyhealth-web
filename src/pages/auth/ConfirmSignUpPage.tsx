@@ -68,7 +68,7 @@ export default function ConfirmSignUpPage() {
                 autoComplete="off"
               />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full bg-primary hover:bg-secondary">
               Verify
             </Button>
           </form>

@@ -1,3 +1,17 @@
+enum Specialization {
+  CARDIOLOGIST
+  PEDIATRICIAN
+  GYNECOLOGIST
+  ORTHOPEDIC
+  DERMATOLOGIST
+  NEUROLOGIST
+  GENERAL_PHYSICIAN
+  ENT_SPECIALIST
+  PSYCHIATRIST
+  DIABETOLOGIST
+  DIETICIAN
+}
+
 type Article @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
@@ -56,6 +70,9 @@ type Expert @model @auth(rules: [{allow: public}]) {
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
   profileStatus: ProfileStatus
   ExpertArticles: [Article] @hasMany(indexName: "byExpert", fields: ["id"])
+  Specialization: Specialization
+  ConsultationFee: Int
+  LanguageSpoken: String
 }
 
 enum ConcernStatus {

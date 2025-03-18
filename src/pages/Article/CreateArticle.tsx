@@ -158,10 +158,17 @@ export default function CreateArticle() {
         )}
         <Button
           onClick={handleSubmit}
-          className="mt-4"
+          className="mt-4 bg-[#23408e] hover:bg-sky-500"
           disabled={loading || !formData.title || !formData.content}
         >
           {loading ? "Submitting..." : "Submit Article"}
+        </Button>
+        <Button
+          variant="outline"
+          className="mt-4 ml-2"
+          onClick={() => navigate("/articles")}
+        >
+          Cancel
         </Button>
       </CardContent>
     </Card>

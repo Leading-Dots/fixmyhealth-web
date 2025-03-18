@@ -247,6 +247,9 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename
@@ -285,6 +288,9 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename
@@ -323,6 +329,9 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename

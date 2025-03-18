@@ -156,7 +156,7 @@ export default function SignUpPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" disabled={form.formState.isSubmitting}>
+                <Button type="submit"  className="bg-primary hover:bg-secondary" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting
                     ? "Creating account..."
                     : "Create account"}

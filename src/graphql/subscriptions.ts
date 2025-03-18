@@ -217,6 +217,9 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename
@@ -252,6 +255,9 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename
@@ -287,6 +293,9 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename

@@ -1,3 +1,4 @@
+import { Specialization } from "@/API";
 import * as z from "zod";
 
 export const DoctorProfileFormSchema = z.object({
@@ -11,6 +12,9 @@ export const DoctorProfileFormSchema = z.object({
   // Step 2
   experience: z.string(),
   education: z.string(),
+  ConsultationFee: z.number(),
+  Specialization: z.custom<Specialization>().optional(),
+  LanguageSpoken: z.string(),
 });
 
 export const PatientProfileFormSchema = z.object({
@@ -49,6 +53,9 @@ const getInitialValues = (role: "doctor" | "patient") => {
       experience: "",
       averageRating:0.0,
       totalReviws: 0,
+      Specialization: undefined,
+      ConsultationFee: 0,
+      LanguageSpoken: "",
     };
   } else {
     return {

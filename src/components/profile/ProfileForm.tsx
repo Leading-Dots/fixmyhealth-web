@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   getProfileFormSchema,
   DoctorProfileFormValues,
@@ -36,12 +36,14 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: initialData || initialValues,
-    mode: "onBlur",
+    mode: "onBlur"
   });
 
   async function onSubmit(
     data: DoctorProfileFormValues | PatientProfileFormValues
   ) {
+    console.log("onSubmit called", data); 
+    
     try {
       console.log("profile data", data);
 
@@ -59,6 +61,9 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               email: doctorData.email,
               introduction: doctorData.introduction,
               experience: doctorData.experience,
+              Specialization: doctorData?.Specialization,
+              ConsultationFee: doctorData?.ConsultationFee,
+              LanguageSpoken: doctorData?.LanguageSpoken,
               education: doctorData.education,
               profilePictureUrl: doctorData.profilePictureUrl || null,
               profileStatus: ProfileStatus.PUBLISHED,
@@ -146,12 +151,12 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
             <Button
               type="button"
               onClick={handleNext}
-              className="w-full bg-[#23408e]"
+              className="w-full bg-primary hover:bg-secondary"
             >
               Next
             </Button>
           ) : (
-            <Button className="w-full bg-[#23408e]" type="submit">
+            <Button className="w-full bg-primary hover:bg-secondary" type="submit">
               Save
             </Button>
           )}

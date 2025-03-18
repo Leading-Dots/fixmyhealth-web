@@ -3,14 +3,20 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
+  ClipboardCheck,
+  CreditCard,
+  FileText,
   HomeIcon,
   LogIn,
   LogOut,
   Menu,
+  MessageSquareHeartIcon,
   Newspaper,
+  Pill,
   Settings,
   User2,
   UserCircle2,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -54,9 +60,19 @@ const Navbar = () => {
       icon: <User2 className="h-5 w-5"/>,
     },
     {
-      title: "Your Articles",
+      title: "Assigned Concerns",
+      url: "/assigned-concerns",
+      icon: <ClipboardCheck className="h-5 w-5" />,
+    },
+    {
+      title: "My Articles",
       url: "/articles",
       icon: <Newspaper className="h-5 w-5" />,
+    },
+    {
+      title: "Reviews & Ratings",
+      url: "/review",
+      icon: <MessageSquareHeartIcon className="h-5 w-5" />,
     },
     {
       title: "Settings",
@@ -81,12 +97,26 @@ const Navbar = () => {
       url: "/search-experts",
       icon: <UserCircle2 className="h-5 w-5" />,
     },
-    // {
-    //   title: "Sessions",
-    //   url: "/sessions",
-    //   icon: <BookOpenText className="h-5 w-5" />,
-    // },
-
+    {
+      title: "My Health Concerns",
+      url: "/health-concern",
+      icon: <Pill className="h-5 w-5" />,
+    },
+    {
+      title: "Family member profiles",
+      url: "/family-member",
+      icon: <Users className="h-5 w-5" />,
+    },
+    {
+      title: "Subscription",
+      url: "/subscription",
+      icon: <CreditCard className="h-5 w-5" />,
+    },
+    {
+      title: "Reports",
+      url: "/reports",
+      icon: <FileText className="h-5 w-5" />,
+    },
     {
       title: "Settings",
       url: "/settings",

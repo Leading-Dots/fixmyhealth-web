@@ -1,3 +1,4 @@
+import { Specialization } from "@/API";
 import {
   FormField,
   FormItem,
@@ -6,11 +7,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 
 interface StepTwoProps {
   role: "doctor" | "patient";
 }
+
+const SpecializationOptions = Object.values(Specialization);
 
 export function StepTwo({ role }: StepTwoProps) {
   return (
@@ -26,42 +36,105 @@ function DoctorFields() {
 
   return (
     <>
-    <FormField
-      control={form.control}
-      name="education"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Qualification</FormLabel>
-          <FormControl>
-            <Input
-              {...field}
-              type="text"
-              onChange={(e) => field.onChange(e.target.value)}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-    <FormField
-      control={form.control}
-      name="experience"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Years of Experience</FormLabel>
-          <FormControl>
-            <Input
-              {...field}
-              type="text"
-              onChange={(e) => field.onChange(e.target.value)}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+      <FormField
+        control={form.control}
+        name="education"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Qualification</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                type="text"
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="Specialization"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Specialization</FormLabel>
+            <FormControl>
+              <Select
+                onValueChange={(value) =>
+                  field.onChange(value as Specialization)
+                }
+                defaultValue={field.value as string}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Specialization" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SpecializationOptions.map((spec) => (
+                    <SelectItem key={spec} value={spec}>
+                      {spec.replace(/_/g, " ")}{" "}
+                      {/* Converts ENUM_NAME to readable text */}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="experience"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Years of Experience</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                type="text"
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="ConsultationFee"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Consultation fee</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                type="number"
+                onChange={(e) => field.onChange(parseInt(e.target.value))}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="LanguageSpoken"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Language Spoken</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                type="text"
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
-    
   );
 }
 

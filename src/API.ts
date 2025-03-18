@@ -241,12 +241,30 @@ export type CreateExpertInput = {
   averageRating?: number | null,
   totalReviews?: number | null,
   profileStatus?: ProfileStatus | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
 };
 
 export enum ProfileStatus {
   PENDING = "PENDING",
   PUBLISHED = "PUBLISHED",
   REJECTED = "REJECTED",
+}
+
+
+export enum Specialization {
+  CARDIOLOGIST = "CARDIOLOGIST",
+  PEDIATRICIAN = "PEDIATRICIAN",
+  GYNECOLOGIST = "GYNECOLOGIST",
+  ORTHOPEDIC = "ORTHOPEDIC",
+  DERMATOLOGIST = "DERMATOLOGIST",
+  NEUROLOGIST = "NEUROLOGIST",
+  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
+  ENT_SPECIALIST = "ENT_SPECIALIST",
+  PSYCHIATRIST = "PSYCHIATRIST",
+  DIABETOLOGIST = "DIABETOLOGIST",
+  DIETICIAN = "DIETICIAN",
 }
 
 
@@ -262,6 +280,9 @@ export type ModelExpertConditionInput = {
   averageRating?: ModelFloatInput | null,
   totalReviews?: ModelIntInput | null,
   profileStatus?: ModelProfileStatusInput | null,
+  Specialization?: ModelSpecializationInput | null,
+  ConsultationFee?: ModelIntInput | null,
+  LanguageSpoken?: ModelStringInput | null,
   and?: Array< ModelExpertConditionInput | null > | null,
   or?: Array< ModelExpertConditionInput | null > | null,
   not?: ModelExpertConditionInput | null,
@@ -286,6 +307,11 @@ export type ModelProfileStatusInput = {
   ne?: ProfileStatus | null,
 };
 
+export type ModelSpecializationInput = {
+  eq?: Specialization | null,
+  ne?: Specialization | null,
+};
+
 export type Expert = {
   __typename: "Expert",
   id: string,
@@ -303,6 +329,9 @@ export type Expert = {
   ExpertReview?: ModelReviewConnection | null,
   profileStatus?: ProfileStatus | null,
   ExpertArticles?: ModelArticleConnection | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -338,6 +367,9 @@ export type UpdateExpertInput = {
   averageRating?: number | null,
   totalReviews?: number | null,
   profileStatus?: ProfileStatus | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
 };
 
 export type DeleteExpertInput = {
@@ -619,6 +651,9 @@ export type ModelExpertFilterInput = {
   averageRating?: ModelFloatInput | null,
   totalReviews?: ModelIntInput | null,
   profileStatus?: ModelProfileStatusInput | null,
+  Specialization?: ModelSpecializationInput | null,
+  ConsultationFee?: ModelIntInput | null,
+  LanguageSpoken?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelExpertFilterInput | null > | null,
@@ -781,6 +816,9 @@ export type ModelSubscriptionExpertFilterInput = {
   averageRating?: ModelSubscriptionFloatInput | null,
   totalReviews?: ModelSubscriptionIntInput | null,
   profileStatus?: ModelSubscriptionStringInput | null,
+  Specialization?: ModelSubscriptionStringInput | null,
+  ConsultationFee?: ModelSubscriptionIntInput | null,
+  LanguageSpoken?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionExpertFilterInput | null > | null,
@@ -1079,6 +1117,9 @@ export type CreateExpertMutation = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1116,6 +1157,9 @@ export type UpdateExpertMutation = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1153,6 +1197,9 @@ export type DeleteExpertMutation = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1696,6 +1743,9 @@ export type GetExpertQuery = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1724,6 +1774,9 @@ export type ListExpertsQuery = {
       averageRating?: number | null,
       totalReviews?: number | null,
       profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -2166,6 +2219,9 @@ export type OnCreateExpertSubscription = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2202,6 +2258,9 @@ export type OnUpdateExpertSubscription = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2238,6 +2297,9 @@ export type OnDeleteExpertSubscription = {
       __typename: "ModelArticleConnection",
       nextToken?: string | null,
     } | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

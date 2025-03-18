@@ -330,6 +330,9 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
       nextToken
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
     createdAt
     updatedAt
     __typename
@@ -355,6 +358,9 @@ export const listExperts = /* GraphQL */ `query ListExperts(
       averageRating
       totalReviews
       profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
       createdAt
       updatedAt
       __typename
