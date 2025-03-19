@@ -386,7 +386,28 @@ export const getHealthConcern = /* GraphQL */ `query GetHealthConcern($id: ID!) 
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -409,6 +430,7 @@ export const listHealthConcerns = /* GraphQL */ `query ListHealthConcerns(
       createdAt
       userID
       updatedAt
+      healthConcernHealthConcernExpertId
       __typename
     }
     nextToken
@@ -442,6 +464,7 @@ export const healthConcernsByUserID = /* GraphQL */ `query HealthConcernsByUserI
       createdAt
       userID
       updatedAt
+      healthConcernHealthConcernExpertId
       __typename
     }
     nextToken

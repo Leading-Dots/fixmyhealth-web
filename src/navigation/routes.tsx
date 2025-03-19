@@ -14,6 +14,9 @@ import ExpertArticles from "@/pages/Article/ExpertArticles";
 import ArticleDetail from "@/pages/Article/ArticleDetail";
 import AllArticles from "@/pages/Article/AllArticles";
 import SearchExperts from "@/pages/Expert/SearchExperts";
+import ExpertDetail from "@/pages/Expert/ExpertDetail";
+import ConsultExpert from "@/pages/Expert/ConsultExpert";
+
 const routes = [
   {
     path: "/",
@@ -96,6 +99,22 @@ const routes = [
     element: (
       <DashboardLayout>
         <SearchExperts/>
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/expert-detail/:id",
+    element: (
+      <DashboardLayout>
+        <ExpertDetail/>
+      </DashboardLayout>
+    ),
+  },  
+  {
+    path: "/ask-concern/:id",
+    element: (
+      <DashboardLayout>
+        <ConsultExpert/>
       </DashboardLayout>
     ),
   },

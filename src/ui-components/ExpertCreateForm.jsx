@@ -40,6 +40,9 @@ export default function ExpertCreateForm(props) {
     averageRating: "",
     totalReviews: "",
     profileStatus: "",
+    Specialization: "",
+    ConsultationFee: "",
+    LanguageSpoken: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -62,6 +65,15 @@ export default function ExpertCreateForm(props) {
   const [profileStatus, setProfileStatus] = React.useState(
     initialValues.profileStatus
   );
+  const [Specialization, setSpecialization] = React.useState(
+    initialValues.Specialization
+  );
+  const [ConsultationFee, setConsultationFee] = React.useState(
+    initialValues.ConsultationFee
+  );
+  const [LanguageSpoken, setLanguageSpoken] = React.useState(
+    initialValues.LanguageSpoken
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
@@ -75,6 +87,9 @@ export default function ExpertCreateForm(props) {
     setAverageRating(initialValues.averageRating);
     setTotalReviews(initialValues.totalReviews);
     setProfileStatus(initialValues.profileStatus);
+    setSpecialization(initialValues.Specialization);
+    setConsultationFee(initialValues.ConsultationFee);
+    setLanguageSpoken(initialValues.LanguageSpoken);
     setErrors({});
   };
   const validations = {
@@ -89,6 +104,9 @@ export default function ExpertCreateForm(props) {
     averageRating: [],
     totalReviews: [],
     profileStatus: [],
+    Specialization: [],
+    ConsultationFee: [],
+    LanguageSpoken: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -127,6 +145,9 @@ export default function ExpertCreateForm(props) {
           averageRating,
           totalReviews,
           profileStatus,
+          Specialization,
+          ConsultationFee,
+          LanguageSpoken,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -200,6 +221,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -234,6 +258,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -268,6 +295,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -302,6 +332,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.mobile ?? value;
@@ -336,6 +369,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.education ?? value;
@@ -370,6 +406,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.introduction ?? value;
@@ -404,6 +443,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.profilePictureUrl ?? value;
@@ -440,6 +482,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.experience ?? value;
@@ -478,6 +523,9 @@ export default function ExpertCreateForm(props) {
               averageRating: value,
               totalReviews,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.averageRating ?? value;
@@ -516,6 +564,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews: value,
               profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.totalReviews ?? value;
@@ -550,6 +601,9 @@ export default function ExpertCreateForm(props) {
               averageRating,
               totalReviews,
               profileStatus: value,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
             };
             const result = onChange(modelFields);
             value = result?.profileStatus ?? value;
@@ -580,6 +634,177 @@ export default function ExpertCreateForm(props) {
           {...getOverrideProps(overrides, "profileStatusoption2")}
         ></option>
       </SelectField>
+      <SelectField
+        label="Specialization"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={Specialization}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              profileStatus,
+              Specialization: value,
+              ConsultationFee,
+              LanguageSpoken,
+            };
+            const result = onChange(modelFields);
+            value = result?.Specialization ?? value;
+          }
+          if (errors.Specialization?.hasError) {
+            runValidationTasks("Specialization", value);
+          }
+          setSpecialization(value);
+        }}
+        onBlur={() => runValidationTasks("Specialization", Specialization)}
+        errorMessage={errors.Specialization?.errorMessage}
+        hasError={errors.Specialization?.hasError}
+        {...getOverrideProps(overrides, "Specialization")}
+      >
+        <option
+          children="Cardiologist"
+          value="CARDIOLOGIST"
+          {...getOverrideProps(overrides, "Specializationoption0")}
+        ></option>
+        <option
+          children="Pediatrician"
+          value="PEDIATRICIAN"
+          {...getOverrideProps(overrides, "Specializationoption1")}
+        ></option>
+        <option
+          children="Gynecologist"
+          value="GYNECOLOGIST"
+          {...getOverrideProps(overrides, "Specializationoption2")}
+        ></option>
+        <option
+          children="Orthopedic"
+          value="ORTHOPEDIC"
+          {...getOverrideProps(overrides, "Specializationoption3")}
+        ></option>
+        <option
+          children="Dermatologist"
+          value="DERMATOLOGIST"
+          {...getOverrideProps(overrides, "Specializationoption4")}
+        ></option>
+        <option
+          children="Neurologist"
+          value="NEUROLOGIST"
+          {...getOverrideProps(overrides, "Specializationoption5")}
+        ></option>
+        <option
+          children="General physician"
+          value="GENERAL_PHYSICIAN"
+          {...getOverrideProps(overrides, "Specializationoption6")}
+        ></option>
+        <option
+          children="Ent specialist"
+          value="ENT_SPECIALIST"
+          {...getOverrideProps(overrides, "Specializationoption7")}
+        ></option>
+        <option
+          children="Psychiatrist"
+          value="PSYCHIATRIST"
+          {...getOverrideProps(overrides, "Specializationoption8")}
+        ></option>
+        <option
+          children="Diabetologist"
+          value="DIABETOLOGIST"
+          {...getOverrideProps(overrides, "Specializationoption9")}
+        ></option>
+        <option
+          children="Dietician"
+          value="DIETICIAN"
+          {...getOverrideProps(overrides, "Specializationoption10")}
+        ></option>
+      </SelectField>
+      <TextField
+        label="Consultation fee"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={ConsultationFee}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              profileStatus,
+              Specialization,
+              ConsultationFee: value,
+              LanguageSpoken,
+            };
+            const result = onChange(modelFields);
+            value = result?.ConsultationFee ?? value;
+          }
+          if (errors.ConsultationFee?.hasError) {
+            runValidationTasks("ConsultationFee", value);
+          }
+          setConsultationFee(value);
+        }}
+        onBlur={() => runValidationTasks("ConsultationFee", ConsultationFee)}
+        errorMessage={errors.ConsultationFee?.errorMessage}
+        hasError={errors.ConsultationFee?.hasError}
+        {...getOverrideProps(overrides, "ConsultationFee")}
+      ></TextField>
+      <TextField
+        label="Language spoken"
+        isRequired={false}
+        isReadOnly={false}
+        value={LanguageSpoken}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.LanguageSpoken ?? value;
+          }
+          if (errors.LanguageSpoken?.hasError) {
+            runValidationTasks("LanguageSpoken", value);
+          }
+          setLanguageSpoken(value);
+        }}
+        onBlur={() => runValidationTasks("LanguageSpoken", LanguageSpoken)}
+        errorMessage={errors.LanguageSpoken?.errorMessage}
+        hasError={errors.LanguageSpoken?.hasError}
+        {...getOverrideProps(overrides, "LanguageSpoken")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

@@ -320,7 +320,28 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -343,7 +364,28 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -366,7 +408,28 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }

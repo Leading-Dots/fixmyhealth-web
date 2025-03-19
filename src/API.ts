@@ -384,6 +384,7 @@ export type CreateHealthConcernInput = {
   attachments?: string | null,
   createdAt?: string | null,
   userID: string,
+  healthConcernHealthConcernExpertId?: string | null,
 };
 
 export enum ConcernStatus {
@@ -404,6 +405,7 @@ export type ModelHealthConcernConditionInput = {
   or?: Array< ModelHealthConcernConditionInput | null > | null,
   not?: ModelHealthConcernConditionInput | null,
   updatedAt?: ModelStringInput | null,
+  healthConcernHealthConcernExpertId?: ModelIDInput | null,
 };
 
 export type ModelConcernStatusInput = {
@@ -421,7 +423,9 @@ export type HealthConcern = {
   createdAt?: string | null,
   userID: string,
   HealthConcernResponses?: ModelResponseConnection | null,
+  HealthConcernExpert?: Expert | null,
   updatedAt: string,
+  healthConcernHealthConcernExpertId?: string | null,
 };
 
 export type UpdateHealthConcernInput = {
@@ -432,6 +436,7 @@ export type UpdateHealthConcernInput = {
   attachments?: string | null,
   createdAt?: string | null,
   userID?: string | null,
+  healthConcernHealthConcernExpertId?: string | null,
 };
 
 export type DeleteHealthConcernInput = {
@@ -679,6 +684,7 @@ export type ModelHealthConcernFilterInput = {
   and?: Array< ModelHealthConcernFilterInput | null > | null,
   or?: Array< ModelHealthConcernFilterInput | null > | null,
   not?: ModelHealthConcernFilterInput | null,
+  healthConcernHealthConcernExpertId?: ModelIDInput | null,
 };
 
 export type ModelFamilyMemberFilterInput = {
@@ -848,6 +854,7 @@ export type ModelSubscriptionHealthConcernFilterInput = {
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionHealthConcernFilterInput | null > | null,
   or?: Array< ModelSubscriptionHealthConcernFilterInput | null > | null,
+  healthConcernHealthConcernExpertId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionFamilyMemberFilterInput = {
@@ -1224,7 +1231,28 @@ export type CreateHealthConcernMutation = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 
@@ -1247,7 +1275,28 @@ export type UpdateHealthConcernMutation = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 
@@ -1270,7 +1319,28 @@ export type DeleteHealthConcernMutation = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 
@@ -1802,7 +1872,28 @@ export type GetHealthConcernQuery = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 
@@ -1825,6 +1916,7 @@ export type ListHealthConcernsQuery = {
       createdAt?: string | null,
       userID: string,
       updatedAt: string,
+      healthConcernHealthConcernExpertId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1851,6 +1943,7 @@ export type HealthConcernsByUserIDQuery = {
       createdAt?: string | null,
       userID: string,
       updatedAt: string,
+      healthConcernHealthConcernExpertId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2323,7 +2416,28 @@ export type OnCreateHealthConcernSubscription = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 
@@ -2345,7 +2459,28 @@ export type OnUpdateHealthConcernSubscription = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 
@@ -2367,7 +2502,28 @@ export type OnDeleteHealthConcernSubscription = {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
     } | null,
+    HealthConcernExpert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
+    healthConcernHealthConcernExpertId?: string | null,
   } | null,
 };
 

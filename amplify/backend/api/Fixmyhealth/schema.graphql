@@ -90,6 +90,7 @@ type HealthConcern @model @auth(rules: [{allow: public}]) {
   createdAt: AWSDateTime
   userID: ID! @index(name: "byUser")
   HealthConcernResponses: [Response] @hasMany(indexName: "byHealthConcern", fields: ["id"])
+  HealthConcernExpert: Expert @hasOne
 }
 
 type FamilyMember @model @auth(rules: [{allow: public}]) {

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import client from "@/lib/apiClient";
 import { getArticle } from "@/graphql/queries";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Pencil } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface Article {
   id: string;

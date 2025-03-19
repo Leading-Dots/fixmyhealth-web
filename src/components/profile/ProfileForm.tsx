@@ -131,7 +131,11 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   return (
     <Form {...form}>
       <StepHeader step={step} />
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form  onSubmit={(e) => {
+    e.preventDefault();
+    console.log("Form errors:", form.formState.errors);
+    form.handleSubmit(onSubmit)(e);
+  }} className="space-y-8">
         {step === 0 && <StepOne />}
         {step === 1 && <StepTwo role={role} />}
 

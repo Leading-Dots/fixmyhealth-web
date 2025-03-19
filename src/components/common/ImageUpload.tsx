@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Upload, Pencil, User2, Loader2 } from "lucide-react"; 
-import { Button } from "../ui/button";
+import {  Pencil, User2, Loader2 } from "lucide-react"; // Add Loader2 import
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   Tooltip,

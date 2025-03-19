@@ -26,6 +26,9 @@ export const transformNullValues = (data: any, role: "doctor" | "patient"): Prof
       introduction: data.introduction || "",
       experience: data.experience || "",
       education: data.education || "",
+      Specialization: data.Specialization || "",
+      ConsultationFee: data.ConsultationFee || 0,
+      LanguageSpoken: data.LanguageSpoken || ""
     } as DoctorProfileFormValues;
   }
 

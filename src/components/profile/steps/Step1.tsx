@@ -35,8 +35,8 @@ export function StepOne() {
 
   return (
     <div className="space-y-6">
-      {/* Profile Picture Section */}
-      <div className="flex justify-center items-center space-y-2 gap-4">
+     {/* Profile Picture Section */}
+     <div className="flex justify-center items-center space-y-2 gap-4">
         <FormField
           control={form.control}
           name="profilePictureUrl"
@@ -44,7 +44,7 @@ export function StepOne() {
             <FormItem>
               <FormControl>
                 <ImageUpload
-                  value={preview || field.value}
+                  value={field.value}
                   onChange={(url) => {
                     console.log("Image URL", url);
                     field.onChange(url);
@@ -94,7 +94,24 @@ export function StepOne() {
           )}
         />
       </div>
-
+      {/* Mobile Field */}
+      <FormField
+          control={form.control}
+          name="mobile"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Mobile Number</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder="Enter your mobile number"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       {/* Email Field */}
       <FormField
         control={form.control}
@@ -146,24 +163,7 @@ export function StepOne() {
   function PatientFields() {
     const form = useFormContext();
     return (
-      <>
-        <FormField
-          control={form.control}
-          name="mobile"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mobile</FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder="Enter your mobile number"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <>       
 
         <FormField
           control={form.control}

@@ -357,7 +357,28 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -381,7 +402,28 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -405,7 +447,28 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       nextToken
       __typename
     }
+    HealthConcernExpert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      createdAt
+      updatedAt
+      __typename
+    }
     updatedAt
+    healthConcernHealthConcernExpertId
     __typename
   }
 }
