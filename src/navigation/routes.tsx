@@ -16,6 +16,9 @@ import AllArticles from "@/pages/Article/AllArticles";
 import SearchExperts from "@/pages/Expert/SearchExperts";
 import ExpertDetail from "@/pages/Expert/ExpertDetail";
 import ConsultExpert from "@/pages/Expert/ConsultExpert";
+import MyHealthConcern from "@/pages/HealthConcern/MyHealthConcern";
+import AssignedConcerns from "@/pages/HealthConcern/AssignedConcerns";
+import ReviewConcern from "@/pages/HealthConcern/ReviewConcern";
 
 const routes = [
   {
@@ -115,6 +118,31 @@ const routes = [
     element: (
       <DashboardLayout>
         <ConsultExpert/>
+      </DashboardLayout>
+    ),
+  },  
+  {
+    path: "/my-health-concerns",
+    element: (
+      <DashboardLayout>
+        <MyHealthConcern/>
+      </DashboardLayout>
+    ),
+  }, 
+  {
+    path: "/assigned-concerns",
+    element: (
+      <DashboardLayout>
+        <AssignedConcerns/>
+      </DashboardLayout>
+    ),
+  },
+  
+  {
+    path: "/concerns/:id/review",
+    element: (
+      <DashboardLayout>
+        <ReviewConcern/>
       </DashboardLayout>
     ),
   },

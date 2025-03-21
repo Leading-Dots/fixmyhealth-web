@@ -88,7 +88,7 @@ const ExpertDetail: React.FC = () => {
         className="flex items-center text-blue-500 mb-5"
       >
         <ArrowLeft className="h-5 w-5 mr-2" />
-        Back to Search
+        Back
       </button>
 
       {/* Expert Profile Card */}

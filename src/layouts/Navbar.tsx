@@ -99,7 +99,7 @@ const Navbar = () => {
     },
     {
       title: "My Health Concerns",
-      url: "/health-concern",
+      url: "/my-health-concerns",
       icon: <Pill className="h-5 w-5" />,
     },
     {
