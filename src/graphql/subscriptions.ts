@@ -8,6 +8,141 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateReport = /* GraphQL */ `subscription OnCreateReport($filter: ModelSubscriptionReportFilterInput) {
+  onCreateReport(filter: $filter) {
+    id
+    fileUrl
+    fileName
+    fileType
+    createdAt
+    userID
+    AppointmentsReport {
+      nextToken
+      __typename
+    }
+    HealthConcernsReports {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateReportSubscriptionVariables,
+  APITypes.OnCreateReportSubscription
+>;
+export const onUpdateReport = /* GraphQL */ `subscription OnUpdateReport($filter: ModelSubscriptionReportFilterInput) {
+  onUpdateReport(filter: $filter) {
+    id
+    fileUrl
+    fileName
+    fileType
+    createdAt
+    userID
+    AppointmentsReport {
+      nextToken
+      __typename
+    }
+    HealthConcernsReports {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateReportSubscriptionVariables,
+  APITypes.OnUpdateReportSubscription
+>;
+export const onDeleteReport = /* GraphQL */ `subscription OnDeleteReport($filter: ModelSubscriptionReportFilterInput) {
+  onDeleteReport(filter: $filter) {
+    id
+    fileUrl
+    fileName
+    fileType
+    createdAt
+    userID
+    AppointmentsReport {
+      nextToken
+      __typename
+    }
+    HealthConcernsReports {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteReportSubscriptionVariables,
+  APITypes.OnDeleteReportSubscription
+>;
+export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointment(
+  $filter: ModelSubscriptionAppointmentFilterInput
+) {
+  onCreateAppointment(filter: $filter) {
+    id
+    concernType
+    concernStatus
+    appointmentDateTime
+    location
+    meetingLink
+    phoneNumber
+    createdAt
+    updatedAt
+    reportID
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateAppointmentSubscriptionVariables,
+  APITypes.OnCreateAppointmentSubscription
+>;
+export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointment(
+  $filter: ModelSubscriptionAppointmentFilterInput
+) {
+  onUpdateAppointment(filter: $filter) {
+    id
+    concernType
+    concernStatus
+    appointmentDateTime
+    location
+    meetingLink
+    phoneNumber
+    createdAt
+    updatedAt
+    reportID
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateAppointmentSubscriptionVariables,
+  APITypes.OnUpdateAppointmentSubscription
+>;
+export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointment(
+  $filter: ModelSubscriptionAppointmentFilterInput
+) {
+  onDeleteAppointment(filter: $filter) {
+    id
+    concernType
+    concernStatus
+    appointmentDateTime
+    location
+    meetingLink
+    phoneNumber
+    createdAt
+    updatedAt
+    reportID
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteAppointmentSubscriptionVariables,
+  APITypes.OnDeleteAppointmentSubscription
+>;
 export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
@@ -340,6 +475,8 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       updatedAt
       __typename
     }
+    concernType
+    reportID
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -384,6 +521,8 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       updatedAt
       __typename
     }
+    concernType
+    reportID
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -428,6 +567,8 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       updatedAt
       __typename
     }
+    concernType
+    reportID
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -526,6 +667,10 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     }
     profilePictureUrl
     profileStatus
+    UserReports {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -561,6 +706,10 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     }
     profilePictureUrl
     profileStatus
+    UserReports {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -596,6 +745,10 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     }
     profilePictureUrl
     profileStatus
+    UserReports {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename

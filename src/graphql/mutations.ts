@@ -8,6 +8,153 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createReport = /* GraphQL */ `mutation CreateReport(
+  $input: CreateReportInput!
+  $condition: ModelReportConditionInput
+) {
+  createReport(input: $input, condition: $condition) {
+    id
+    fileUrl
+    fileName
+    fileType
+    createdAt
+    userID
+    AppointmentsReport {
+      nextToken
+      __typename
+    }
+    HealthConcernsReports {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateReportMutationVariables,
+  APITypes.CreateReportMutation
+>;
+export const updateReport = /* GraphQL */ `mutation UpdateReport(
+  $input: UpdateReportInput!
+  $condition: ModelReportConditionInput
+) {
+  updateReport(input: $input, condition: $condition) {
+    id
+    fileUrl
+    fileName
+    fileType
+    createdAt
+    userID
+    AppointmentsReport {
+      nextToken
+      __typename
+    }
+    HealthConcernsReports {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateReportMutationVariables,
+  APITypes.UpdateReportMutation
+>;
+export const deleteReport = /* GraphQL */ `mutation DeleteReport(
+  $input: DeleteReportInput!
+  $condition: ModelReportConditionInput
+) {
+  deleteReport(input: $input, condition: $condition) {
+    id
+    fileUrl
+    fileName
+    fileType
+    createdAt
+    userID
+    AppointmentsReport {
+      nextToken
+      __typename
+    }
+    HealthConcernsReports {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteReportMutationVariables,
+  APITypes.DeleteReportMutation
+>;
+export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
+  $input: CreateAppointmentInput!
+  $condition: ModelAppointmentConditionInput
+) {
+  createAppointment(input: $input, condition: $condition) {
+    id
+    concernType
+    concernStatus
+    appointmentDateTime
+    location
+    meetingLink
+    phoneNumber
+    createdAt
+    updatedAt
+    reportID
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateAppointmentMutationVariables,
+  APITypes.CreateAppointmentMutation
+>;
+export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
+  $input: UpdateAppointmentInput!
+  $condition: ModelAppointmentConditionInput
+) {
+  updateAppointment(input: $input, condition: $condition) {
+    id
+    concernType
+    concernStatus
+    appointmentDateTime
+    location
+    meetingLink
+    phoneNumber
+    createdAt
+    updatedAt
+    reportID
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateAppointmentMutationVariables,
+  APITypes.UpdateAppointmentMutation
+>;
+export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
+  $input: DeleteAppointmentInput!
+  $condition: ModelAppointmentConditionInput
+) {
+  deleteAppointment(input: $input, condition: $condition) {
+    id
+    concernType
+    concernStatus
+    appointmentDateTime
+    location
+    meetingLink
+    phoneNumber
+    createdAt
+    updatedAt
+    reportID
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteAppointmentMutationVariables,
+  APITypes.DeleteAppointmentMutation
+>;
 export const createArticle = /* GraphQL */ `mutation CreateArticle(
   $input: CreateArticleInput!
   $condition: ModelArticleConditionInput
@@ -377,6 +524,8 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       updatedAt
       __typename
     }
+    concernType
+    reportID
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -422,6 +571,8 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       updatedAt
       __typename
     }
+    concernType
+    reportID
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -467,6 +618,8 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       updatedAt
       __typename
     }
+    concernType
+    reportID
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -571,6 +724,10 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     }
     profilePictureUrl
     profileStatus
+    UserReports {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -609,6 +766,10 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     }
     profilePictureUrl
     profileStatus
+    UserReports {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -647,6 +808,10 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     }
     profilePictureUrl
     profileStatus
+    UserReports {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename

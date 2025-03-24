@@ -2,26 +2,25 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateArticleInput = {
+export type CreateReportInput = {
   id?: string | null,
-  title?: string | null,
-  content?: string | null,
-  imageUrl?: string | null,
+  fileUrl?: string | null,
+  fileName?: string | null,
+  fileType?: string | null,
   createdAt?: string | null,
-  updatedAt?: string | null,
-  expertID?: string | null,
+  userID: string,
 };
 
-export type ModelArticleConditionInput = {
-  title?: ModelStringInput | null,
-  content?: ModelStringInput | null,
-  imageUrl?: ModelStringInput | null,
+export type ModelReportConditionInput = {
+  fileUrl?: ModelStringInput | null,
+  fileName?: ModelStringInput | null,
+  fileType?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  and?: Array< ModelReportConditionInput | null > | null,
+  or?: Array< ModelReportConditionInput | null > | null,
+  not?: ModelReportConditionInput | null,
   updatedAt?: ModelStringInput | null,
-  expertID?: ModelIDInput | null,
-  and?: Array< ModelArticleConditionInput | null > | null,
-  or?: Array< ModelArticleConditionInput | null > | null,
-  not?: ModelArticleConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -80,6 +79,158 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type Report = {
+  __typename: "Report",
+  id: string,
+  fileUrl?: string | null,
+  fileName?: string | null,
+  fileType?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  AppointmentsReport?: ModelAppointmentConnection | null,
+  HealthConcernsReports?: ModelHealthConcernConnection | null,
+  updatedAt: string,
+};
+
+export type ModelAppointmentConnection = {
+  __typename: "ModelAppointmentConnection",
+  items:  Array<Appointment | null >,
+  nextToken?: string | null,
+};
+
+export type Appointment = {
+  __typename: "Appointment",
+  id: string,
+  concernType?: ConcernType | null,
+  concernStatus?: ConcernStatus | null,
+  appointmentDateTime?: string | null,
+  location?: string | null,
+  meetingLink?: string | null,
+  phoneNumber?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  reportID: string,
+};
+
+export enum ConcernType {
+  TEXT = "TEXT",
+  IN_CLINIC = "IN_CLINIC",
+  AUDIO_CALL = "AUDIO_CALL",
+  VIDEO_CALL = "VIDEO_CALL",
+}
+
+
+export enum ConcernStatus {
+  PENDING = "PENDING",
+  ANSWERED = "ANSWERED",
+  CLOSED = "CLOSED",
+}
+
+
+export type ModelHealthConcernConnection = {
+  __typename: "ModelHealthConcernConnection",
+  items:  Array<HealthConcern | null >,
+  nextToken?: string | null,
+};
+
+export type HealthConcern = {
+  __typename: "HealthConcern",
+  id: string,
+  title: string,
+  description: string,
+  concernStatus?: ConcernStatus | null,
+  attachments?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  HealthConcernResponses?: ModelResponseConnection | null,
+  HealthConcernExpert?: Expert | null,
+  concernType?: ConcernType | null,
+  reportID: string,
+  updatedAt: string,
+  healthConcernHealthConcernExpertId?: string | null,
+};
+
+export type ModelResponseConnection = {
+  __typename: "ModelResponseConnection",
+  items:  Array<Response | null >,
+  nextToken?: string | null,
+};
+
+export type Response = {
+  __typename: "Response",
+  id: string,
+  responseText?: string | null,
+  responseStatus?: ResponseStatus | null,
+  createdAt?: string | null,
+  healthconcernID: string,
+  expertID: string,
+  ResponseReview?: Review | null,
+  updatedAt: string,
+  responseResponseReviewId?: string | null,
+};
+
+export enum ResponseStatus {
+  DRAFT = "DRAFT",
+  SUBMITTED = "SUBMITTED",
+  REVIEWED = "REVIEWED",
+}
+
+
+export type Review = {
+  __typename: "Review",
+  id: string,
+  responseId: string,
+  rating: number,
+  feedback?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  expertID: string,
+  updatedAt: string,
+};
+
+export type Expert = {
+  __typename: "Expert",
+  id: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  email: string,
+  mobile?: string | null,
+  education?: string | null,
+  introduction?: string | null,
+  profilePictureUrl?: string | null,
+  experience?: string | null,
+  averageRating?: number | null,
+  totalReviews?: number | null,
+  ExpertResponse?: ModelResponseConnection | null,
+  ExpertReview?: ModelReviewConnection | null,
+  profileStatus?: ProfileStatus | null,
+  ExpertArticles?: ModelArticleConnection | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelReviewConnection = {
+  __typename: "ModelReviewConnection",
+  items:  Array<Review | null >,
+  nextToken?: string | null,
+};
+
+export enum ProfileStatus {
+  PENDING = "PENDING",
+  PUBLISHED = "PUBLISHED",
+  REJECTED = "REJECTED",
+}
+
+
+export type ModelArticleConnection = {
+  __typename: "ModelArticleConnection",
+  items:  Array<Article | null >,
+  nextToken?: string | null,
+};
+
 export type Article = {
   __typename: "Article",
   id: string,
@@ -89,6 +240,111 @@ export type Article = {
   createdAt?: string | null,
   updatedAt?: string | null,
   expertID?: string | null,
+};
+
+export enum Specialization {
+  CARDIOLOGIST = "CARDIOLOGIST",
+  PEDIATRICIAN = "PEDIATRICIAN",
+  GYNECOLOGIST = "GYNECOLOGIST",
+  ORTHOPEDIC = "ORTHOPEDIC",
+  DERMATOLOGIST = "DERMATOLOGIST",
+  NEUROLOGIST = "NEUROLOGIST",
+  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
+  ENT_SPECIALIST = "ENT_SPECIALIST",
+  PSYCHIATRIST = "PSYCHIATRIST",
+  DIABETOLOGIST = "DIABETOLOGIST",
+  DIETICIAN = "DIETICIAN",
+}
+
+
+export type UpdateReportInput = {
+  id: string,
+  fileUrl?: string | null,
+  fileName?: string | null,
+  fileType?: string | null,
+  createdAt?: string | null,
+  userID?: string | null,
+};
+
+export type DeleteReportInput = {
+  id: string,
+};
+
+export type CreateAppointmentInput = {
+  id?: string | null,
+  concernType?: ConcernType | null,
+  concernStatus?: ConcernStatus | null,
+  appointmentDateTime?: string | null,
+  location?: string | null,
+  meetingLink?: string | null,
+  phoneNumber?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  reportID: string,
+};
+
+export type ModelAppointmentConditionInput = {
+  concernType?: ModelConcernTypeInput | null,
+  concernStatus?: ModelConcernStatusInput | null,
+  appointmentDateTime?: ModelStringInput | null,
+  location?: ModelStringInput | null,
+  meetingLink?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  reportID?: ModelIDInput | null,
+  and?: Array< ModelAppointmentConditionInput | null > | null,
+  or?: Array< ModelAppointmentConditionInput | null > | null,
+  not?: ModelAppointmentConditionInput | null,
+};
+
+export type ModelConcernTypeInput = {
+  eq?: ConcernType | null,
+  ne?: ConcernType | null,
+};
+
+export type ModelConcernStatusInput = {
+  eq?: ConcernStatus | null,
+  ne?: ConcernStatus | null,
+};
+
+export type UpdateAppointmentInput = {
+  id: string,
+  concernType?: ConcernType | null,
+  concernStatus?: ConcernStatus | null,
+  appointmentDateTime?: string | null,
+  location?: string | null,
+  meetingLink?: string | null,
+  phoneNumber?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  reportID?: string | null,
+};
+
+export type DeleteAppointmentInput = {
+  id: string,
+};
+
+export type CreateArticleInput = {
+  id?: string | null,
+  title?: string | null,
+  content?: string | null,
+  imageUrl?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  expertID?: string | null,
+};
+
+export type ModelArticleConditionInput = {
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  imageUrl?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  expertID?: ModelIDInput | null,
+  and?: Array< ModelArticleConditionInput | null > | null,
+  or?: Array< ModelArticleConditionInput | null > | null,
+  not?: ModelArticleConditionInput | null,
 };
 
 export type UpdateArticleInput = {
@@ -140,18 +396,6 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type Review = {
-  __typename: "Review",
-  id: string,
-  responseId: string,
-  rating: number,
-  feedback?: string | null,
-  createdAt?: string | null,
-  userID: string,
-  expertID: string,
-  updatedAt: string,
-};
-
 export type UpdateReviewInput = {
   id: string,
   responseId?: string | null,
@@ -176,13 +420,6 @@ export type CreateResponseInput = {
   responseResponseReviewId?: string | null,
 };
 
-export enum ResponseStatus {
-  DRAFT = "DRAFT",
-  SUBMITTED = "SUBMITTED",
-  REVIEWED = "REVIEWED",
-}
-
-
 export type ModelResponseConditionInput = {
   responseText?: ModelStringInput | null,
   responseStatus?: ModelResponseStatusInput | null,
@@ -199,19 +436,6 @@ export type ModelResponseConditionInput = {
 export type ModelResponseStatusInput = {
   eq?: ResponseStatus | null,
   ne?: ResponseStatus | null,
-};
-
-export type Response = {
-  __typename: "Response",
-  id: string,
-  responseText?: string | null,
-  responseStatus?: ResponseStatus | null,
-  createdAt?: string | null,
-  healthconcernID: string,
-  expertID: string,
-  ResponseReview?: Review | null,
-  updatedAt: string,
-  responseResponseReviewId?: string | null,
 };
 
 export type UpdateResponseInput = {
@@ -245,28 +469,6 @@ export type CreateExpertInput = {
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
 };
-
-export enum ProfileStatus {
-  PENDING = "PENDING",
-  PUBLISHED = "PUBLISHED",
-  REJECTED = "REJECTED",
-}
-
-
-export enum Specialization {
-  CARDIOLOGIST = "CARDIOLOGIST",
-  PEDIATRICIAN = "PEDIATRICIAN",
-  GYNECOLOGIST = "GYNECOLOGIST",
-  ORTHOPEDIC = "ORTHOPEDIC",
-  DERMATOLOGIST = "DERMATOLOGIST",
-  NEUROLOGIST = "NEUROLOGIST",
-  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
-  ENT_SPECIALIST = "ENT_SPECIALIST",
-  PSYCHIATRIST = "PSYCHIATRIST",
-  DIABETOLOGIST = "DIABETOLOGIST",
-  DIETICIAN = "DIETICIAN",
-}
-
 
 export type ModelExpertConditionInput = {
   firstName?: ModelStringInput | null,
@@ -312,48 +514,6 @@ export type ModelSpecializationInput = {
   ne?: Specialization | null,
 };
 
-export type Expert = {
-  __typename: "Expert",
-  id: string,
-  firstName?: string | null,
-  lastName?: string | null,
-  email: string,
-  mobile?: string | null,
-  education?: string | null,
-  introduction?: string | null,
-  profilePictureUrl?: string | null,
-  experience?: string | null,
-  averageRating?: number | null,
-  totalReviews?: number | null,
-  ExpertResponse?: ModelResponseConnection | null,
-  ExpertReview?: ModelReviewConnection | null,
-  profileStatus?: ProfileStatus | null,
-  ExpertArticles?: ModelArticleConnection | null,
-  Specialization?: Specialization | null,
-  ConsultationFee?: number | null,
-  LanguageSpoken?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelResponseConnection = {
-  __typename: "ModelResponseConnection",
-  items:  Array<Response | null >,
-  nextToken?: string | null,
-};
-
-export type ModelReviewConnection = {
-  __typename: "ModelReviewConnection",
-  items:  Array<Review | null >,
-  nextToken?: string | null,
-};
-
-export type ModelArticleConnection = {
-  __typename: "ModelArticleConnection",
-  items:  Array<Article | null >,
-  nextToken?: string | null,
-};
-
 export type UpdateExpertInput = {
   id: string,
   firstName?: string | null,
@@ -384,15 +544,10 @@ export type CreateHealthConcernInput = {
   attachments?: string | null,
   createdAt?: string | null,
   userID: string,
+  concernType?: ConcernType | null,
+  reportID: string,
   healthConcernHealthConcernExpertId?: string | null,
 };
-
-export enum ConcernStatus {
-  PENDING = "PENDING",
-  ANSWERED = "ANSWERED",
-  CLOSED = "CLOSED",
-}
-
 
 export type ModelHealthConcernConditionInput = {
   title?: ModelStringInput | null,
@@ -401,31 +556,13 @@ export type ModelHealthConcernConditionInput = {
   attachments?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   userID?: ModelIDInput | null,
+  concernType?: ModelConcernTypeInput | null,
+  reportID?: ModelIDInput | null,
   and?: Array< ModelHealthConcernConditionInput | null > | null,
   or?: Array< ModelHealthConcernConditionInput | null > | null,
   not?: ModelHealthConcernConditionInput | null,
   updatedAt?: ModelStringInput | null,
   healthConcernHealthConcernExpertId?: ModelIDInput | null,
-};
-
-export type ModelConcernStatusInput = {
-  eq?: ConcernStatus | null,
-  ne?: ConcernStatus | null,
-};
-
-export type HealthConcern = {
-  __typename: "HealthConcern",
-  id: string,
-  title: string,
-  description: string,
-  concernStatus?: ConcernStatus | null,
-  attachments?: string | null,
-  createdAt?: string | null,
-  userID: string,
-  HealthConcernResponses?: ModelResponseConnection | null,
-  HealthConcernExpert?: Expert | null,
-  updatedAt: string,
-  healthConcernHealthConcernExpertId?: string | null,
 };
 
 export type UpdateHealthConcernInput = {
@@ -436,6 +573,8 @@ export type UpdateHealthConcernInput = {
   attachments?: string | null,
   createdAt?: string | null,
   userID?: string | null,
+  concernType?: ConcernType | null,
+  reportID?: string | null,
   healthConcernHealthConcernExpertId?: string | null,
 };
 
@@ -561,6 +700,7 @@ export type User = {
   UserReviews?: ModelReviewConnection | null,
   profilePictureUrl?: string | null,
   profileStatus?: ProfileStatus | null,
+  UserReports?: ModelReportConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -571,9 +711,9 @@ export type ModelFamilyMemberConnection = {
   nextToken?: string | null,
 };
 
-export type ModelHealthConcernConnection = {
-  __typename: "ModelHealthConcernConnection",
-  items:  Array<HealthConcern | null >,
+export type ModelReportConnection = {
+  __typename: "ModelReportConnection",
+  items:  Array<Report | null >,
   nextToken?: string | null,
 };
 
@@ -596,6 +736,41 @@ export type DeleteUserInput = {
   id: string,
 };
 
+export type ModelReportFilterInput = {
+  id?: ModelIDInput | null,
+  fileUrl?: ModelStringInput | null,
+  fileName?: ModelStringInput | null,
+  fileType?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelReportFilterInput | null > | null,
+  or?: Array< ModelReportFilterInput | null > | null,
+  not?: ModelReportFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelAppointmentFilterInput = {
+  id?: ModelIDInput | null,
+  concernType?: ModelConcernTypeInput | null,
+  concernStatus?: ModelConcernStatusInput | null,
+  appointmentDateTime?: ModelStringInput | null,
+  location?: ModelStringInput | null,
+  meetingLink?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  reportID?: ModelIDInput | null,
+  and?: Array< ModelAppointmentFilterInput | null > | null,
+  or?: Array< ModelAppointmentFilterInput | null > | null,
+  not?: ModelAppointmentFilterInput | null,
+};
+
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -608,12 +783,6 @@ export type ModelArticleFilterInput = {
   or?: Array< ModelArticleFilterInput | null > | null,
   not?: ModelArticleFilterInput | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelReviewFilterInput = {
   id?: ModelIDInput | null,
@@ -680,6 +849,8 @@ export type ModelHealthConcernFilterInput = {
   attachments?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   userID?: ModelIDInput | null,
+  concernType?: ModelConcernTypeInput | null,
+  reportID?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelHealthConcernFilterInput | null > | null,
   or?: Array< ModelHealthConcernFilterInput | null > | null,
@@ -729,16 +900,16 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
-export type ModelSubscriptionArticleFilterInput = {
+export type ModelSubscriptionReportFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  title?: ModelSubscriptionStringInput | null,
-  content?: ModelSubscriptionStringInput | null,
-  imageUrl?: ModelSubscriptionStringInput | null,
+  fileUrl?: ModelSubscriptionStringInput | null,
+  fileName?: ModelSubscriptionStringInput | null,
+  fileType?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  userID?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  expertID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionArticleFilterInput | null > | null,
-  or?: Array< ModelSubscriptionArticleFilterInput | null > | null,
+  and?: Array< ModelSubscriptionReportFilterInput | null > | null,
+  or?: Array< ModelSubscriptionReportFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -769,6 +940,33 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionAppointmentFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  concernType?: ModelSubscriptionStringInput | null,
+  concernStatus?: ModelSubscriptionStringInput | null,
+  appointmentDateTime?: ModelSubscriptionStringInput | null,
+  location?: ModelSubscriptionStringInput | null,
+  meetingLink?: ModelSubscriptionStringInput | null,
+  phoneNumber?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  reportID?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionAppointmentFilterInput | null > | null,
+  or?: Array< ModelSubscriptionAppointmentFilterInput | null > | null,
+};
+
+export type ModelSubscriptionArticleFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  content?: ModelSubscriptionStringInput | null,
+  imageUrl?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  expertID?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionArticleFilterInput | null > | null,
+  or?: Array< ModelSubscriptionArticleFilterInput | null > | null,
 };
 
 export type ModelSubscriptionReviewFilterInput = {
@@ -851,6 +1049,8 @@ export type ModelSubscriptionHealthConcernFilterInput = {
   attachments?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   userID?: ModelSubscriptionIDInput | null,
+  concernType?: ModelSubscriptionStringInput | null,
+  reportID?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionHealthConcernFilterInput | null > | null,
   or?: Array< ModelSubscriptionHealthConcernFilterInput | null > | null,
@@ -889,6 +1089,147 @@ export type ModelSubscriptionUserFilterInput = {
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+};
+
+export type CreateReportMutationVariables = {
+  input: CreateReportInput,
+  condition?: ModelReportConditionInput | null,
+};
+
+export type CreateReportMutation = {
+  createReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateReportMutationVariables = {
+  input: UpdateReportInput,
+  condition?: ModelReportConditionInput | null,
+};
+
+export type UpdateReportMutation = {
+  updateReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteReportMutationVariables = {
+  input: DeleteReportInput,
+  condition?: ModelReportConditionInput | null,
+};
+
+export type DeleteReportMutation = {
+  deleteReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateAppointmentMutationVariables = {
+  input: CreateAppointmentInput,
+  condition?: ModelAppointmentConditionInput | null,
+};
+
+export type CreateAppointmentMutation = {
+  createAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
+  } | null,
+};
+
+export type UpdateAppointmentMutationVariables = {
+  input: UpdateAppointmentInput,
+  condition?: ModelAppointmentConditionInput | null,
+};
+
+export type UpdateAppointmentMutation = {
+  updateAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
+  } | null,
+};
+
+export type DeleteAppointmentMutationVariables = {
+  input: DeleteAppointmentInput,
+  condition?: ModelAppointmentConditionInput | null,
+};
+
+export type DeleteAppointmentMutation = {
+  deleteAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
+  } | null,
 };
 
 export type CreateArticleMutationVariables = {
@@ -1251,6 +1592,8 @@ export type CreateHealthConcernMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1295,6 +1638,8 @@ export type UpdateHealthConcernMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1339,6 +1684,8 @@ export type DeleteHealthConcernMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1439,6 +1786,10 @@ export type CreateUserMutation = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1476,6 +1827,10 @@ export type UpdateUserMutation = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1513,8 +1868,159 @@ export type DeleteUserMutation = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type GetReportQueryVariables = {
+  id: string,
+};
+
+export type GetReportQuery = {
+  getReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListReportsQueryVariables = {
+  filter?: ModelReportFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListReportsQuery = {
+  listReports?:  {
+    __typename: "ModelReportConnection",
+    items:  Array< {
+      __typename: "Report",
+      id: string,
+      fileUrl?: string | null,
+      fileName?: string | null,
+      fileType?: string | null,
+      createdAt?: string | null,
+      userID: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ReportsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelReportFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ReportsByUserIDQuery = {
+  reportsByUserID?:  {
+    __typename: "ModelReportConnection",
+    items:  Array< {
+      __typename: "Report",
+      id: string,
+      fileUrl?: string | null,
+      fileName?: string | null,
+      fileType?: string | null,
+      createdAt?: string | null,
+      userID: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetAppointmentQueryVariables = {
+  id: string,
+};
+
+export type GetAppointmentQuery = {
+  getAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
+  } | null,
+};
+
+export type ListAppointmentsQueryVariables = {
+  filter?: ModelAppointmentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListAppointmentsQuery = {
+  listAppointments?:  {
+    __typename: "ModelAppointmentConnection",
+    items:  Array< {
+      __typename: "Appointment",
+      id: string,
+      concernType?: ConcernType | null,
+      concernStatus?: ConcernStatus | null,
+      appointmentDateTime?: string | null,
+      location?: string | null,
+      meetingLink?: string | null,
+      phoneNumber?: string | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      reportID: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type AppointmentsByReportIDQueryVariables = {
+  reportID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAppointmentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type AppointmentsByReportIDQuery = {
+  appointmentsByReportID?:  {
+    __typename: "ModelAppointmentConnection",
+    items:  Array< {
+      __typename: "Appointment",
+      id: string,
+      concernType?: ConcernType | null,
+      concernStatus?: ConcernStatus | null,
+      appointmentDateTime?: string | null,
+      location?: string | null,
+      meetingLink?: string | null,
+      phoneNumber?: string | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      reportID: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -1892,6 +2398,8 @@ export type GetHealthConcernQuery = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1915,6 +2423,8 @@ export type ListHealthConcernsQuery = {
       attachments?: string | null,
       createdAt?: string | null,
       userID: string,
+      concernType?: ConcernType | null,
+      reportID: string,
       updatedAt: string,
       healthConcernHealthConcernExpertId?: string | null,
     } | null >,
@@ -1942,6 +2452,37 @@ export type HealthConcernsByUserIDQuery = {
       attachments?: string | null,
       createdAt?: string | null,
       userID: string,
+      concernType?: ConcernType | null,
+      reportID: string,
+      updatedAt: string,
+      healthConcernHealthConcernExpertId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type HealthConcernsByReportIDQueryVariables = {
+  reportID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelHealthConcernFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type HealthConcernsByReportIDQuery = {
+  healthConcernsByReportID?:  {
+    __typename: "ModelHealthConcernConnection",
+    items:  Array< {
+      __typename: "HealthConcern",
+      id: string,
+      title: string,
+      description: string,
+      concernStatus?: ConcernStatus | null,
+      attachments?: string | null,
+      createdAt?: string | null,
+      userID: string,
+      concernType?: ConcernType | null,
+      reportID: string,
       updatedAt: string,
       healthConcernHealthConcernExpertId?: string | null,
     } | null >,
@@ -2054,6 +2595,10 @@ export type GetUserQuery = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2086,6 +2631,141 @@ export type ListUsersQuery = {
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateReportSubscriptionVariables = {
+  filter?: ModelSubscriptionReportFilterInput | null,
+};
+
+export type OnCreateReportSubscription = {
+  onCreateReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateReportSubscriptionVariables = {
+  filter?: ModelSubscriptionReportFilterInput | null,
+};
+
+export type OnUpdateReportSubscription = {
+  onUpdateReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteReportSubscriptionVariables = {
+  filter?: ModelSubscriptionReportFilterInput | null,
+};
+
+export type OnDeleteReportSubscription = {
+  onDeleteReport?:  {
+    __typename: "Report",
+    id: string,
+    fileUrl?: string | null,
+    fileName?: string | null,
+    fileType?: string | null,
+    createdAt?: string | null,
+    userID: string,
+    AppointmentsReport?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    HealthConcernsReports?:  {
+      __typename: "ModelHealthConcernConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateAppointmentSubscriptionVariables = {
+  filter?: ModelSubscriptionAppointmentFilterInput | null,
+};
+
+export type OnCreateAppointmentSubscription = {
+  onCreateAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
+  } | null,
+};
+
+export type OnUpdateAppointmentSubscriptionVariables = {
+  filter?: ModelSubscriptionAppointmentFilterInput | null,
+};
+
+export type OnUpdateAppointmentSubscription = {
+  onUpdateAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
+  } | null,
+};
+
+export type OnDeleteAppointmentSubscriptionVariables = {
+  filter?: ModelSubscriptionAppointmentFilterInput | null,
+};
+
+export type OnDeleteAppointmentSubscription = {
+  onDeleteAppointment?:  {
+    __typename: "Appointment",
+    id: string,
+    concernType?: ConcernType | null,
+    concernStatus?: ConcernStatus | null,
+    appointmentDateTime?: string | null,
+    location?: string | null,
+    meetingLink?: string | null,
+    phoneNumber?: string | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    reportID: string,
   } | null,
 };
 
@@ -2436,6 +3116,8 @@ export type OnCreateHealthConcernSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -2479,6 +3161,8 @@ export type OnUpdateHealthConcernSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -2522,6 +3206,8 @@ export type OnDeleteHealthConcernSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    concernType?: ConcernType | null,
+    reportID: string,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -2618,6 +3304,10 @@ export type OnCreateUserSubscription = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2654,6 +3344,10 @@ export type OnUpdateUserSubscription = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2690,6 +3384,10 @@ export type OnDeleteUserSubscription = {
     } | null,
     profilePictureUrl?: string | null,
     profileStatus?: ProfileStatus | null,
+    UserReports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
