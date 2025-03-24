@@ -16,14 +16,8 @@ export const getReport = /* GraphQL */ `query GetReport($id: ID!) {
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -42,6 +36,8 @@ export const listReports = /* GraphQL */ `query ListReports(
       fileType
       createdAt
       userID
+      appointmentID
+      healthConcernID
       updatedAt
       __typename
     }
@@ -74,6 +70,8 @@ export const reportsByUserID = /* GraphQL */ `query ReportsByUserID(
       fileType
       createdAt
       userID
+      appointmentID
+      healthConcernID
       updatedAt
       __typename
     }
@@ -85,18 +83,93 @@ export const reportsByUserID = /* GraphQL */ `query ReportsByUserID(
   APITypes.ReportsByUserIDQueryVariables,
   APITypes.ReportsByUserIDQuery
 >;
+export const reportsByAppointmentID = /* GraphQL */ `query ReportsByAppointmentID(
+  $appointmentID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelReportFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  reportsByAppointmentID(
+    appointmentID: $appointmentID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      fileUrl
+      fileName
+      fileType
+      createdAt
+      userID
+      appointmentID
+      healthConcernID
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ReportsByAppointmentIDQueryVariables,
+  APITypes.ReportsByAppointmentIDQuery
+>;
+export const reportsByHealthConcernID = /* GraphQL */ `query ReportsByHealthConcernID(
+  $healthConcernID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelReportFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  reportsByHealthConcernID(
+    healthConcernID: $healthConcernID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      fileUrl
+      fileName
+      fileType
+      createdAt
+      userID
+      appointmentID
+      healthConcernID
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ReportsByHealthConcernIDQueryVariables,
+  APITypes.ReportsByHealthConcernIDQuery
+>;
 export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
   getAppointment(id: $id) {
     id
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -115,12 +188,15 @@ export const listAppointments = /* GraphQL */ `query ListAppointments(
       concernType
       concernStatus
       appointmentDateTime
+      startTime
+      endTime
+      status
       location
       meetingLink
       phoneNumber
       createdAt
       updatedAt
-      reportID
+      expertID
       __typename
     }
     nextToken
@@ -131,15 +207,15 @@ export const listAppointments = /* GraphQL */ `query ListAppointments(
   APITypes.ListAppointmentsQueryVariables,
   APITypes.ListAppointmentsQuery
 >;
-export const appointmentsByReportID = /* GraphQL */ `query AppointmentsByReportID(
-  $reportID: ID!
+export const appointmentsByExpertID = /* GraphQL */ `query AppointmentsByExpertID(
+  $expertID: ID!
   $sortDirection: ModelSortDirection
   $filter: ModelAppointmentFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  appointmentsByReportID(
-    reportID: $reportID
+  appointmentsByExpertID(
+    expertID: $expertID
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -150,12 +226,15 @@ export const appointmentsByReportID = /* GraphQL */ `query AppointmentsByReportI
       concernType
       concernStatus
       appointmentDateTime
+      startTime
+      endTime
+      status
       location
       meetingLink
       phoneNumber
       createdAt
       updatedAt
-      reportID
+      expertID
       __typename
     }
     nextToken
@@ -163,8 +242,8 @@ export const appointmentsByReportID = /* GraphQL */ `query AppointmentsByReportI
   }
 }
 ` as GeneratedQuery<
-  APITypes.AppointmentsByReportIDQueryVariables,
-  APITypes.AppointmentsByReportIDQuery
+  APITypes.AppointmentsByExpertIDQueryVariables,
+  APITypes.AppointmentsByExpertIDQuery
 >;
 export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
   getArticle(id: $id) {
@@ -475,6 +554,14 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -565,7 +652,10 @@ export const getHealthConcern = /* GraphQL */ `query GetHealthConcern($id: ID!) 
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -590,7 +680,6 @@ export const listHealthConcerns = /* GraphQL */ `query ListHealthConcerns(
       createdAt
       userID
       concernType
-      reportID
       updatedAt
       healthConcernHealthConcernExpertId
       __typename
@@ -626,7 +715,6 @@ export const healthConcernsByUserID = /* GraphQL */ `query HealthConcernsByUserI
       createdAt
       userID
       concernType
-      reportID
       updatedAt
       healthConcernHealthConcernExpertId
       __typename
@@ -638,42 +726,6 @@ export const healthConcernsByUserID = /* GraphQL */ `query HealthConcernsByUserI
 ` as GeneratedQuery<
   APITypes.HealthConcernsByUserIDQueryVariables,
   APITypes.HealthConcernsByUserIDQuery
->;
-export const healthConcernsByReportID = /* GraphQL */ `query HealthConcernsByReportID(
-  $reportID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelHealthConcernFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  healthConcernsByReportID(
-    reportID: $reportID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      description
-      concernStatus
-      attachments
-      createdAt
-      userID
-      concernType
-      reportID
-      updatedAt
-      healthConcernHealthConcernExpertId
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.HealthConcernsByReportIDQueryVariables,
-  APITypes.HealthConcernsByReportIDQuery
 >;
 export const getFamilyMember = /* GraphQL */ `query GetFamilyMember($id: ID!) {
   getFamilyMember(id: $id) {

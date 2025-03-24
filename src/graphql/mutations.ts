@@ -19,14 +19,8 @@ export const createReport = /* GraphQL */ `mutation CreateReport(
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -46,14 +40,8 @@ export const updateReport = /* GraphQL */ `mutation UpdateReport(
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -73,14 +61,8 @@ export const deleteReport = /* GraphQL */ `mutation DeleteReport(
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -98,12 +80,19 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -120,12 +109,19 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -142,12 +138,19 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -381,6 +384,14 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -422,6 +433,14 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -463,6 +482,14 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -525,7 +552,10 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -572,7 +602,10 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -619,7 +652,10 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename

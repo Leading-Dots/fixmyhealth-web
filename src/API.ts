@@ -9,6 +9,8 @@ export type CreateReportInput = {
   fileType?: string | null,
   createdAt?: string | null,
   userID: string,
+  appointmentID?: string | null,
+  healthConcernID?: string | null,
 };
 
 export type ModelReportConditionInput = {
@@ -17,6 +19,8 @@ export type ModelReportConditionInput = {
   fileType?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   userID?: ModelIDInput | null,
+  appointmentID?: ModelIDInput | null,
+  healthConcernID?: ModelIDInput | null,
   and?: Array< ModelReportConditionInput | null > | null,
   or?: Array< ModelReportConditionInput | null > | null,
   not?: ModelReportConditionInput | null,
@@ -87,29 +91,40 @@ export type Report = {
   fileType?: string | null,
   createdAt?: string | null,
   userID: string,
-  AppointmentsReport?: ModelAppointmentConnection | null,
-  HealthConcernsReports?: ModelHealthConcernConnection | null,
+  appointmentID?: string | null,
+  healthConcernID?: string | null,
   updatedAt: string,
 };
 
-export type ModelAppointmentConnection = {
-  __typename: "ModelAppointmentConnection",
-  items:  Array<Appointment | null >,
-  nextToken?: string | null,
+export type UpdateReportInput = {
+  id: string,
+  fileUrl?: string | null,
+  fileName?: string | null,
+  fileType?: string | null,
+  createdAt?: string | null,
+  userID?: string | null,
+  appointmentID?: string | null,
+  healthConcernID?: string | null,
 };
 
-export type Appointment = {
-  __typename: "Appointment",
+export type DeleteReportInput = {
   id: string,
+};
+
+export type CreateAppointmentInput = {
+  id?: string | null,
   concernType?: ConcernType | null,
   concernStatus?: ConcernStatus | null,
   appointmentDateTime?: string | null,
+  startTime: string,
+  endTime: string,
+  status?: string | null,
   location?: string | null,
   meetingLink?: string | null,
   phoneNumber?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
-  reportID: string,
+  expertID: string,
 };
 
 export enum ConcernType {
@@ -127,172 +142,19 @@ export enum ConcernStatus {
 }
 
 
-export type ModelHealthConcernConnection = {
-  __typename: "ModelHealthConcernConnection",
-  items:  Array<HealthConcern | null >,
-  nextToken?: string | null,
-};
-
-export type HealthConcern = {
-  __typename: "HealthConcern",
-  id: string,
-  title: string,
-  description: string,
-  concernStatus?: ConcernStatus | null,
-  attachments?: string | null,
-  createdAt?: string | null,
-  userID: string,
-  HealthConcernResponses?: ModelResponseConnection | null,
-  HealthConcernExpert?: Expert | null,
-  concernType?: ConcernType | null,
-  reportID: string,
-  updatedAt: string,
-  healthConcernHealthConcernExpertId?: string | null,
-};
-
-export type ModelResponseConnection = {
-  __typename: "ModelResponseConnection",
-  items:  Array<Response | null >,
-  nextToken?: string | null,
-};
-
-export type Response = {
-  __typename: "Response",
-  id: string,
-  responseText?: string | null,
-  responseStatus?: ResponseStatus | null,
-  createdAt?: string | null,
-  healthconcernID: string,
-  expertID: string,
-  ResponseReview?: Review | null,
-  updatedAt: string,
-  responseResponseReviewId?: string | null,
-};
-
-export enum ResponseStatus {
-  DRAFT = "DRAFT",
-  SUBMITTED = "SUBMITTED",
-  REVIEWED = "REVIEWED",
-}
-
-
-export type Review = {
-  __typename: "Review",
-  id: string,
-  responseId: string,
-  rating: number,
-  feedback?: string | null,
-  createdAt?: string | null,
-  userID: string,
-  expertID: string,
-  updatedAt: string,
-};
-
-export type Expert = {
-  __typename: "Expert",
-  id: string,
-  firstName?: string | null,
-  lastName?: string | null,
-  email: string,
-  mobile?: string | null,
-  education?: string | null,
-  introduction?: string | null,
-  profilePictureUrl?: string | null,
-  experience?: string | null,
-  averageRating?: number | null,
-  totalReviews?: number | null,
-  ExpertResponse?: ModelResponseConnection | null,
-  ExpertReview?: ModelReviewConnection | null,
-  profileStatus?: ProfileStatus | null,
-  ExpertArticles?: ModelArticleConnection | null,
-  Specialization?: Specialization | null,
-  ConsultationFee?: number | null,
-  LanguageSpoken?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelReviewConnection = {
-  __typename: "ModelReviewConnection",
-  items:  Array<Review | null >,
-  nextToken?: string | null,
-};
-
-export enum ProfileStatus {
-  PENDING = "PENDING",
-  PUBLISHED = "PUBLISHED",
-  REJECTED = "REJECTED",
-}
-
-
-export type ModelArticleConnection = {
-  __typename: "ModelArticleConnection",
-  items:  Array<Article | null >,
-  nextToken?: string | null,
-};
-
-export type Article = {
-  __typename: "Article",
-  id: string,
-  title?: string | null,
-  content?: string | null,
-  imageUrl?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  expertID?: string | null,
-};
-
-export enum Specialization {
-  CARDIOLOGIST = "CARDIOLOGIST",
-  PEDIATRICIAN = "PEDIATRICIAN",
-  GYNECOLOGIST = "GYNECOLOGIST",
-  ORTHOPEDIC = "ORTHOPEDIC",
-  DERMATOLOGIST = "DERMATOLOGIST",
-  NEUROLOGIST = "NEUROLOGIST",
-  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
-  ENT_SPECIALIST = "ENT_SPECIALIST",
-  PSYCHIATRIST = "PSYCHIATRIST",
-  DIABETOLOGIST = "DIABETOLOGIST",
-  DIETICIAN = "DIETICIAN",
-}
-
-
-export type UpdateReportInput = {
-  id: string,
-  fileUrl?: string | null,
-  fileName?: string | null,
-  fileType?: string | null,
-  createdAt?: string | null,
-  userID?: string | null,
-};
-
-export type DeleteReportInput = {
-  id: string,
-};
-
-export type CreateAppointmentInput = {
-  id?: string | null,
-  concernType?: ConcernType | null,
-  concernStatus?: ConcernStatus | null,
-  appointmentDateTime?: string | null,
-  location?: string | null,
-  meetingLink?: string | null,
-  phoneNumber?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  reportID: string,
-};
-
 export type ModelAppointmentConditionInput = {
   concernType?: ModelConcernTypeInput | null,
   concernStatus?: ModelConcernStatusInput | null,
   appointmentDateTime?: ModelStringInput | null,
+  startTime?: ModelStringInput | null,
+  endTime?: ModelStringInput | null,
+  status?: ModelStringInput | null,
   location?: ModelStringInput | null,
   meetingLink?: ModelStringInput | null,
   phoneNumber?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  reportID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
   and?: Array< ModelAppointmentConditionInput | null > | null,
   or?: Array< ModelAppointmentConditionInput | null > | null,
   not?: ModelAppointmentConditionInput | null,
@@ -308,17 +170,44 @@ export type ModelConcernStatusInput = {
   ne?: ConcernStatus | null,
 };
 
-export type UpdateAppointmentInput = {
+export type Appointment = {
+  __typename: "Appointment",
   id: string,
   concernType?: ConcernType | null,
   concernStatus?: ConcernStatus | null,
   appointmentDateTime?: string | null,
+  startTime: string,
+  endTime: string,
+  status?: string | null,
   location?: string | null,
   meetingLink?: string | null,
   phoneNumber?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
-  reportID?: string | null,
+  expertID: string,
+  reports?: ModelReportConnection | null,
+};
+
+export type ModelReportConnection = {
+  __typename: "ModelReportConnection",
+  items:  Array<Report | null >,
+  nextToken?: string | null,
+};
+
+export type UpdateAppointmentInput = {
+  id: string,
+  concernType?: ConcernType | null,
+  concernStatus?: ConcernStatus | null,
+  appointmentDateTime?: string | null,
+  startTime?: string | null,
+  endTime?: string | null,
+  status?: string | null,
+  location?: string | null,
+  meetingLink?: string | null,
+  phoneNumber?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  expertID?: string | null,
 };
 
 export type DeleteAppointmentInput = {
@@ -345,6 +234,17 @@ export type ModelArticleConditionInput = {
   and?: Array< ModelArticleConditionInput | null > | null,
   or?: Array< ModelArticleConditionInput | null > | null,
   not?: ModelArticleConditionInput | null,
+};
+
+export type Article = {
+  __typename: "Article",
+  id: string,
+  title?: string | null,
+  content?: string | null,
+  imageUrl?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  expertID?: string | null,
 };
 
 export type UpdateArticleInput = {
@@ -396,6 +296,18 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type Review = {
+  __typename: "Review",
+  id: string,
+  responseId: string,
+  rating: number,
+  feedback?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  expertID: string,
+  updatedAt: string,
+};
+
 export type UpdateReviewInput = {
   id: string,
   responseId?: string | null,
@@ -420,6 +332,13 @@ export type CreateResponseInput = {
   responseResponseReviewId?: string | null,
 };
 
+export enum ResponseStatus {
+  DRAFT = "DRAFT",
+  SUBMITTED = "SUBMITTED",
+  REVIEWED = "REVIEWED",
+}
+
+
 export type ModelResponseConditionInput = {
   responseText?: ModelStringInput | null,
   responseStatus?: ModelResponseStatusInput | null,
@@ -436,6 +355,19 @@ export type ModelResponseConditionInput = {
 export type ModelResponseStatusInput = {
   eq?: ResponseStatus | null,
   ne?: ResponseStatus | null,
+};
+
+export type Response = {
+  __typename: "Response",
+  id: string,
+  responseText?: string | null,
+  responseStatus?: ResponseStatus | null,
+  createdAt?: string | null,
+  healthconcernID: string,
+  expertID: string,
+  ResponseReview?: Review | null,
+  updatedAt: string,
+  responseResponseReviewId?: string | null,
 };
 
 export type UpdateResponseInput = {
@@ -464,11 +396,47 @@ export type CreateExpertInput = {
   experience?: string | null,
   averageRating?: number | null,
   totalReviews?: number | null,
+  weeklySchedule?: Array< DayScheduleInput | null > | null,
   profileStatus?: ProfileStatus | null,
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
 };
+
+export type DayScheduleInput = {
+  dayOfWeek: number,
+  inClinicSlots?: Array< TimeSlotInput | null > | null,
+  audioCallSlots?: Array< TimeSlotInput | null > | null,
+  videoCallSlots?: Array< TimeSlotInput | null > | null,
+  breakSlots?: Array< TimeSlotInput | null > | null,
+};
+
+export type TimeSlotInput = {
+  startTime: string,
+  endTime: string,
+};
+
+export enum ProfileStatus {
+  PENDING = "PENDING",
+  PUBLISHED = "PUBLISHED",
+  REJECTED = "REJECTED",
+}
+
+
+export enum Specialization {
+  CARDIOLOGIST = "CARDIOLOGIST",
+  PEDIATRICIAN = "PEDIATRICIAN",
+  GYNECOLOGIST = "GYNECOLOGIST",
+  ORTHOPEDIC = "ORTHOPEDIC",
+  DERMATOLOGIST = "DERMATOLOGIST",
+  NEUROLOGIST = "NEUROLOGIST",
+  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
+  ENT_SPECIALIST = "ENT_SPECIALIST",
+  PSYCHIATRIST = "PSYCHIATRIST",
+  DIABETOLOGIST = "DIABETOLOGIST",
+  DIETICIAN = "DIETICIAN",
+}
+
 
 export type ModelExpertConditionInput = {
   firstName?: ModelStringInput | null,
@@ -514,6 +482,71 @@ export type ModelSpecializationInput = {
   ne?: Specialization | null,
 };
 
+export type Expert = {
+  __typename: "Expert",
+  id: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  email: string,
+  mobile?: string | null,
+  education?: string | null,
+  introduction?: string | null,
+  profilePictureUrl?: string | null,
+  experience?: string | null,
+  averageRating?: number | null,
+  totalReviews?: number | null,
+  weeklySchedule?:  Array<DaySchedule | null > | null,
+  appointments?: ModelAppointmentConnection | null,
+  ExpertResponse?: ModelResponseConnection | null,
+  ExpertReview?: ModelReviewConnection | null,
+  profileStatus?: ProfileStatus | null,
+  ExpertArticles?: ModelArticleConnection | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type DaySchedule = {
+  __typename: "DaySchedule",
+  dayOfWeek: number,
+  inClinicSlots?:  Array<TimeSlot | null > | null,
+  audioCallSlots?:  Array<TimeSlot | null > | null,
+  videoCallSlots?:  Array<TimeSlot | null > | null,
+  breakSlots?:  Array<TimeSlot | null > | null,
+};
+
+export type TimeSlot = {
+  __typename: "TimeSlot",
+  startTime: string,
+  endTime: string,
+};
+
+export type ModelAppointmentConnection = {
+  __typename: "ModelAppointmentConnection",
+  items:  Array<Appointment | null >,
+  nextToken?: string | null,
+};
+
+export type ModelResponseConnection = {
+  __typename: "ModelResponseConnection",
+  items:  Array<Response | null >,
+  nextToken?: string | null,
+};
+
+export type ModelReviewConnection = {
+  __typename: "ModelReviewConnection",
+  items:  Array<Review | null >,
+  nextToken?: string | null,
+};
+
+export type ModelArticleConnection = {
+  __typename: "ModelArticleConnection",
+  items:  Array<Article | null >,
+  nextToken?: string | null,
+};
+
 export type UpdateExpertInput = {
   id: string,
   firstName?: string | null,
@@ -526,6 +559,7 @@ export type UpdateExpertInput = {
   experience?: string | null,
   averageRating?: number | null,
   totalReviews?: number | null,
+  weeklySchedule?: Array< DayScheduleInput | null > | null,
   profileStatus?: ProfileStatus | null,
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
@@ -545,7 +579,6 @@ export type CreateHealthConcernInput = {
   createdAt?: string | null,
   userID: string,
   concernType?: ConcernType | null,
-  reportID: string,
   healthConcernHealthConcernExpertId?: string | null,
 };
 
@@ -557,12 +590,28 @@ export type ModelHealthConcernConditionInput = {
   createdAt?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   concernType?: ModelConcernTypeInput | null,
-  reportID?: ModelIDInput | null,
   and?: Array< ModelHealthConcernConditionInput | null > | null,
   or?: Array< ModelHealthConcernConditionInput | null > | null,
   not?: ModelHealthConcernConditionInput | null,
   updatedAt?: ModelStringInput | null,
   healthConcernHealthConcernExpertId?: ModelIDInput | null,
+};
+
+export type HealthConcern = {
+  __typename: "HealthConcern",
+  id: string,
+  title: string,
+  description: string,
+  concernStatus?: ConcernStatus | null,
+  attachments?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  HealthConcernResponses?: ModelResponseConnection | null,
+  HealthConcernExpert?: Expert | null,
+  concernType?: ConcernType | null,
+  reports?: ModelReportConnection | null,
+  updatedAt: string,
+  healthConcernHealthConcernExpertId?: string | null,
 };
 
 export type UpdateHealthConcernInput = {
@@ -574,7 +623,6 @@ export type UpdateHealthConcernInput = {
   createdAt?: string | null,
   userID?: string | null,
   concernType?: ConcernType | null,
-  reportID?: string | null,
   healthConcernHealthConcernExpertId?: string | null,
 };
 
@@ -711,9 +759,9 @@ export type ModelFamilyMemberConnection = {
   nextToken?: string | null,
 };
 
-export type ModelReportConnection = {
-  __typename: "ModelReportConnection",
-  items:  Array<Report | null >,
+export type ModelHealthConcernConnection = {
+  __typename: "ModelHealthConcernConnection",
+  items:  Array<HealthConcern | null >,
   nextToken?: string | null,
 };
 
@@ -743,6 +791,8 @@ export type ModelReportFilterInput = {
   fileType?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   userID?: ModelIDInput | null,
+  appointmentID?: ModelIDInput | null,
+  healthConcernID?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelReportFilterInput | null > | null,
   or?: Array< ModelReportFilterInput | null > | null,
@@ -760,12 +810,15 @@ export type ModelAppointmentFilterInput = {
   concernType?: ModelConcernTypeInput | null,
   concernStatus?: ModelConcernStatusInput | null,
   appointmentDateTime?: ModelStringInput | null,
+  startTime?: ModelStringInput | null,
+  endTime?: ModelStringInput | null,
+  status?: ModelStringInput | null,
   location?: ModelStringInput | null,
   meetingLink?: ModelStringInput | null,
   phoneNumber?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  reportID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
   and?: Array< ModelAppointmentFilterInput | null > | null,
   or?: Array< ModelAppointmentFilterInput | null > | null,
   not?: ModelAppointmentFilterInput | null,
@@ -850,7 +903,6 @@ export type ModelHealthConcernFilterInput = {
   createdAt?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   concernType?: ModelConcernTypeInput | null,
-  reportID?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelHealthConcernFilterInput | null > | null,
   or?: Array< ModelHealthConcernFilterInput | null > | null,
@@ -907,6 +959,8 @@ export type ModelSubscriptionReportFilterInput = {
   fileType?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   userID?: ModelSubscriptionIDInput | null,
+  appointmentID?: ModelSubscriptionIDInput | null,
+  healthConcernID?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionReportFilterInput | null > | null,
   or?: Array< ModelSubscriptionReportFilterInput | null > | null,
@@ -947,12 +1001,15 @@ export type ModelSubscriptionAppointmentFilterInput = {
   concernType?: ModelSubscriptionStringInput | null,
   concernStatus?: ModelSubscriptionStringInput | null,
   appointmentDateTime?: ModelSubscriptionStringInput | null,
+  startTime?: ModelSubscriptionStringInput | null,
+  endTime?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
   location?: ModelSubscriptionStringInput | null,
   meetingLink?: ModelSubscriptionStringInput | null,
   phoneNumber?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  reportID?: ModelSubscriptionIDInput | null,
+  expertID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionAppointmentFilterInput | null > | null,
   or?: Array< ModelSubscriptionAppointmentFilterInput | null > | null,
 };
@@ -1050,7 +1107,6 @@ export type ModelSubscriptionHealthConcernFilterInput = {
   createdAt?: ModelSubscriptionStringInput | null,
   userID?: ModelSubscriptionIDInput | null,
   concernType?: ModelSubscriptionStringInput | null,
-  reportID?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionHealthConcernFilterInput | null > | null,
   or?: Array< ModelSubscriptionHealthConcernFilterInput | null > | null,
@@ -1105,14 +1161,8 @@ export type CreateReportMutation = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -1131,14 +1181,8 @@ export type UpdateReportMutation = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -1157,14 +1201,8 @@ export type DeleteReportMutation = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -1181,12 +1219,19 @@ export type CreateAppointmentMutation = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -1202,12 +1247,19 @@ export type UpdateAppointmentMutation = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -1223,12 +1275,19 @@ export type DeleteAppointmentMutation = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -1452,6 +1511,14 @@ export type CreateExpertMutation = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -1492,6 +1559,14 @@ export type UpdateExpertMutation = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -1532,6 +1607,14 @@ export type DeleteExpertMutation = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -1593,7 +1676,10 @@ export type CreateHealthConcernMutation = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1639,7 +1725,10 @@ export type UpdateHealthConcernMutation = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1685,7 +1774,10 @@ export type DeleteHealthConcernMutation = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -1890,14 +1982,8 @@ export type GetReportQuery = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -1919,6 +2005,8 @@ export type ListReportsQuery = {
       fileType?: string | null,
       createdAt?: string | null,
       userID: string,
+      appointmentID?: string | null,
+      healthConcernID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -1944,6 +2032,62 @@ export type ReportsByUserIDQuery = {
       fileType?: string | null,
       createdAt?: string | null,
       userID: string,
+      appointmentID?: string | null,
+      healthConcernID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ReportsByAppointmentIDQueryVariables = {
+  appointmentID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelReportFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ReportsByAppointmentIDQuery = {
+  reportsByAppointmentID?:  {
+    __typename: "ModelReportConnection",
+    items:  Array< {
+      __typename: "Report",
+      id: string,
+      fileUrl?: string | null,
+      fileName?: string | null,
+      fileType?: string | null,
+      createdAt?: string | null,
+      userID: string,
+      appointmentID?: string | null,
+      healthConcernID?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ReportsByHealthConcernIDQueryVariables = {
+  healthConcernID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelReportFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ReportsByHealthConcernIDQuery = {
+  reportsByHealthConcernID?:  {
+    __typename: "ModelReportConnection",
+    items:  Array< {
+      __typename: "Report",
+      id: string,
+      fileUrl?: string | null,
+      fileName?: string | null,
+      fileType?: string | null,
+      createdAt?: string | null,
+      userID: string,
+      appointmentID?: string | null,
+      healthConcernID?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -1961,12 +2105,19 @@ export type GetAppointmentQuery = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -1985,27 +2136,30 @@ export type ListAppointmentsQuery = {
       concernType?: ConcernType | null,
       concernStatus?: ConcernStatus | null,
       appointmentDateTime?: string | null,
+      startTime: string,
+      endTime: string,
+      status?: string | null,
       location?: string | null,
       meetingLink?: string | null,
       phoneNumber?: string | null,
       createdAt?: string | null,
       updatedAt?: string | null,
-      reportID: string,
+      expertID: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type AppointmentsByReportIDQueryVariables = {
-  reportID: string,
+export type AppointmentsByExpertIDQueryVariables = {
+  expertID: string,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelAppointmentFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type AppointmentsByReportIDQuery = {
-  appointmentsByReportID?:  {
+export type AppointmentsByExpertIDQuery = {
+  appointmentsByExpertID?:  {
     __typename: "ModelAppointmentConnection",
     items:  Array< {
       __typename: "Appointment",
@@ -2013,12 +2167,15 @@ export type AppointmentsByReportIDQuery = {
       concernType?: ConcernType | null,
       concernStatus?: ConcernStatus | null,
       appointmentDateTime?: string | null,
+      startTime: string,
+      endTime: string,
+      status?: string | null,
       location?: string | null,
       meetingLink?: string | null,
       phoneNumber?: string | null,
       createdAt?: string | null,
       updatedAt?: string | null,
-      reportID: string,
+      expertID: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2306,6 +2463,14 @@ export type GetExpertQuery = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -2399,7 +2564,10 @@ export type GetHealthConcernQuery = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -2424,7 +2592,6 @@ export type ListHealthConcernsQuery = {
       createdAt?: string | null,
       userID: string,
       concernType?: ConcernType | null,
-      reportID: string,
       updatedAt: string,
       healthConcernHealthConcernExpertId?: string | null,
     } | null >,
@@ -2453,36 +2620,6 @@ export type HealthConcernsByUserIDQuery = {
       createdAt?: string | null,
       userID: string,
       concernType?: ConcernType | null,
-      reportID: string,
-      updatedAt: string,
-      healthConcernHealthConcernExpertId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type HealthConcernsByReportIDQueryVariables = {
-  reportID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelHealthConcernFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type HealthConcernsByReportIDQuery = {
-  healthConcernsByReportID?:  {
-    __typename: "ModelHealthConcernConnection",
-    items:  Array< {
-      __typename: "HealthConcern",
-      id: string,
-      title: string,
-      description: string,
-      concernStatus?: ConcernStatus | null,
-      attachments?: string | null,
-      createdAt?: string | null,
-      userID: string,
-      concernType?: ConcernType | null,
-      reportID: string,
       updatedAt: string,
       healthConcernHealthConcernExpertId?: string | null,
     } | null >,
@@ -2647,14 +2784,8 @@ export type OnCreateReportSubscription = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -2672,14 +2803,8 @@ export type OnUpdateReportSubscription = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -2697,14 +2822,8 @@ export type OnDeleteReportSubscription = {
     fileType?: string | null,
     createdAt?: string | null,
     userID: string,
-    AppointmentsReport?:  {
-      __typename: "ModelAppointmentConnection",
-      nextToken?: string | null,
-    } | null,
-    HealthConcernsReports?:  {
-      __typename: "ModelHealthConcernConnection",
-      nextToken?: string | null,
-    } | null,
+    appointmentID?: string | null,
+    healthConcernID?: string | null,
     updatedAt: string,
   } | null,
 };
@@ -2720,12 +2839,19 @@ export type OnCreateAppointmentSubscription = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -2740,12 +2866,19 @@ export type OnUpdateAppointmentSubscription = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -2760,12 +2893,19 @@ export type OnDeleteAppointmentSubscription = {
     concernType?: ConcernType | null,
     concernStatus?: ConcernStatus | null,
     appointmentDateTime?: string | null,
+    startTime: string,
+    endTime: string,
+    status?: string | null,
     location?: string | null,
     meetingLink?: string | null,
     phoneNumber?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    reportID: string,
+    expertID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -2979,6 +3119,14 @@ export type OnCreateExpertSubscription = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -3018,6 +3166,14 @@ export type OnUpdateExpertSubscription = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -3057,6 +3213,14 @@ export type OnDeleteExpertSubscription = {
     experience?: string | null,
     averageRating?: number | null,
     totalReviews?: number | null,
+    weeklySchedule?:  Array< {
+      __typename: "DaySchedule",
+      dayOfWeek: number,
+    } | null > | null,
+    appointments?:  {
+      __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
     ExpertResponse?:  {
       __typename: "ModelResponseConnection",
       nextToken?: string | null,
@@ -3117,7 +3281,10 @@ export type OnCreateHealthConcernSubscription = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -3162,7 +3329,10 @@ export type OnUpdateHealthConcernSubscription = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,
@@ -3207,7 +3377,10 @@ export type OnDeleteHealthConcernSubscription = {
       updatedAt: string,
     } | null,
     concernType?: ConcernType | null,
-    reportID: string,
+    reports?:  {
+      __typename: "ModelReportConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
     healthConcernHealthConcernExpertId?: string | null,
   } | null,

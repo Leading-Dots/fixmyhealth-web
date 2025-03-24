@@ -16,14 +16,8 @@ export const onCreateReport = /* GraphQL */ `subscription OnCreateReport($filter
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -40,14 +34,8 @@ export const onUpdateReport = /* GraphQL */ `subscription OnUpdateReport($filter
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -64,14 +52,8 @@ export const onDeleteReport = /* GraphQL */ `subscription OnDeleteReport($filter
     fileType
     createdAt
     userID
-    AppointmentsReport {
-      nextToken
-      __typename
-    }
-    HealthConcernsReports {
-      nextToken
-      __typename
-    }
+    appointmentID
+    healthConcernID
     updatedAt
     __typename
   }
@@ -88,12 +70,19 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -109,12 +98,19 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -130,12 +126,19 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
     concernType
     concernStatus
     appointmentDateTime
+    startTime
+    endTime
+    status
     location
     meetingLink
     phoneNumber
     createdAt
     updatedAt
-    reportID
+    expertID
+    reports {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -339,6 +342,14 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -377,6 +388,14 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -415,6 +434,14 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
     experience
     averageRating
     totalReviews
+    weeklySchedule {
+      dayOfWeek
+      __typename
+    }
+    appointments {
+      nextToken
+      __typename
+    }
     ExpertResponse {
       nextToken
       __typename
@@ -476,7 +503,10 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -522,7 +552,10 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename
@@ -568,7 +601,10 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       __typename
     }
     concernType
-    reportID
+    reports {
+      nextToken
+      __typename
+    }
     updatedAt
     healthConcernHealthConcernExpertId
     __typename

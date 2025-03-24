@@ -5,8 +5,8 @@ type Report @model @auth(rules: [{allow: public}]) {
   fileType: String
   createdAt: AWSDateTime
   userID: ID! @index(name: "byUser")
-  AppointmentsReport: [Appointment] @hasMany(indexName: "byReport", fields: ["id"])
-  HealthConcernsReports: [HealthConcern] @hasMany(indexName: "byReport", fields: ["id"])
+  appointmentID: ID @index(name: "byAppointment") # One-to-Many with Appointment
+  healthConcernID: ID @index(name: "byHealthConcern") # One-to-Many with HealthConcern
 }
 
 type Appointment @model @auth(rules: [{allow: public}]) {
@@ -14,12 +14,16 @@ type Appointment @model @auth(rules: [{allow: public}]) {
   concernType: ConcernType
   concernStatus: ConcernStatus
   appointmentDateTime: AWSDateTime
+  startTime: String!
+  endTime: String!
+  status: String
   location: String
   meetingLink: String
   phoneNumber: String
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
-  reportID: ID! @index(name: "byReport")
+  expertID: ID! @index(name: "byExpert") 
+  reports: [Report] @hasMany(indexName: "byAppointment", fields: ["id"])
 }
 
 enum ConcernType {
@@ -85,6 +89,21 @@ type Response @model @auth(rules: [{allow: public}]) {
   ResponseReview: Review @hasOne
 }
 
+# TimeSlot Type (Embedded Type)
+type TimeSlot {
+  startTime: String!
+  endTime: String!
+}
+
+# DaySchedule Type (Embedded Type)
+type DaySchedule {
+  dayOfWeek: Int! # 0 = Sunday, 6 = Saturday
+  inClinicSlots: [TimeSlot]
+  audioCallSlots: [TimeSlot]
+  videoCallSlots: [TimeSlot]
+  breakSlots: [TimeSlot]
+}
+
 type Expert @model @auth(rules: [{allow: public}]) {
   id: ID!
   firstName: String
@@ -97,6 +116,8 @@ type Expert @model @auth(rules: [{allow: public}]) {
   experience: String
   averageRating: Float
   totalReviews: Int
+  weeklySchedule: [DaySchedule] # Array of DaySchedule
+  appointments: [Appointment] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertResponse: [Response] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
   profileStatus: ProfileStatus
@@ -123,7 +144,7 @@ type HealthConcern @model @auth(rules: [{allow: public}]) {
   HealthConcernResponses: [Response] @hasMany(indexName: "byHealthConcern", fields: ["id"])
   HealthConcernExpert: Expert @hasOne
   concernType: ConcernType
-  reportID: ID! @index(name: "byReport")
+  reports: [Report] @hasMany(indexName: "byHealthConcern", fields: ["id"])
 }
 
 type FamilyMember @model @auth(rules: [{allow: public}]) {
