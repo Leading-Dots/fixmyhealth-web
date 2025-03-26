@@ -37,8 +37,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
     resolver: zodResolver(schema),
     defaultValues: initialData || initialValues,
     mode: "onBlur",
-  });
-  
+  });  
 
   async function onSubmit(
     data: DoctorProfileFormValues | PatientProfileFormValues
@@ -139,7 +138,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
 
   return (
     <Form {...form}>
-      <StepHeader step={step} />
+      <StepHeader step={step} role={user?.role} />
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -19,6 +19,7 @@ import ConsultExpert from "@/pages/Expert/ConsultExpert";
 import MyHealthConcern from "@/pages/HealthConcern/MyHealthConcern";
 import AssignedConcerns from "@/pages/HealthConcern/AssignedConcerns";
 import ReviewConcern from "@/pages/HealthConcern/ReviewConcern";
+import BookAppointment from "@/pages/Appointment/BookAppointment";
 
 const routes = [
   {
@@ -136,13 +137,20 @@ const routes = [
         <AssignedConcerns/>
       </DashboardLayout>
     ),
-  },
-  
+  },  
   {
     path: "/concerns/:id/review",
     element: (
       <DashboardLayout>
         <ReviewConcern/>
+      </DashboardLayout>
+    ),
+  },  
+  {
+    path: "/book-appointment/:id",
+    element: (
+      <DashboardLayout>
+        <BookAppointment/>
       </DashboardLayout>
     ),
   },

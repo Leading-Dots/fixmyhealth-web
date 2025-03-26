@@ -116,13 +116,22 @@ const ExpertDetail: React.FC = () => {
                 </p>
               </div>
             </div>
-            {/* Consult Expert Button */}
-            <Button
-              onClick={() => navigate(`/ask-concern/${expert.id}`)}
-              className="bg-primary hover:bg-secondary"
-            >
-              Consult Expert
-            </Button>
+
+            {/* Buttons */}
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={() => navigate(`/ask-concern/${expert.id}`)}
+                className="bg-primary hover:bg-secondary"
+              >
+                Ask Concern
+              </Button>
+              <Button
+                onClick={() => navigate(`/book-appointment/${expert.id}`)}
+                className="bg-green-500 hover:bg-green-600"
+              >
+                Book Appointment
+              </Button>
+            </div>
           </div>
         </CardHeader>
 
