@@ -344,6 +344,7 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
       __typename
     }
     appointments {
@@ -390,6 +391,7 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
       __typename
     }
     appointments {
@@ -436,6 +438,7 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
       __typename
     }
     appointments {

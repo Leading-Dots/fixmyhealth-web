@@ -409,6 +409,7 @@ export type DayScheduleInput = {
   audioCallSlots?: Array< TimeSlotInput | null > | null,
   videoCallSlots?: Array< TimeSlotInput | null > | null,
   breakSlots?: Array< TimeSlotInput | null > | null,
+  isAvailable?: boolean | null,
 };
 
 export type TimeSlotInput = {
@@ -515,6 +516,7 @@ export type DaySchedule = {
   audioCallSlots?:  Array<TimeSlot | null > | null,
   videoCallSlots?:  Array<TimeSlot | null > | null,
   breakSlots?:  Array<TimeSlot | null > | null,
+  isAvailable?: boolean | null,
 };
 
 export type TimeSlot = {
@@ -1514,6 +1516,7 @@ export type CreateExpertMutation = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
@@ -1562,6 +1565,7 @@ export type UpdateExpertMutation = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
@@ -1610,6 +1614,7 @@ export type DeleteExpertMutation = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
@@ -2466,6 +2471,7 @@ export type GetExpertQuery = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
@@ -3122,6 +3128,7 @@ export type OnCreateExpertSubscription = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
@@ -3169,6 +3176,7 @@ export type OnUpdateExpertSubscription = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
@@ -3216,6 +3224,7 @@ export type OnDeleteExpertSubscription = {
     weeklySchedule?:  Array< {
       __typename: "DaySchedule",
       dayOfWeek: number,
+      isAvailable?: boolean | null,
     } | null > | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",

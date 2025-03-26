@@ -556,6 +556,27 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
+      inClinicSlots {
+        startTime
+        endTime
+        __typename
+      }
+      audioCallSlots {
+        startTime
+        endTime
+        __typename
+      }
+      videoCallSlots {
+        startTime
+        endTime
+        __typename
+      }
+      breakSlots {
+        startTime
+        endTime
+        __typename
+      }
       __typename
     }
     appointments {

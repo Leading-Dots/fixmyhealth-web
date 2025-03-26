@@ -1,4 +1,4 @@
-import { Specialization } from "@/API";
+import { Specialization, DayScheduleInput } from "@/API";
 import * as z from "zod";
 
 export const DoctorProfileFormSchema = z.object({
@@ -15,6 +15,9 @@ export const DoctorProfileFormSchema = z.object({
   ConsultationFee: z.number(),
   Specialization: z.custom<Specialization>().optional(),
   LanguageSpoken: z.string(),
+
+  //step 3  
+  weeklySchedule: z.custom<DayScheduleInput>().optional(),
 });
 
 export const PatientProfileFormSchema = z.object({
@@ -53,6 +56,7 @@ const getInitialValues = (role: "doctor" | "patient") => {
       Specialization: undefined,
       ConsultationFee: 0,
       LanguageSpoken: "",
+      weeklySchedule: "",
     };
   } else {
     return {

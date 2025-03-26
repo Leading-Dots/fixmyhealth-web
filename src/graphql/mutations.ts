@@ -386,6 +386,7 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
       __typename
     }
     appointments {
@@ -435,6 +436,7 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
       __typename
     }
     appointments {
@@ -484,6 +486,7 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
     totalReviews
     weeklySchedule {
       dayOfWeek
+      isAvailable
       __typename
     }
     appointments {

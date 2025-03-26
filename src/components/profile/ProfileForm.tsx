@@ -10,6 +10,7 @@ import {
 } from "@/lib/zod";
 import { StepOne } from "./steps/Step1";
 import { StepTwo } from "./steps/Step2";
+import { StepThree } from "./steps/Step3";
 import { UserRole } from "types";
 import StepHeader from "./steps/StepHeader";
 import { showToast } from "@/lib/toast";
@@ -17,7 +18,7 @@ import client from "@/lib/apiClient";
 import { updateExpert, updateUser } from "@/graphql/mutations";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { ProfileStatus } from "@/API";
+import {  DayScheduleInput, ProfileStatus } from "@/API";
 
 interface ProfileFormProps {
   role: UserRole;
@@ -27,7 +28,6 @@ interface ProfileFormProps {
 
 export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   const [step, setStep] = useState(0);
-
   const { user, refreshUser } = useAuth();
   const { schema, initialValues } = getProfileFormSchema(role);
 
@@ -36,21 +36,30 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: initialData || initialValues,
-    mode: "onBlur"
+    mode: "onBlur",
   });
+  
 
   async function onSubmit(
     data: DoctorProfileFormValues | PatientProfileFormValues
   ) {
-    console.log("onSubmit called", data); 
-    
+    console.log("onSubmit called", data);
+
     try {
       console.log("profile data", data);
+      // Quick and simple way to remove __typename
+    const cleanedData = JSON.parse(
+      JSON.stringify(data),
+      (key, value) => (key === "__typename" ? undefined : value)
+    );
 
-      //uploadImage
+    console.log("profile data after cleanup", cleanedData);
 
       if (role === "doctor") {
-        const doctorData = data as DoctorProfileFormValues;
+        // const doctorData = data as DoctorProfileFormValues; 
+        
+      const doctorData = cleanedData as DoctorProfileFormValues;         
+
         const response = await client.graphql({
           query: updateExpert,
           variables: {
@@ -67,6 +76,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               education: doctorData.education,
               profilePictureUrl: doctorData.profilePictureUrl || null,
               profileStatus: ProfileStatus.PUBLISHED,
+              weeklySchedule: (doctorData?.weeklySchedule || []) as (DayScheduleInput | null)[],
             },
           },
         });
@@ -79,7 +89,6 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
         return response;
       } else {
         const patientData = data as PatientProfileFormValues;
-        console.log("patientData", patientData);
 
         const response = await client.graphql({
           query: updateUser,
@@ -102,6 +111,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
 
         console.log("response", response);
         showToast("Patient Profile updated successfully", "success");
+
         refreshUser();
         router("/home");
         return response;
@@ -113,31 +123,34 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   }
 
   const handleNext = async (e: React.MouseEvent) => {
-    // Validate step 1 fields
-
     e.preventDefault();
 
     const step1Fields = ["firstName", "lastName", "email"] as const;
-
     const isValid = await form.trigger(step1Fields);
 
     if (!isValid) {
       showToast("Please fill in all required fields", "error");
       return;
     }
-
-    setStep(1);
+    setStep(step + 1);
   };
+
+  const handlePrevious = () => setStep(step - 1);
+
   return (
     <Form {...form}>
       <StepHeader step={step} />
-      <form  onSubmit={(e) => {
-    e.preventDefault();
-    console.log("Form errors:", form.formState.errors);
-    form.handleSubmit(onSubmit)(e);
-  }} className="space-y-8">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("Form errors:", form.formState.errors);
+          form.handleSubmit(onSubmit)(e);
+        }}
+        className="space-y-8"
+      >
         {step === 0 && <StepOne />}
         {step === 1 && <StepTwo role={role} />}
+        {step === 2 && role === "doctor" && <StepThree />} 
 
         <div className="flex justify-between w-full gap-2">
           {step > 0 && (
@@ -145,13 +158,13 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               type="button"
               className="w-full"
               variant="outline"
-              onClick={() => setStep(step - 1)}
+              onClick={handlePrevious}
             >
               Previous
             </Button>
           )}
 
-          {step === 0 ? (
+          {step < (role === "doctor" ? 2 : 1) ? (
             <Button
               type="button"
               onClick={handleNext}
@@ -160,7 +173,10 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               Next
             </Button>
           ) : (
-            <Button className="w-full bg-primary hover:bg-secondary" type="submit">
+            <Button
+              className="w-full bg-primary hover:bg-secondary"
+              type="submit"
+            >
               Save
             </Button>
           )}

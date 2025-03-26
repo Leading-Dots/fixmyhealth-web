@@ -1,16 +1,78 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-
 import { DoctorProfileFormValues, PatientProfileFormValues } from "@/lib/zod";
+import { DayScheduleInput } from "@/API";
 
 type ProfileData = DoctorProfileFormValues | PatientProfileFormValues | null;
 
-export const transformNullValues = (data: any, role: "doctor" | "patient"): ProfileData => {
+const defaultSchedule: DayScheduleInput[] = [
+  {
+    dayOfWeek: 1,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+  {
+    dayOfWeek: 2,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+  {
+    dayOfWeek: 3,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+  {
+    dayOfWeek: 4,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+  {
+    dayOfWeek: 5,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+  {
+    dayOfWeek: 6,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+  {
+    dayOfWeek: 0,
+    inClinicSlots: [],
+    audioCallSlots: [],
+    videoCallSlots: [],
+    breakSlots: [],
+    isAvailable: false,
+  },
+];
+
+export const transformNullValues = (
+  data: any,
+  role: "doctor" | "patient"
+): ProfileData => {
   if (!data) return null;
 
   const baseTransform = {
@@ -28,7 +90,10 @@ export const transformNullValues = (data: any, role: "doctor" | "patient"): Prof
       education: data.education || "",
       Specialization: data.Specialization || "",
       ConsultationFee: data.ConsultationFee || 0,
-      LanguageSpoken: data.LanguageSpoken || ""
+      LanguageSpoken: data.LanguageSpoken || "",
+      weeklySchedule: data.weeklySchedule?.length
+        ? data.weeklySchedule
+        : defaultSchedule,
     } as DoctorProfileFormValues;
   }
 
@@ -42,7 +107,11 @@ export const transformNullValues = (data: any, role: "doctor" | "patient"): Prof
   } as PatientProfileFormValues;
 };
 
-export const getInitials = (firstName?: string | null, lastName?: string | null) => {
+
+export const getInitials = (
+  firstName?: string | null,
+  lastName?: string | null
+) => {
   if (!firstName && !lastName) return "U";
   return `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
 };
@@ -53,4 +122,4 @@ export const formatTime = (date: Date) => {
     minute: "numeric",
     hour12: true,
   });
-}
+};

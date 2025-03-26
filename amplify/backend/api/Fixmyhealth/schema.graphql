@@ -5,8 +5,8 @@ type Report @model @auth(rules: [{allow: public}]) {
   fileType: String
   createdAt: AWSDateTime
   userID: ID! @index(name: "byUser")
-  appointmentID: ID @index(name: "byAppointment") # One-to-Many with Appointment
-  healthConcernID: ID @index(name: "byHealthConcern") # One-to-Many with HealthConcern
+  appointmentID: ID @index(name: "byAppointment")
+  healthConcernID: ID @index(name: "byHealthConcern")
 }
 
 type Appointment @model @auth(rules: [{allow: public}]) {
@@ -22,7 +22,7 @@ type Appointment @model @auth(rules: [{allow: public}]) {
   phoneNumber: String
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
-  expertID: ID! @index(name: "byExpert") 
+  expertID: ID! @index(name: "byExpert")
   reports: [Report] @hasMany(indexName: "byAppointment", fields: ["id"])
 }
 
@@ -89,19 +89,18 @@ type Response @model @auth(rules: [{allow: public}]) {
   ResponseReview: Review @hasOne
 }
 
-# TimeSlot Type (Embedded Type)
 type TimeSlot {
   startTime: String!
   endTime: String!
 }
 
-# DaySchedule Type (Embedded Type)
 type DaySchedule {
-  dayOfWeek: Int! # 0 = Sunday, 6 = Saturday
+  dayOfWeek: Int!
   inClinicSlots: [TimeSlot]
   audioCallSlots: [TimeSlot]
   videoCallSlots: [TimeSlot]
   breakSlots: [TimeSlot]
+  isAvailable: Boolean
 }
 
 type Expert @model @auth(rules: [{allow: public}]) {
@@ -116,7 +115,7 @@ type Expert @model @auth(rules: [{allow: public}]) {
   experience: String
   averageRating: Float
   totalReviews: Int
-  weeklySchedule: [DaySchedule] # Array of DaySchedule
+  weeklySchedule: [DaySchedule]
   appointments: [Appointment] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertResponse: [Response] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
