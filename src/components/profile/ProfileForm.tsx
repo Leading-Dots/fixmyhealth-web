@@ -27,15 +27,23 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
+
   const [step, setStep] = useState(0);
   const { user, refreshUser } = useAuth();
   const { schema, initialValues } = getProfileFormSchema(role);
 
   const router = useNavigate();
 
+  const parsedInitialData = initialData && 'weeklySchedule' in initialData
+  ? {
+      ...initialData,
+      weeklySchedule: initialData.weeklySchedule as DayScheduleInput[]
+    }
+  : initialData;
+
   const form = useForm({
     resolver: zodResolver(schema),
-    defaultValues: initialData || initialValues,
+    defaultValues: parsedInitialData || initialValues,
     mode: "onBlur",
   });  
 
@@ -61,6 +69,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               lastName: doctorData.lastName,
               email: doctorData.email,
               introduction: doctorData.introduction,
+              mobile: doctorData.mobile,
               experience: doctorData.experience,
               Specialization: doctorData?.Specialization,
               ConsultationFee: doctorData?.ConsultationFee,

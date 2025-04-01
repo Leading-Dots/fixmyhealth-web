@@ -21,6 +21,7 @@ import AssignedConcerns from "@/pages/HealthConcern/AssignedConcerns";
 import ReviewConcern from "@/pages/HealthConcern/ReviewConcern";
 import BookAppointment from "@/pages/Appointment/BookAppointment";
 import UserAppointments from "@/pages/Appointment/UserAppointments";
+import ReportsPage from "@/pages/Reports/ReportPage";
 
 const routes = [
   {
@@ -160,6 +161,14 @@ const routes = [
     element: (
       <DashboardLayout>
         <UserAppointments/>
+      </DashboardLayout>
+    ),
+  },  
+  {
+    path: "/reports",
+    element: (
+      <DashboardLayout>
+        <ReportsPage/>
       </DashboardLayout>
     ),
   },
