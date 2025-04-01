@@ -14,6 +14,7 @@ import {
   Languages,
   DollarSign,
   ArrowLeft,
+  MapPin,
 } from "lucide-react";
 import client from "@/lib/apiClient";
 import { getExpert } from "@/graphql/queries";
@@ -34,6 +35,7 @@ type ExpertDetails = {
   totalReviews?: number | null;
   profileStatus?: string | null;
   Specialization?: string | null;
+  clinicLocation?: string | null;
   ConsultationFee?: number | null;
   LanguageSpoken?: string | null;
 };
@@ -193,6 +195,15 @@ const ExpertDetail: React.FC = () => {
               value={
                 expert.ConsultationFee
                   ? `$${expert.ConsultationFee}`
+                  : "Not specified"
+              }
+            />
+            <DetailItem
+              icon={<MapPin className="h-5 w-5 text-red-500" />}
+              label="Clinic/Hospital Address"
+              value={
+                expert.clinicLocation
+                  ? `${expert.clinicLocation}`
                   : "Not specified"
               }
             />

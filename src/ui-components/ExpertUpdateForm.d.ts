@@ -37,6 +37,7 @@ export declare type ExpertUpdateFormInputValues = {
     Specialization?: string;
     ConsultationFee?: number;
     LanguageSpoken?: string;
+    clinicLocation?: string;
 };
 export declare type ExpertUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -53,6 +54,7 @@ export declare type ExpertUpdateFormValidationValues = {
     Specialization?: ValidationFunction<string>;
     ConsultationFee?: ValidationFunction<number>;
     LanguageSpoken?: ValidationFunction<string>;
+    clinicLocation?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ExpertUpdateFormOverridesProps = {
@@ -71,6 +73,7 @@ export declare type ExpertUpdateFormOverridesProps = {
     Specialization?: PrimitiveOverrideProps<SelectFieldProps>;
     ConsultationFee?: PrimitiveOverrideProps<TextFieldProps>;
     LanguageSpoken?: PrimitiveOverrideProps<TextFieldProps>;
+    clinicLocation?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ExpertUpdateFormProps = React.PropsWithChildren<{
     overrides?: ExpertUpdateFormOverridesProps | undefined | null;

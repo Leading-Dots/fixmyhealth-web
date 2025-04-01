@@ -89,6 +89,7 @@ export const transformNullValues = (
       experience: data.experience || "",
       education: data.education || "",
       Specialization: data.Specialization || "",
+      clinicLocation: data.clinicLocation || "",
       ConsultationFee: data.ConsultationFee || 0,
       LanguageSpoken: data.LanguageSpoken || "",
       weeklySchedule: data.weeklySchedule?.length

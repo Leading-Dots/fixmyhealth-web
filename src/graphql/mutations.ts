@@ -93,6 +93,7 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -122,6 +123,7 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -151,6 +153,7 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -409,6 +412,7 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -459,6 +463,7 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -509,6 +514,7 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -550,6 +556,7 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename
@@ -600,6 +607,7 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename
@@ -650,6 +658,7 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename

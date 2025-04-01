@@ -45,6 +45,7 @@ export default function ExpertUpdateForm(props) {
     Specialization: "",
     ConsultationFee: "",
     LanguageSpoken: "",
+    clinicLocation: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -76,6 +77,9 @@ export default function ExpertUpdateForm(props) {
   const [LanguageSpoken, setLanguageSpoken] = React.useState(
     initialValues.LanguageSpoken
   );
+  const [clinicLocation, setClinicLocation] = React.useState(
+    initialValues.clinicLocation
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = expertRecord
@@ -95,6 +99,7 @@ export default function ExpertUpdateForm(props) {
     setSpecialization(cleanValues.Specialization);
     setConsultationFee(cleanValues.ConsultationFee);
     setLanguageSpoken(cleanValues.LanguageSpoken);
+    setClinicLocation(cleanValues.clinicLocation);
     setErrors({});
   };
   const [expertRecord, setExpertRecord] = React.useState(expertModelProp);
@@ -128,6 +133,7 @@ export default function ExpertUpdateForm(props) {
     Specialization: [],
     ConsultationFee: [],
     LanguageSpoken: [],
+    clinicLocation: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -169,6 +175,7 @@ export default function ExpertUpdateForm(props) {
           Specialization: Specialization ?? null,
           ConsultationFee: ConsultationFee ?? null,
           LanguageSpoken: LanguageSpoken ?? null,
+          clinicLocation: clinicLocation ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -243,6 +250,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -280,6 +288,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -317,6 +326,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -354,6 +364,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.mobile ?? value;
@@ -391,6 +402,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.education ?? value;
@@ -428,6 +440,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.introduction ?? value;
@@ -465,6 +478,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.profilePictureUrl ?? value;
@@ -504,6 +518,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.experience ?? value;
@@ -545,6 +560,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.averageRating ?? value;
@@ -586,6 +602,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.totalReviews ?? value;
@@ -623,6 +640,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.profileStatus ?? value;
@@ -676,6 +694,7 @@ export default function ExpertUpdateForm(props) {
               Specialization: value,
               ConsultationFee,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.Specialization ?? value;
@@ -773,6 +792,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee: value,
               LanguageSpoken,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.ConsultationFee ?? value;
@@ -810,6 +830,7 @@ export default function ExpertUpdateForm(props) {
               Specialization,
               ConsultationFee,
               LanguageSpoken: value,
+              clinicLocation,
             };
             const result = onChange(modelFields);
             value = result?.LanguageSpoken ?? value;
@@ -823,6 +844,44 @@ export default function ExpertUpdateForm(props) {
         errorMessage={errors.LanguageSpoken?.errorMessage}
         hasError={errors.LanguageSpoken?.hasError}
         {...getOverrideProps(overrides, "LanguageSpoken")}
+      ></TextField>
+      <TextField
+        label="Clinic location"
+        isRequired={false}
+        isReadOnly={false}
+        value={clinicLocation}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              profileStatus,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
+              clinicLocation: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.clinicLocation ?? value;
+          }
+          if (errors.clinicLocation?.hasError) {
+            runValidationTasks("clinicLocation", value);
+          }
+          setClinicLocation(value);
+        }}
+        onBlur={() => runValidationTasks("clinicLocation", clinicLocation)}
+        errorMessage={errors.clinicLocation?.errorMessage}
+        hasError={errors.clinicLocation?.hasError}
+        {...getOverrideProps(overrides, "clinicLocation")}
       ></TextField>
       <Flex
         justifyContent="space-between"

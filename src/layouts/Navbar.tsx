@@ -108,6 +108,11 @@ const Navbar = () => {
       icon: <Users className="h-5 w-5" />,
     },
     {
+      title: "My Appointments",
+      url: "/my-appointments",
+      icon: <Users className="h-5 w-5" />,
+    },
+    {
       title: "Subscription",
       url: "/subscription",
       icon: <CreditCard className="h-5 w-5" />,

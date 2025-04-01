@@ -20,6 +20,7 @@ import MyHealthConcern from "@/pages/HealthConcern/MyHealthConcern";
 import AssignedConcerns from "@/pages/HealthConcern/AssignedConcerns";
 import ReviewConcern from "@/pages/HealthConcern/ReviewConcern";
 import BookAppointment from "@/pages/Appointment/BookAppointment";
+import UserAppointments from "@/pages/Appointment/UserAppointments";
 
 const routes = [
   {
@@ -151,6 +152,14 @@ const routes = [
     element: (
       <DashboardLayout>
         <BookAppointment/>
+      </DashboardLayout>
+    ),
+  },  
+  {
+    path: "/my-appointments",
+    element: (
+      <DashboardLayout>
+        <UserAppointments/>
       </DashboardLayout>
     ),
   },

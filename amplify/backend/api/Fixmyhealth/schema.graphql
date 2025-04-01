@@ -24,6 +24,7 @@ type Appointment @model @auth(rules: [{allow: public}]) {
   updatedAt: AWSDateTime
   expertID: ID! @index(name: "byExpert")
   reports: [Report] @hasMany(indexName: "byAppointment", fields: ["id"])
+  userId: String
 }
 
 enum ConcernType {
@@ -124,6 +125,7 @@ type Expert @model @auth(rules: [{allow: public}]) {
   Specialization: Specialization
   ConsultationFee: Int
   LanguageSpoken: String
+  clinicLocation: String
 }
 
 enum ConcernStatus {

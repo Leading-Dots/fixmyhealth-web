@@ -12,6 +12,7 @@ export const DoctorProfileFormSchema = z.object({
   // Step 2
   experience: z.string(),
   education: z.string(),
+  clinicLocation: z.string(),
   ConsultationFee: z.number(),
   Specialization: z.custom<Specialization>().optional(),
   LanguageSpoken: z.string(),

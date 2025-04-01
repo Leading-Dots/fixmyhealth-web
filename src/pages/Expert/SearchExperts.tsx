@@ -3,7 +3,13 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Search, GraduationCap, Briefcase, Layers, UserCircle } from "lucide-react"; // Import Lucide icons
+import {
+  Search,
+  GraduationCap,
+  Briefcase,
+  Layers,
+  UserCircle,
+} from "lucide-react"; // Import Lucide icons
 import { listExperts } from "@/graphql/queries";
 import client from "@/lib/apiClient";
 import { Expert } from "@/API";
@@ -27,7 +33,7 @@ export default function SearchExperts() {
   const [experts, setExperts] = useState<Expert[]>([]);
   const [filteredExperts, setFilteredExperts] = useState<Expert[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const router = useNavigate(); 
+  const router = useNavigate();
 
   useEffect(() => {
     async function getExperts() {
@@ -88,7 +94,7 @@ export default function SearchExperts() {
             <Card
               key={expert?.id}
               className="hover:shadow-lg transition cursor-pointer"
-              onClick={() => goToExpertProfile(expert?.id!)} 
+              onClick={() => goToExpertProfile(expert?.id!)}
             >
               <CardHeader className="flex items-center gap-4">
                 {/* Profile Photo */}
@@ -105,7 +111,9 @@ export default function SearchExperts() {
                   <CardTitle>
                     {expert?.firstName} {expert?.lastName}
                   </CardTitle>
-                  <p className="text-sm text-gray-500">{expert?.Specialization || "Specialization not provided"}</p>
+                  <p className="text-sm text-gray-500">
+                    {expert?.Specialization || "Specialization not provided"}
+                  </p>
                 </div>
               </CardHeader>
               <CardContent>

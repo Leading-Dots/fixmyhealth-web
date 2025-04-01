@@ -83,6 +83,7 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -111,6 +112,7 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -139,6 +141,7 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -367,6 +370,7 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -414,6 +418,7 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -461,6 +466,7 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -501,6 +507,7 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename
@@ -550,6 +557,7 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename
@@ -599,6 +607,7 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename

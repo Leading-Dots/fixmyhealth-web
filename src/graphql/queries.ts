@@ -170,6 +170,7 @@ export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
       nextToken
       __typename
     }
+    userId
     __typename
   }
 }
@@ -197,6 +198,7 @@ export const listAppointments = /* GraphQL */ `query ListAppointments(
       createdAt
       updatedAt
       expertID
+      userId
       __typename
     }
     nextToken
@@ -235,6 +237,7 @@ export const appointmentsByExpertID = /* GraphQL */ `query AppointmentsByExpertI
       createdAt
       updatedAt
       expertID
+      userId
       __typename
     }
     nextToken
@@ -599,6 +602,7 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     Specialization
     ConsultationFee
     LanguageSpoken
+    clinicLocation
     createdAt
     updatedAt
     __typename
@@ -627,6 +631,7 @@ export const listExperts = /* GraphQL */ `query ListExperts(
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename
@@ -668,6 +673,7 @@ export const getHealthConcern = /* GraphQL */ `query GetHealthConcern($id: ID!) 
       Specialization
       ConsultationFee
       LanguageSpoken
+      clinicLocation
       createdAt
       updatedAt
       __typename

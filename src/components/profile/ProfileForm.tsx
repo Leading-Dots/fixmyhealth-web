@@ -42,22 +42,15 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   async function onSubmit(
     data: DoctorProfileFormValues | PatientProfileFormValues
   ) {
-    console.log("onSubmit called", data);
-
     try {
       console.log("profile data", data);
-      // Quick and simple way to remove __typename
-    const cleanedData = JSON.parse(
+      const cleanedData = JSON.parse(
       JSON.stringify(data),
       (key, value) => (key === "__typename" ? undefined : value)
     );
 
-    console.log("profile data after cleanup", cleanedData);
-
-      if (role === "doctor") {
-        // const doctorData = data as DoctorProfileFormValues; 
-        
-      const doctorData = cleanedData as DoctorProfileFormValues;         
+      if (role === "doctor") {        
+       const doctorData = cleanedData as DoctorProfileFormValues;         
 
         const response = await client.graphql({
           query: updateExpert,
@@ -71,6 +64,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               experience: doctorData.experience,
               Specialization: doctorData?.Specialization,
               ConsultationFee: doctorData?.ConsultationFee,
+              clinicLocation: doctorData?.clinicLocation,
               LanguageSpoken: doctorData?.LanguageSpoken,
               education: doctorData.education,
               profilePictureUrl: doctorData.profilePictureUrl || null,

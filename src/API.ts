@@ -125,6 +125,7 @@ export type CreateAppointmentInput = {
   createdAt?: string | null,
   updatedAt?: string | null,
   expertID: string,
+  userId?: string | null,
 };
 
 export enum ConcernType {
@@ -155,6 +156,7 @@ export type ModelAppointmentConditionInput = {
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   expertID?: ModelIDInput | null,
+  userId?: ModelStringInput | null,
   and?: Array< ModelAppointmentConditionInput | null > | null,
   or?: Array< ModelAppointmentConditionInput | null > | null,
   not?: ModelAppointmentConditionInput | null,
@@ -186,6 +188,7 @@ export type Appointment = {
   updatedAt?: string | null,
   expertID: string,
   reports?: ModelReportConnection | null,
+  userId?: string | null,
 };
 
 export type ModelReportConnection = {
@@ -208,6 +211,7 @@ export type UpdateAppointmentInput = {
   createdAt?: string | null,
   updatedAt?: string | null,
   expertID?: string | null,
+  userId?: string | null,
 };
 
 export type DeleteAppointmentInput = {
@@ -401,6 +405,7 @@ export type CreateExpertInput = {
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
+  clinicLocation?: string | null,
 };
 
 export type DayScheduleInput = {
@@ -454,6 +459,7 @@ export type ModelExpertConditionInput = {
   Specialization?: ModelSpecializationInput | null,
   ConsultationFee?: ModelIntInput | null,
   LanguageSpoken?: ModelStringInput | null,
+  clinicLocation?: ModelStringInput | null,
   and?: Array< ModelExpertConditionInput | null > | null,
   or?: Array< ModelExpertConditionInput | null > | null,
   not?: ModelExpertConditionInput | null,
@@ -505,6 +511,7 @@ export type Expert = {
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
+  clinicLocation?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -566,6 +573,7 @@ export type UpdateExpertInput = {
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
+  clinicLocation?: string | null,
 };
 
 export type DeleteExpertInput = {
@@ -821,6 +829,7 @@ export type ModelAppointmentFilterInput = {
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   expertID?: ModelIDInput | null,
+  userId?: ModelStringInput | null,
   and?: Array< ModelAppointmentFilterInput | null > | null,
   or?: Array< ModelAppointmentFilterInput | null > | null,
   not?: ModelAppointmentFilterInput | null,
@@ -883,6 +892,7 @@ export type ModelExpertFilterInput = {
   Specialization?: ModelSpecializationInput | null,
   ConsultationFee?: ModelIntInput | null,
   LanguageSpoken?: ModelStringInput | null,
+  clinicLocation?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelExpertFilterInput | null > | null,
@@ -1012,6 +1022,7 @@ export type ModelSubscriptionAppointmentFilterInput = {
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   expertID?: ModelSubscriptionIDInput | null,
+  userId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionAppointmentFilterInput | null > | null,
   or?: Array< ModelSubscriptionAppointmentFilterInput | null > | null,
 };
@@ -1082,6 +1093,7 @@ export type ModelSubscriptionExpertFilterInput = {
   Specialization?: ModelSubscriptionStringInput | null,
   ConsultationFee?: ModelSubscriptionIntInput | null,
   LanguageSpoken?: ModelSubscriptionStringInput | null,
+  clinicLocation?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionExpertFilterInput | null > | null,
@@ -1234,6 +1246,7 @@ export type CreateAppointmentMutation = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -1262,6 +1275,7 @@ export type UpdateAppointmentMutation = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -1290,6 +1304,7 @@ export type DeleteAppointmentMutation = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -1538,6 +1553,7 @@ export type CreateExpertMutation = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1587,6 +1603,7 @@ export type UpdateExpertMutation = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1636,6 +1653,7 @@ export type DeleteExpertMutation = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1677,6 +1695,7 @@ export type CreateHealthConcernMutation = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1726,6 +1745,7 @@ export type UpdateHealthConcernMutation = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1775,6 +1795,7 @@ export type DeleteHealthConcernMutation = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2123,6 +2144,7 @@ export type GetAppointmentQuery = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -2150,6 +2172,7 @@ export type ListAppointmentsQuery = {
       createdAt?: string | null,
       updatedAt?: string | null,
       expertID: string,
+      userId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2181,6 +2204,7 @@ export type AppointmentsByExpertIDQuery = {
       createdAt?: string | null,
       updatedAt?: string | null,
       expertID: string,
+      userId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2493,6 +2517,7 @@ export type GetExpertQuery = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2524,6 +2549,7 @@ export type ListExpertsQuery = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -2566,6 +2592,7 @@ export type GetHealthConcernQuery = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2858,6 +2885,7 @@ export type OnCreateAppointmentSubscription = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -2885,6 +2913,7 @@ export type OnUpdateAppointmentSubscription = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -2912,6 +2941,7 @@ export type OnDeleteAppointmentSubscription = {
       __typename: "ModelReportConnection",
       nextToken?: string | null,
     } | null,
+    userId?: string | null,
   } | null,
 };
 
@@ -3150,6 +3180,7 @@ export type OnCreateExpertSubscription = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3198,6 +3229,7 @@ export type OnUpdateExpertSubscription = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3246,6 +3278,7 @@ export type OnDeleteExpertSubscription = {
     Specialization?: Specialization | null,
     ConsultationFee?: number | null,
     LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3286,6 +3319,7 @@ export type OnCreateHealthConcernSubscription = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3334,6 +3368,7 @@ export type OnUpdateHealthConcernSubscription = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3382,6 +3417,7 @@ export type OnDeleteHealthConcernSubscription = {
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,

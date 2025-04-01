@@ -11,6 +11,8 @@ import client from "@/lib/apiClient";
 import { getExpert } from "@/graphql/queries";
 import { createAppointment } from "@/graphql/mutations";
 import { ArrowLeft } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { showToast } from "@/lib/toast";
 
 // Enum for concern types
 enum ConcernType {
@@ -46,7 +48,7 @@ type AppointmentForm = {
 
 // Initial form state
 const initialFormState: AppointmentForm = {
-  appointmentDateTime: "",
+  appointmentDateTime: new Date().toISOString().slice(0, 16),
   startTime: "",
   endTime: "",
   location: "",
@@ -57,13 +59,19 @@ const initialFormState: AppointmentForm = {
 const BookAppointment: React.FC = () => {
   const { id } = useParams<{ id: string }>() as { id: string };
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [formData, setFormData] = useState<AppointmentForm>(initialFormState);
   const [weeklySchedule, setWeeklySchedule] = useState<WeeklySchedule[]>([]);
   const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [futureDates, setFutureDates] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split("T")[0] // Default to current date
+  );
   const [dateStatus, setDateStatus] = useState<{ [key: string]: string }>({});
+  const [location, setLocation] = useState<string | null>(null);
+
+  console.log("form", formData);
 
   // Fetch expert data and set weekly schedule
   useEffect(() => {
@@ -75,11 +83,13 @@ const BookAppointment: React.FC = () => {
         });
 
         const expert = response.data.getExpert;
+        setLocation(expert?.clinicLocation ?? null);
+
         if (expert && expert.weeklySchedule) {
           const formattedSchedule = expert.weeklySchedule
             .filter((day: any) => day !== null)
             .map((day: any) => ({
-              dayOfWeek: getDayName(day.dayOfWeek), // Convert dayOfWeek to name
+              dayOfWeek: getDayName(day.dayOfWeek),
               isAvailable: day.isAvailable || false,
               inClinicSlots: day.inClinicSlots || [],
               audioCallSlots: day.audioCallSlots || [],
@@ -95,8 +105,21 @@ const BookAppointment: React.FC = () => {
     if (id) {
       fetchExpertData();
     }
-    generateFutureDates();
   }, [id]);
+
+  // Generate future dates and set date status
+  useEffect(() => {
+    if (weeklySchedule.length > 0) {
+      generateFutureDates();
+    }
+  }, [weeklySchedule]);
+
+  // Update available slots for the current date on page load
+  useEffect(() => {
+    if (selectedDate && weeklySchedule.length > 0) {
+      updateAvailableSlots(selectedDate, formData.concernType);
+    }
+  }, [selectedDate, weeklySchedule, formData.concernType]);
 
   // Helper to convert dayOfWeek number to day name
   const getDayName = (dayIndex: number): string => {
@@ -126,9 +149,10 @@ const BookAppointment: React.FC = () => {
         weekday: "long",
       });
 
-      const schedule = weeklySchedule.find((slot) => slot.dayOfWeek === dayOfWeek);
-      status[dateStr] = schedule?.isAvailable ? "Slots Available" : "No Slots Available";
-      
+      const schedule = weeklySchedule.find(
+        (slot) => slot.dayOfWeek === dayOfWeek
+      );
+      status[dateStr] = schedule?.isAvailable ? "Available" : "Not Available";
     }
     setFutureDates(dates);
     setDateStatus(status);
@@ -146,12 +170,17 @@ const BookAppointment: React.FC = () => {
   };
 
   // Get slots for selected date and concern type
-  const updateAvailableSlots = (selectedDate: string, concernType: ConcernType) => {
+  const updateAvailableSlots = (
+    selectedDate: string,
+    concernType: ConcernType
+  ) => {
     if (!selectedDate) return;
     const selectedDay = new Date(selectedDate).toLocaleDateString("en-US", {
       weekday: "long",
     });
-    const schedule = weeklySchedule.find((slot) => slot.dayOfWeek === selectedDay);
+    const schedule = weeklySchedule.find(
+      (slot) => slot.dayOfWeek === selectedDay
+    );
     if (schedule?.isAvailable) {
       let slots: TimeSlot[] = [];
       switch (concernType) {
@@ -171,7 +200,7 @@ const BookAppointment: React.FC = () => {
     }
   };
 
-  // Handle date selection from carousel
+  // Handle date selection
   const handleDateSelect = (date: string) => {
     setSelectedDate(date);
     setFormData((prev) => ({ ...prev, appointmentDateTime: date }));
@@ -187,32 +216,61 @@ const BookAppointment: React.FC = () => {
     }));
   };
 
+  // Generate meeting link dynamically
+  const generateMeetingLink = async (
+    concernType: ConcernType
+  ): Promise<string> => {
+    if (
+      concernType === ConcernType.AUDIO_CALL ||
+      concernType === ConcernType.VIDEO_CALL
+    ) {
+      // Simulate meeting link generation
+      const meetingType =
+        concernType === ConcernType.AUDIO_CALL ? "audio" : "video";
+      return `https://meeting.example.com/${meetingType}/${Date.now()}`;
+    }
+    return "";
+  };
+
   // Submit appointment
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Format appointmentDateTime
+    const selectedDateTime = `${formData.appointmentDateTime}T${formData.startTime}:00.000Z`;
+
     try {
+      // Generate meeting link if required
+      const meetingLink = await generateMeetingLink(formData.concernType);
+
       const input = {
         ...formData,
+        appointmentDateTime: selectedDateTime,
+        phoneNumber: user?.mobile || "",
         expertID: id,
+        userId: user?.id,
         status: "PENDING",
+        location: location || "",
+        meetingLink,
       };
+
       const response = await client.graphql({
         query: createAppointment,
         variables: { input },
       });
 
       if (response.data.createAppointment) {
-        alert("Appointment booked successfully!");
-        navigate(`/expert/${id}`);
+        showToast("Appointment booked successfully!", "success");
+        navigate(`/expert-detail/${id}`);
       }
     } catch (error) {
       console.error("Error creating appointment:", error);
-      alert("Failed to book appointment. Please try again.");
+      showToast("Failed to book appointment. Please try again.", "error");
     } finally {
       setIsSubmitting(false);
     }
-  };  
+  };
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-5">
@@ -235,7 +293,9 @@ const BookAppointment: React.FC = () => {
               <div
                 key={date}
                 className={`p-3 w-24 text-center rounded-lg cursor-pointer border transition-all duration-300 ${
-                  selectedDate === date ? "bg-blue-500 text-white" : "bg-gray-100"
+                  selectedDate === date
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100"
                 }`}
                 onClick={() => handleDateSelect(date)}
               >
@@ -248,7 +308,7 @@ const BookAppointment: React.FC = () => {
                 </div>
                 <div
                   className={`text-xs mt-1 ${
-                    dateStatus[date] === "Slots Available"
+                    dateStatus[date] === "Available"
                       ? "text-green-600"
                       : "text-red-500"
                   }`}
@@ -263,78 +323,76 @@ const BookAppointment: React.FC = () => {
           <Tabs
             defaultValue={ConcernType.IN_CLINIC}
             className="w-full"
-            onValueChange={(value) => handleConcernTypeChange(value as ConcernType)}
+            onValueChange={(value) =>
+              handleConcernTypeChange(value as ConcernType)
+            }
           >
             <TabsList className="w-full flex justify-between mb-5">
               <TabsTrigger value={ConcernType.IN_CLINIC}>IN CLINIC</TabsTrigger>
-              <TabsTrigger value={ConcernType.AUDIO_CALL}>AUDIO CALL</TabsTrigger>
-              <TabsTrigger value={ConcernType.VIDEO_CALL}>VIDEO CALL</TabsTrigger>
+              <TabsTrigger value={ConcernType.AUDIO_CALL}>
+                AUDIO CALL
+              </TabsTrigger>
+              <TabsTrigger value={ConcernType.VIDEO_CALL}>
+                VIDEO CALL
+              </TabsTrigger>
             </TabsList>
 
             {/* Time Slots Grid */}
             <div className="mb-5">
               <Label>Available Time Slots</Label>
               {availableSlots.length > 0 ? (
-                <div className="grid grid-cols-3 gap-3 mt-2">
+                <div className="grid grid-cols-3 gap-3 mt-3">
                   {availableSlots.map((slot, index) => (
-                    <button
+                    <Button
                       key={index}
-                      className={`p-2 border rounded-lg text-sm cursor-pointer transition-all duration-300 ${
+                      variant={
                         formData.startTime === slot.startTime
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-100"
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() =>
+                        handleSlotSelect(slot.startTime, slot.endTime)
+                      }
+                      data-state={
+                        formData.startTime === slot.startTime ? "on" : "off"
+                      }
+                      className={`transition-all duration-300 ${
+                        formData.startTime === slot.startTime
+                          ? "bg-blue-500 text-white hover:bg-blue-600"
+                          : "hover:bg-gray-200"
                       }`}
-                      onClick={() => handleSlotSelect(slot.startTime, slot.endTime)}
                     >
-                      {slot.startTime}
-                    </button>
+                      {`${slot.startTime} - ${slot.endTime}`}
+                    </Button>
                   ))}
                 </div>
               ) : (
-                <p className="text-red-500 mt-2">No slots available</p>
+                <div className="text-red-500 text-sm mt-3">
+                  No slots available for this date.
+                </div>
               )}
             </div>
 
-            {/* Appointment Form */}
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {formData.concernType === ConcernType.IN_CLINIC && (
-                <div>
-                  <Label htmlFor="location">Clinic Location</Label>
-                  <Input
-                    id="location"
-                    name="location"
-                    type="text"
-                    value={formData.location || "Clinic Address Auto-filled"}
-                    readOnly
-                  />
-                </div>
-              )}
+            {/* Additional Fields */}
+            {formData.concernType === ConcernType.IN_CLINIC && (
+              <div className="mb-5">
+                <Label>Clinic/Hospital Address</Label>
+                <Input
+                  type="text"
+                  value={location || "Not available"}
+                  readOnly
+                />
+              </div>
+            )}
 
-              {(formData.concernType === ConcernType.AUDIO_CALL ||
-                formData.concernType === ConcernType.VIDEO_CALL) && (
-                <div>
-                  <Label htmlFor="phoneNumber">Phone Number</Label>
-                  <Input
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    type="tel"
-                    value={formData.phoneNumber || ""}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phoneNumber: e.target.value })
-                    }
-                    required
-                  />
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full bg-primary hover:bg-secondary"
-                disabled={isSubmitting || availableSlots.length === 0}
-              >
-                {isSubmitting ? "Booking..." : "Confirm Appointment"}
-              </Button>
-            </form>
+            {/* Submit Button */}
+            <Button
+              className="w-full bg-primary hover:bg-secondary"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Booking..." : "Confirm Appointment"}
+            </Button>
           </Tabs>
         </CardContent>
       </Card>

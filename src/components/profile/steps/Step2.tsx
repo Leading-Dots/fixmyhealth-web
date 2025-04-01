@@ -119,6 +119,23 @@ function DoctorFields() {
       />
       <FormField
         control={form.control}
+        name="clinicLocation"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Clinic/Hospital Address</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                type="text"
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="LanguageSpoken"
         render={({ field }) => (
           <FormItem>
