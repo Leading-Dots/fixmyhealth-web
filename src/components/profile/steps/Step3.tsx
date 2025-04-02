@@ -76,10 +76,10 @@ const daysOfWeek = [
 ];
 
 export function StepThree() {
-  const { control, watch, setValue } = useFormContext();
+  const { control, watch, setValue, trigger } = useFormContext();
   const weeklySchedule = watch("weeklySchedule") || defaultSchedule;
 
-  console.log("weekly schedule", weeklySchedule);
+  console.log("weekly schedule in step 3", weeklySchedule);
 
   const addSlot = (dayIndex: number, type: keyof DayScheduleInput) => {
     const updatedSchedule = [...weeklySchedule];
@@ -129,21 +129,17 @@ export function StepThree() {
                 <div className="flex items-center space-x-2">
                   <Label>Available</Label>
                   <Switch
-                    checked={field.value}
+                    checked={field.value} 
                     onCheckedChange={(value) => {
-                      const updatedSchedule = [...weeklySchedule];
-                      updatedSchedule[index] = {
-                        ...updatedSchedule[index],
-                        isAvailable: value,
-                      };
-                      setValue("weeklySchedule", updatedSchedule);
+                      setValue(`weeklySchedule[${index}].isAvailable`, value, { shouldDirty: true, shouldValidate: true });
+                      trigger(`weeklySchedule[${index}].isAvailable`);
                     }}
                   />
                 </div>
               )}
             />
           </div>
-          {schedule.isAvailable && (
+          {schedule?.isAvailable && (
             <>
               {[
                 "inClinicSlots",

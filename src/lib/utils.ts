@@ -93,18 +93,8 @@ export const transformNullValues = (
       clinicLocation: data.clinicLocation || "",
       ConsultationFee: data.ConsultationFee || 0,
       LanguageSpoken: data.LanguageSpoken || "",
-      // weeklySchedule: data.weeklySchedule?.length
-      //   ? data.weeklySchedule
-      //   : defaultSchedule,
-      weeklySchedule: Array.isArray(data.weeklySchedule)
-        ? data.weeklySchedule.map((day: Partial<DayScheduleInput>) => ({
-            dayOfWeek: day.dayOfWeek ?? 0,
-            isAvailable: day.isAvailable ?? false,
-            inClinicSlots: day.inClinicSlots?.filter(Boolean) ?? [],
-            audioCallSlots: day.audioCallSlots?.filter(Boolean) ?? [],
-            videoCallSlots: day.videoCallSlots?.filter(Boolean) ?? [],
-            breakSlots: day.breakSlots?.filter(Boolean) ?? [],
-          }))
+      weeklySchedule: data.weeklySchedule?.length
+        ? data.weeklySchedule
         : defaultSchedule,
     } as DoctorProfileFormValues;
   }

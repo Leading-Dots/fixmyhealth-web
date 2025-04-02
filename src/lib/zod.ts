@@ -43,7 +43,7 @@ export const DoctorProfileFormSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  mobile: z.string().min(10, "Mobile number must be at least 10 characters"),
+  mobile: z.string().regex(/^\d{10}$/, "Invalid mobile number"),
   introduction: z.string().min(10, "Introduction must be at least 10 characters"),
   profilePictureUrl: z.string().url("Unable to upload image").optional(),
 
@@ -64,7 +64,7 @@ export const PatientProfileFormSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  mobile: z.string().min(10, "Mobile number must be at least 10 characters"),
+  mobile: z.string().regex(/^\d{10}$/, "Invalid mobile number"),
   profilePictureUrl: z.string().url("Unable to upload image").optional(),
   address: z.string().min(4, "Address must be at least 4 characters"),
 

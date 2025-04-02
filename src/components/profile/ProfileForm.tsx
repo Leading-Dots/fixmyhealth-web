@@ -45,20 +45,21 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
     resolver: zodResolver(schema),
     defaultValues: parsedInitialData || initialValues,
     mode: "onBlur",
-  });  
+  });
+
+  const watchSchedule = form.watch("weeklySchedule");
 
   async function onSubmit(
     data: DoctorProfileFormValues | PatientProfileFormValues
   ) {
     try {
-      console.log("profile data", data);
-      const cleanedData = JSON.parse(
-      JSON.stringify(data),
-      (key, value) => (key === "__typename" ? undefined : value)
-    );
+      const watchScheduleData = JSON.parse(
+        JSON.stringify(watchSchedule),
+        (key, value) => (key === "__typename" ? undefined : value)
+      );
 
-      if (role === "doctor") {        
-       const doctorData = cleanedData as DoctorProfileFormValues;         
+      if (role === "doctor") {
+        const doctorData = data as DoctorProfileFormValues;
 
         const response = await client.graphql({
           query: updateExpert,
@@ -78,7 +79,8 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               education: doctorData.education,
               profilePictureUrl: doctorData.profilePictureUrl || null,
               profileStatus: ProfileStatus.PUBLISHED,
-              weeklySchedule: (doctorData?.weeklySchedule || []) as (DayScheduleInput | null)[],
+              weeklySchedule: (watchScheduleData ||
+                []) as (DayScheduleInput | null)[],
             },
           },
         });
