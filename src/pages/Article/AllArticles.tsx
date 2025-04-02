@@ -32,8 +32,8 @@ const AllArticles: React.FC = () => {
           .map((article: any) => ({
             id: article.id,
             title: article.title || "No Title",
-            description: article.description || "No Description",
-            image: article.image || "/images/icons/default.jpg",
+            description: article.content || "No Description",
+            image: article.imageUrl || "/images/icons/default.jpg",
           }));
 
         setArticles(formattedArticles);

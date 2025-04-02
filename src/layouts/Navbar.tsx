@@ -42,6 +42,11 @@ const Navbar = () => {
       icon: <HomeIcon className="h-5 w-5" />,
     },
     {
+      title: "Search Experts",
+      url: "/search-experts",
+      icon: <UserCircle2 className="h-5 w-5" />,
+    },
+    {
       title: "Login",
       url: "/login",
       icon: <LogIn className="h-5 w-5" />,
@@ -146,14 +151,14 @@ const Navbar = () => {
                 key={item.title}
                 to={item.url}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors",
+                  "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-[#23408e] ",
                   isActive
-                    ? "bg-muted text-secondary-foreground"
-                    : "hover:bg-secondary/80"
+                  ? "bg-muted text-secondary-foreground text-[#23408e]"
+                  : "hover:bg-secondary/80"
                 )}
               >
                 {item.icon}
-                <span>{item.title}</span>
+                <span className="text-secondary">{item.title}</span>
               </Link>
             );
           })}
@@ -186,7 +191,7 @@ const Navbar = () => {
               })}
             >
               {item.icon}
-              <span className="text-sky-500">{item.title}</span>
+              <span className="text-secondary">{item.title}</span>
             </Link>
           );
         })}

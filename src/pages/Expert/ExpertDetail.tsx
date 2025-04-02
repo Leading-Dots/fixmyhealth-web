@@ -15,10 +15,12 @@ import {
   DollarSign,
   ArrowLeft,
   MapPin,
+  LogIn,
 } from "lucide-react";
 import client from "@/lib/apiClient";
 import { getExpert } from "@/graphql/queries";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 // Define the type for required properties
 type ExpertDetails = {
@@ -58,6 +60,7 @@ const fetchExpertDetails = async (
 };
 
 const ExpertDetail: React.FC = () => {
+  const { user } = useAuth();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [expert, setExpert] = useState<ExpertDetails | null>(null);
@@ -120,20 +123,28 @@ const ExpertDetail: React.FC = () => {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-col gap-2">
+            {user ? (
+              <div className="flex flex-col gap-2">
+                <Button
+                  onClick={() => navigate(`/ask-concern/${expert.id}`)}
+                  className="bg-primary hover:bg-secondary"
+                >
+                  Ask Concern
+                </Button>
+                <Button
+                  onClick={() => navigate(`/book-appointment/${expert.id}`)}
+                  className="bg-green-500 hover:bg-green-600"
+                >
+                  Book Appointment
+                </Button>
+              </div>
+            ) : (
               <Button
-                onClick={() => navigate(`/ask-concern/${expert.id}`)}
-                className="bg-primary hover:bg-secondary"
-              >
-                Ask Concern
+                onClick={() => navigate(`/login`)}
+                className="bg-green-500 hover:bg-green-600"              >
+               <LogIn className="h-5 w-5 mr-2"/>Login to ask a health concern.
               </Button>
-              <Button
-                onClick={() => navigate(`/book-appointment/${expert.id}`)}
-                className="bg-green-500 hover:bg-green-600"
-              >
-                Book Appointment
-              </Button>
-            </div>
+            )}
           </div>
         </CardHeader>
 

@@ -79,7 +79,7 @@ const routes = [
   {
     path: "/all-articles",
     element: (
-      <DashboardLayout>
+      <DashboardLayout isProtected={false}>
         <AllArticles />
       </DashboardLayout>
     ),
@@ -87,7 +87,7 @@ const routes = [
   {
     path: "/article/:id",
     element: (
-      <DashboardLayout>
+      <DashboardLayout isProtected={false}>
         <ArticleDetail />
       </DashboardLayout>
     ),
@@ -103,7 +103,7 @@ const routes = [
   {
     path: "/search-experts",
     element: (
-      <DashboardLayout>
+      <DashboardLayout isProtected={false}>
         <SearchExperts/>
       </DashboardLayout>
     ),
@@ -111,7 +111,7 @@ const routes = [
   {
     path: "/expert-detail/:id",
     element: (
-      <DashboardLayout>
+      <DashboardLayout isProtected={false}>
         <ExpertDetail/>
       </DashboardLayout>
     ),

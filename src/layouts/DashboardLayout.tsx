@@ -21,14 +21,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     return <Navigate to="/login" replace />;
   }
 
-  useEffect(() => {
-    if (isProtected) {
-      if (user && user!.profileStatus === ProfileStatus.PUBLISHED) {
-        router("/profile");
-      }
-    }
-  }, []);
-
   return (
     <div className="flex min-h-screen flex-col md:flex-row flex-1 max-w-7xl mx-auto">
       <Navbar />
