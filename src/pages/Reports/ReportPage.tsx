@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { reportsByUserID } from "@/graphql/queries";
+import { deleteReport } from "@/graphql/mutations";
 import {
   Table,
   TableHeader,
@@ -12,6 +13,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import client from "@/lib/apiClient";
 import { useAuth } from "@/hooks/useAuth";
+import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import DeleteConfirmationDialog from "@/components/common/DeleteConfirmationDialog";
 
 interface Report {
   id: string;
@@ -26,6 +30,8 @@ const UserReports = () => {
   const userID = user?.id;
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -45,12 +51,40 @@ const UserReports = () => {
     fetchReports();
   }, [userID]);
 
+  // Open Delete Confirmation Dialog
+  const confirmDelete = (reportId: string) => {
+    setSelectedReportId(reportId);
+    setDeleteModalOpen(true);
+  };
+
+  // Delete Report
+  const handleDelete = async () => {
+    if (!selectedReportId) return;
+
+    try {
+      await client.graphql({
+        query: deleteReport,
+        variables: { input: { id: selectedReportId } },
+      });
+
+      // Remove deleted report from state
+      setReports((prevReports) => prevReports.filter((r) => r.id !== selectedReportId));
+      toast.success("Report deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting report:", error);
+      toast.error("Failed to delete report. Please try again.");
+    } finally {
+      setDeleteModalOpen(false);
+      setSelectedReportId(null);
+    }
+  };
+
   if (loading) return <p>Loading reports...</p>;
 
   return (
     <Card>
       <CardContent>
-        <h2 className="text-xl font-semibold mb-4">User Reports</h2>
+        <h2 className="text-xl font-semibold mb-4">My Reports</h2>
         <Table>
           <TableHeader>
             <TableRow>
@@ -78,15 +112,18 @@ const UserReports = () => {
                   <TableCell>
                     {new Date(report.createdAt).toLocaleDateString()}
                   </TableCell>
-                  <TableCell>
-                    <Button asChild>
-                      <a
-                        href={report.fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                  <TableCell className="flex gap-2">
+                    <Button asChild className="hover:bg-secondary">
+                      <a href={report.fileUrl} target="_blank" rel="noopener noreferrer">
                         View Report
                       </a>
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      onClick={() => confirmDelete(report.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -101,6 +138,13 @@ const UserReports = () => {
           </TableBody>
         </Table>
       </CardContent>
+
+      {/* Reusable Delete Confirmation Modal */}
+      <DeleteConfirmationDialog
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+      />
     </Card>
   );
 };

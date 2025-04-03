@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { createHealthConcern } from "@/graphql/mutations";
+import { createHealthConcern, createReport } from "@/graphql/mutations";
 import client from "@/lib/apiClient";
 import { useAuth } from "@/hooks/useAuth";
 import { ConcernStatus } from "@/API";
@@ -38,7 +38,7 @@ const ConsultExpert: React.FC = () => {
       if (files.length === 1) {
         attachmentUrl = await uploadPatientReports(files[0], user?.id);
       }
-      await client.graphql({
+      const healthConcernResponse = await client.graphql({
         query: createHealthConcern,
         variables: {
           input: {
@@ -51,6 +51,25 @@ const ConsultExpert: React.FC = () => {
           },
         },
       });
+
+      const healthConcernId =
+        healthConcernResponse?.data?.createHealthConcern?.id;
+
+      // If a file is uploaded, create report after health concern
+      if (files.length === 1 && healthConcernId) {
+        await client.graphql({
+          query: createReport,
+          variables: {
+            input: {
+              fileUrl: attachmentUrl,
+              fileName: files[0].name,
+              fileType: files[0].type,
+              userID: user?.id,
+              healthConcernID: healthConcernId, // Link report to created health concern
+            },
+          },
+        });
+      }
       navigate(`/expert-detail/${id}`);
     } catch (error) {
       console.error("Error submitting concern:", error);
