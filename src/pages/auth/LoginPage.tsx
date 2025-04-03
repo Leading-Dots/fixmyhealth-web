@@ -11,52 +11,38 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { showToast } from "@/lib/toast";
-import { RoleSelect } from "@/components/common/RoleSelect";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-const formSchema = z.object({
+type UserRole = "patient" | "doctor";
+
+const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.enum(["patient", "doctor"] as const),
 });
 
-type FormData = z.infer<typeof formSchema>;
+type LoginValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const [role, setRole] = useState<UserRole>("patient");
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
-      role: "patient",
     },
   });
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit(values: LoginValues) {    
     try {
-      const response = await signIn(data.email, data.password, data.role);
-      console.log(response);
-      showToast("Successfully logged in!", "success");
-      return response;
+      await signIn(values.email, values.password, role);
+      showToast("Login successful!", "success");
     } catch (error: any) {
       showToast(error.message, "error");
       console.error(error);
@@ -64,99 +50,58 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-6">
-      <div className="flex flex-col gap-6">
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>
-              Enter your credentials to access your account
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="grid gap-4"
-              >
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="name@example.com"
-                          type="email"
-                          autoComplete="email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          autoComplete="current-password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="role"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Role</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <RoleSelect
-                            onRoleChange={(role) => field.onChange(role)}
-                          />
-                        </FormControl>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="bg-primary hover:bg-secondary " disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Logging in..." : "Login"}
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex w-[900px] h-[600px] bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Left Side - Login Form */}
+        <div className="w-1/2 p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{role === "patient" ? "Patient" : "Doctor"} Login</h2>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField control={form.control} name="email" render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="name@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} />
+              <FormField control={form.control} name="password" render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} />
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Button type="submit" className="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg">
+                {form.formState.isSubmitting ? "Logging in..." : "Login"}
                 </Button>
-              </form>
-            </Form>
-          </CardContent>
-          <CardFooter className="text-muted-foreground text-sm flex flex-col justify-center gap-4 ">
-            <Link to={"/signup"} className="text-primary">
-              <span className="text-muted-foreground">
-                Don't have an account yet?{" "}
-              </span>
-              Register
+              </motion.div>
+            </form>
+          </Form>
+          <div className="mt-4 text-center">
+            <button onClick={() => setRole(role === "patient" ? "doctor" : "patient")} className="text-primary hover:underline">
+              Login as {role === "patient" ? "Doctor" : "Patient"}
+            </button>
+          </div>
+          <div className="mt-4 text-center">
+            <Link to="/home" className="text-primary hover:underline">
+              Continue without signing in
             </Link>
-          </CardFooter>
-        </Card>
-      </div>
-      <div className="flex flex-col gap-6 items-center">
-        <Link
-          to={"/home"}
-          className="hover:underline underline-offset-4  text-muted-foreground flex items-center gap-2"
-        >
-          Continue without signing in
-        </Link>
+          </div>
+        </div>
+        
+        {/* Right Side - Welcome Message */}
+        <div className="w-1/2 flex flex-col items-center justify-center bg-cover bg-center text-white p-8" style={{ backgroundImage: "url('/images/icons/login/loginbg.jpg')" }}>
+          <h2 className="text-2xl font-bold mb-2">Welcome to Login</h2>
+          <p className="mb-4">Don't have an account?</p>
+          <Link to="/signup" className="border border-white px-4 py-2 rounded-lg hover:bg-white hover:text-pink-500 transition">
+            Sign Up
+          </Link>
+        </div>
       </div>
     </div>
   );
