@@ -31,21 +31,23 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   const [step, setStep] = useState(0);
   const { user, refreshUser } = useAuth();
   const { schema, initialValues } = getProfileFormSchema(role);
-
   const router = useNavigate();
-
-  const parsedInitialData = initialData && 'weeklySchedule' in initialData
-  ? {
-      ...initialData,
-      weeklySchedule: initialData.weeklySchedule as DayScheduleInput[]
-    }
-  : initialData;
+  
+  const parsedInitialData =
+    initialData && "weeklySchedule" in initialData
+      ? {
+          ...initialData,
+          weeklySchedule: initialData.weeklySchedule as DayScheduleInput[],
+        }
+        : initialData;
 
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: parsedInitialData || initialValues,
     mode: "onBlur",
   });
+  
+  const { isValid, isSubmitting } = form.formState;
 
   const watchSchedule = form.watch("weeklySchedule");
 
@@ -53,10 +55,15 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
     data: DoctorProfileFormValues | PatientProfileFormValues
   ) {
     try {
-      const watchScheduleData = JSON.parse(
-        JSON.stringify(watchSchedule),
-        (key, value) => (key === "__typename" ? undefined : value)
-      );
+      const watchScheduleData =
+      watchSchedule && Array.isArray(watchSchedule)
+        ? JSON.parse(
+            JSON.stringify(watchSchedule, (key, value) =>
+              key === "__typename" ? undefined : value
+            )
+          )
+        : [];
+    
 
       if (role === "doctor") {
         const doctorData = data as DoctorProfileFormValues;
@@ -104,9 +111,9 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
               email: patientData.email,
               mobile: patientData.mobile,
               address: patientData.address,
-              dob: patientData.dob,
-              height: patientData.height,
-              weight: patientData.weight,
+              dob: patientData.dob === "" ? null : patientData.dob,
+              height: patientData.height ?? 0,
+              weight: patientData.weight ?? 0,
               profilePictureUrl: patientData.profilePictureUrl || null,
               profileStatus: ProfileStatus.PUBLISHED,
             },
@@ -129,13 +136,37 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
   const handleNext = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const step1Fields = ["firstName", "lastName", "email"] as const;
-    const isValid = await form.trigger(step1Fields);
+    const commonFields = ["firstName", "lastName", "email", "mobile"] as const;
+
+    const patientStep0Fields = [...commonFields, "address"] as const;
+    const doctorStep0Fields = [...commonFields, "introduction"] as const;
+    const patientFields = ["address", "dob", "height", "weight"] as const;
+    const doctorFields = [
+      "experience",
+      "Specialization",
+      "ConsultationFee",
+      "clinicLocation",
+      "LanguageSpoken",
+      "education",
+    ] as const;
+    const summaryFields = ["summary"] as const;
+
+    const stepValidationFields = {
+      0: role === "patient" ? patientStep0Fields : doctorStep0Fields,
+      1: role === "patient" ? patientFields : doctorFields,
+      2: summaryFields,
+    };
+
+    const currentStepFields =
+      stepValidationFields[step as keyof typeof stepValidationFields];
+
+    const isValid = await form.trigger(currentStepFields as any);
 
     if (!isValid) {
       showToast("Please fill in all required fields", "error");
       return;
     }
+
     setStep(step + 1);
   };
 
@@ -147,14 +178,13 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log("Form errors:", form.formState.errors);
           form.handleSubmit(onSubmit)(e);
         }}
         className="space-y-8"
       >
         {step === 0 && <StepOne />}
         {step === 1 && <StepTwo role={role} />}
-        {step === 2 && role === "doctor" && <StepThree />} 
+        {step === 2 && role === "doctor" && <StepThree />}
 
         <div className="flex justify-between w-full gap-2">
           {step > 0 && (
@@ -180,6 +210,7 @@ export function ProfileForm({ role, initialData = null }: ProfileFormProps) {
             <Button
               className="w-full bg-primary hover:bg-secondary"
               type="submit"
+              disabled={isSubmitting}
             >
               Save
             </Button>

@@ -41,7 +41,7 @@ function DoctorFields() {
         name="education"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Qualification</FormLabel>
+            <FormLabel>Qualification<span className="text-red-500 font-bold">*</span></FormLabel>
             <FormControl>
               <Input
                 {...field}
@@ -58,7 +58,7 @@ function DoctorFields() {
         name="Specialization"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Specialization</FormLabel>
+            <FormLabel>Specialization<span className="text-red-500 font-bold">*</span></FormLabel>
             <FormControl>
               <Select
                 onValueChange={(value) =>
@@ -88,7 +88,7 @@ function DoctorFields() {
         name="experience"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Years of Experience</FormLabel>
+            <FormLabel>Years of Experience<span className="text-red-500 font-bold">*</span></FormLabel>
             <FormControl>
               <Input
                 {...field}
@@ -199,7 +199,6 @@ function PatientFields() {
           </FormItem>
         )}
       />
-
       {/* Weight Field */}
       <FormField
         control={form.control}

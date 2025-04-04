@@ -20,19 +20,6 @@ export function StepOne() {
   const router = useNavigate();
   const [preview, setPreview] = useState<string>("");
 
-  const handlePublicProfile = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("Public Profile");
-    const role = user?.role;
-    if (role === "doctor") {
-      console.log("Doctor Public Profile");
-      router(`/doctor/${user?.id}`);
-    } else {
-      console.log("Patient Public Profile");
-      router(`/patient/${user?.id}`);
-    }
-  };
-
   return (
     <div className="space-y-6">
      {/* Profile Picture Section */}
@@ -58,12 +45,6 @@ export function StepOne() {
         />
       </div>
 
-      <div className="flex justify-center items-center space-y-2 gap-4">
-        <Button variant={"ghost"} onClick={handlePublicProfile}>
-          View Public Profile
-        </Button>
-      </div>
-
       {/* Name Fields Row */}
       <div className="grid grid-cols-2 gap-4">
         <FormField
@@ -71,7 +52,7 @@ export function StepOne() {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>First Name<span className="text-red-500 font-bold">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="John" {...field} />
               </FormControl>
@@ -85,7 +66,7 @@ export function StepOne() {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel>Last Name<span className="text-red-500 font-bold">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="Doe" {...field} />
               </FormControl>
@@ -100,7 +81,7 @@ export function StepOne() {
           name="mobile"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mobile Number</FormLabel>
+              <FormLabel>Mobile Number<span className="text-red-500 font-bold">*</span></FormLabel>
               <FormControl>
                 <Input
                   type="text"
@@ -118,7 +99,7 @@ export function StepOne() {
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Email<span className="text-red-500 font-bold">*</span></FormLabel>
             <FormControl>
               <Input
                 type="email"
