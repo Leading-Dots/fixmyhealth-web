@@ -238,7 +238,8 @@ const BookAppointment: React.FC = () => {
     setIsSubmitting(true);
 
     // Format appointmentDateTime
-    const selectedDateTime = `${formData.appointmentDateTime}T${formData.startTime}:00.000Z`;
+    const selectedDateTime = new Date(`${formData.appointmentDateTime}T${formData.startTime}:00Z`).toISOString();
+
 
     try {
       // Generate meeting link if required
