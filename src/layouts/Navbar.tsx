@@ -114,7 +114,7 @@ const Navbar = () => {
       icon: <Pill className="h-5 w-5" />,
     },
     {
-      title: "Family member profiles",
+      title: "Family members",
       url: "/family-member",
       icon: <Users className="h-5 w-5" />,
     },

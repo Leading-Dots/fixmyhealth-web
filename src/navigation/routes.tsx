@@ -22,6 +22,8 @@ import ReviewConcern from "@/pages/HealthConcern/ReviewConcern";
 import BookAppointment from "@/pages/Appointment/BookAppointment";
 import UserAppointments from "@/pages/Appointment/UserAppointments";
 import ReportsPage from "@/pages/Reports/ReportPage";
+import FamilyMembersPage from "@/pages/FamilyMember/FamilyMember";
+import AddFamilyMember from "@/pages/FamilyMember/AddFamilyMember";
 
 const routes = [
   {
@@ -161,6 +163,22 @@ const routes = [
     element: (
       <DashboardLayout>
         <UserAppointments/>
+      </DashboardLayout>
+    ),
+  },   
+  {
+    path: "/family-member",
+    element: (
+      <DashboardLayout>
+        <FamilyMembersPage/>
+      </DashboardLayout>
+    ),
+  },     
+  {
+    path: "/add-family-member",
+    element: (
+      <DashboardLayout>
+        <AddFamilyMember/>
       </DashboardLayout>
     ),
   },  
