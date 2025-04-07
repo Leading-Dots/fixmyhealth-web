@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
+  BriefcaseMedical,
   ClipboardCheck,
   CreditCard,
   FileText,
@@ -73,6 +74,11 @@ const Navbar = () => {
       title: "My Articles",
       url: "/articles",
       icon: <Newspaper className="h-5 w-5" />,
+    },
+    {
+      title: "My Appointments",
+      url: "/my-appointments",
+      icon: <BriefcaseMedical className="h-5 w-5" />,
     },
     {
       title: "Reviews & Ratings",

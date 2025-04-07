@@ -117,7 +117,7 @@ const ExpertArticles: React.FC = () => {
           </p>
           <Link
             to="/create-article"
-            className="inline-flex items-center mt-4 px-4 py-2 text-sm font-medium bg-primary hover:bg-secondary" 
+            className="inline-flex items-center mt-4 text-sm font-medium text-blue-600 hover:underline"
           >
             Create an Article
           </Link>
