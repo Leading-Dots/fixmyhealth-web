@@ -65,11 +65,10 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="flex w-[900px] h-[600px] bg-white shadow-lg rounded-lg overflow-hidden">
-        {/* Left Side - Signup Form */}
-        <div className="w-1/2 p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Create an Account - {role === "patient" ? "Patient" : "Doctor"}</h2>
+    <div className="flex flex-col md:flex-row w-full h-[600px] max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Left Side - Login Form */}
+        <div className="w-full md:w-1/2  overflow-y-auto p-6 md:p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">{role === "patient" ? "Patient" : "Doctor"} Sign up</h2>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField control={form.control} name="email" render={({ field }) => (
@@ -112,14 +111,14 @@ export default function SignUpPage() {
         </div>
         
         {/* Right Side - Login Message */}
-        <div className="w-1/2 flex flex-col items-center justify-center bg-cover bg-center text-white p-8" style={{ backgroundImage: "url('/images/icons/login/loginbg.jpg')" }}>
-          <h2 className="text-2xl font-bold mb-2">Already have an account?</h2>
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-cover bg-center text-white p-6 md:p-8"
+            style={{ backgroundImage: "url('/images/icons/login/loginbg.jpg')" }}>
+            <h2 className="text-2xl font-bold mb-2">Already have an account?</h2>
           <p className="mb-4">Login to access your account.</p>
-          <Link to="/login" className="border border-white px-4 py-2 rounded-lg hover:bg-white hover:text-pink-500 transition">
+          <Link to="/login"  className="border border-white px-4 py-2 rounded-lg hover:bg-white hover:text-pink-500 transition">
             Login
           </Link>
         </div>
       </div>
-    </div>
   );
 }
