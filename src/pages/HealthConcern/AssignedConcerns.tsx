@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ConcernStatus, ResponseStatus } from "@/API";
+import { useNavigate } from "react-router-dom";
 
 // Type definitions for health concerns
 type HealthConcern = {
@@ -48,6 +49,7 @@ type User = {
 };
 
 const AssignedConcerns: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [concerns, setConcerns] = useState<HealthConcern[]>([]);
   const [loading, setLoading] = useState(true);
@@ -211,26 +213,45 @@ const AssignedConcerns: React.FC = () => {
             <div className="space-y-4 mt-5">
               {concerns.map((concern) => (
                 <Card key={concern.id} className="border rounded-lg shadow-md">
-                  <CardHeader className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg font-semibold">
-                        {concern.title}
-                      </CardTitle>
-                      <p className="text-sm text-gray-500">
-                        Created on:{" "}
-                        {new Date(concern.createdAt).toLocaleDateString()}
-                      </p>
+                  <CardHeader>
+                    <div className="flex justify-between items-start w-full">
+                      <div>
+                        <CardTitle className="text-lg font-semibold">
+                          {concern.title}
+                        </CardTitle>
+                        <p className="text-sm text-gray-500">
+                          Created on:{" "}
+                          {new Date(concern.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col items-end gap-2">
+                        <Badge
+                          className={`px-2 py-1 text-xs font-medium rounded-full border ${getBadgeColor(
+                            concern.concernStatus
+                          )}`}
+                        >
+                          {concern.concernStatus === ConcernStatus.PENDING
+                            ? "Pending"
+                            : "Reviewed"}
+                        </Badge>
+
+                        {concern.concernStatus === ConcernStatus.PENDING && (
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            className="bg-primary hover:bg-secondary"
+                            onClick={() =>
+                              navigate(`/concerns/${concern.id}/review`)
+                            }
+                          >
+                            Review Concern
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                    <Badge
-                      className={`px-2 py-1 text-xs font-medium rounded-full border ${getBadgeColor(
-                        concern.concernStatus
-                      )}`}
-                    >
-                      {concern.concernStatus === ConcernStatus.PENDING
-                        ? "Pending"
-                        : "Reviewed"}
-                    </Badge>
                   </CardHeader>
+
                   <CardContent className="space-y-3">
                     <p className="text-sm text-gray-700">
                       {concern.description}
