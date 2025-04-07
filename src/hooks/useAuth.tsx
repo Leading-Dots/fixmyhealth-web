@@ -133,7 +133,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = async () => {
     try {
       setLoading(true);
-      await handleSignOut();
+      await handleSignOut();      
+      window.location.href = "/";
       setUser(null);
     } catch (error) {
       throw error;
