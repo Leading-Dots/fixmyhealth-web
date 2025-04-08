@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadCloud } from "lucide-react";
 import client from "@/lib/apiClient";
@@ -10,6 +9,7 @@ import { createArticle, updateArticle } from "@/graphql/mutations";
 import { uploadArticleImage } from "@/lib/storage";
 import { useLocation, useNavigate } from "react-router";
 import { getArticle } from "@/graphql/queries";
+import Tiptap from "@/components/common/Tiptap";
 
 interface FormData {
   title: string;
@@ -30,10 +30,11 @@ export default function CreateArticle() {
     imageUrl: "null",
   });
   const [loading, setLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   // Fetch article details if editing
   useEffect(() => {
-    if (!articleId) return;
+    if (!articleId) return setDataLoaded(true);
     const fetchArticle = async () => {
       try {
         const response = await client.graphql({
@@ -46,11 +47,13 @@ export default function CreateArticle() {
           setFormData({
             title: article.title || "",
             content: article.content || "",
-            imageUrl: article.imageUrl || "",
+            imageUrl: article.imageUrl || null,
           });
         }
       } catch (error) {
         console.error("Error fetching article:", error);
+      } finally {
+        setDataLoaded(true);
       }
     };
 
@@ -59,7 +62,6 @@ export default function CreateArticle() {
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
-    setLoading(true);
     try {
       const file = e.target.files[0];
       const url = await uploadArticleImage(file, user.id);
@@ -67,9 +69,7 @@ export default function CreateArticle() {
       console.error("CreateArticle > Article Image upload, url:", url);
     } catch (error) {
       console.error("Error uploading file:", error);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   // Handle Create or Update
@@ -111,6 +111,8 @@ export default function CreateArticle() {
       setLoading(false);
     }
   };
+
+  if (!dataLoaded) return null;
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -119,57 +121,58 @@ export default function CreateArticle() {
   };
 
   return (
-    <Card className="max-w-2xl mx-auto mt-10 p-5">
+    <Card className="w-full max-w-6xl mx-auto my-10 p-10">
       <CardHeader>
-        <CardTitle>{articleId ? "Edit Article" : "Create Article"}</CardTitle>
+        <CardTitle>{articleId ? "Edit your article" : "Write your article"}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Input
+      <CardContent className="space-y-4">
+        <div>
+          <label className="text-sm font-medium mb-1 block">Article Title</label>
+          <Input
           name="title"
           placeholder="Article Title"
           value={formData.title}
           onChange={handleInputChange}
         />
-        <Textarea
-          name="content"
-          placeholder="Write your article content..."
-          value={formData.content}
-          className="mt-3"
-          onChange={handleInputChange}
-        />
-        <label className="mt-3 flex items-center gap-2 cursor-pointer border rounded-md p-2 w-fit">
-          <UploadCloud size={20} />
-          <span>Upload Image</span>
-          <Input
-            type="file"
-            className="hidden"
-            onChange={onFileChange}
-            accept="image/*"
+        </div>
+        <div>
+          <label className="text-sm font-medium mb-1 block">Content</label>
+          <Tiptap
+            content={formData?.content}
+            onChange={(value) => setFormData((prev) => ({ ...prev, content: value }))}
           />
-        </label>
-        {formData.imageUrl && (
-          <div className="mt-2">
-            <img
-              src={formData.imageUrl}
-              alt="Article preview"
-              className="max-w-xs h-auto"
+        </div>
+        <div>
+          <label className="mt-3 flex items-center gap-2 cursor-pointer border rounded-md p-2 w-fit">
+            <UploadCloud size={20} />
+            <span>Upload Image</span>
+            <input
+              type="file"
+              className="hidden"
+              onChange={onFileChange}
+              accept="image/*"
             />
-          </div>
-        )}
-        <Button
-          onClick={handleSubmit}
-          className="mt-4 bg-[#23408e] hover:bg-sky-500"
-          disabled={loading || !formData.title || !formData.content}
-        >
-          {loading ? "Submitting..." : "Submit Article"}
-        </Button>
-        <Button
-          variant="outline"
-          className="mt-4 ml-2"
-          onClick={() => navigate("/articles")}
-        >
-          Cancel
-        </Button>
+          </label>
+          {formData.imageUrl && (
+            <div className="mt-2">
+              <img
+                src={formData.imageUrl}
+                alt="Article preview"
+                className="max-w-xs h-auto"
+              />
+            </div>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Button
+            onClick={handleSubmit}
+            className="bg-primary hover:bg-secondary"
+            disabled={loading || !formData.title || !formData.content}
+          >
+            {loading ? "Submitting..." : articleId ? "Update Article" : "Submit Article"}
+          </Button>
+          <Button variant="outline" onClick={() => navigate("/articles")}>Cancel</Button>
+        </div>
       </CardContent>
     </Card>
   );

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import client from "@/lib/apiClient";
 import { listArticles } from "@/graphql/queries";
 import { ArrowLeft } from "lucide-react";
+import { stripHtml } from "string-strip-html";
 
 interface Article {
   id: string;
@@ -83,9 +84,9 @@ const AllArticles: React.FC = () => {
                 <CardTitle className="text-lg font-semibold truncate">
                   {article.title}
                 </CardTitle>
-                <p className="text-sm text-gray-500 line-clamp-2">
-                  {article.description}
-                </p>
+                <p className="text-sm text-gray-500 line-clamp-3">
+                    {stripHtml(article.description).result}
+                  </p>
               </CardContent>
             </Card>
           ))}

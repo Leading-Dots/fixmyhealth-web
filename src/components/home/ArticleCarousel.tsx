@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import client from "@/lib/apiClient"; // Your API client
 import { listArticles } from "@/graphql/queries"; // Replace with correct query
 import { Link, useNavigate } from "react-router-dom";
+import { stripHtml } from "string-strip-html";
 
 interface Article {
   id: string;
@@ -108,7 +109,7 @@ const ArticleCarousel: React.FC = () => {
                               {article.title}
                             </CardTitle>
                             <p className="text-sm text-gray-500 line-clamp-3">
-                              {article.content}
+                              {stripHtml(article.content).result}
                             </p>
                           </Link>
                         </div>

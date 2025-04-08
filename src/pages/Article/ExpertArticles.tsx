@@ -8,6 +8,7 @@ import { articlesByExpertID } from "@/graphql/queries";
 import { deleteArticle } from "@/graphql/mutations";
 import { useAuth } from "@/hooks/useAuth";
 import DeleteConfirmationDialog from "@/components/common/DeleteConfirmationDialog";
+import { stripHtml } from "string-strip-html";
 
 interface Article {
   id: string;
@@ -77,9 +78,7 @@ const ExpertArticles: React.FC = () => {
     if (articleToDelete) {
       const success = await deleteExpertArticle(articleToDelete);
       if (success) {
-        setArticles(
-          articles.filter((article) => article.id !== articleToDelete)
-        );
+        setArticles(articles.filter((article) => article.id !== articleToDelete));
       }
     }
     setDeleteModalOpen(false);
@@ -112,9 +111,7 @@ const ExpertArticles: React.FC = () => {
       {/* No Articles Found */}
       {!loading && articles.length === 0 && (
         <div className="text-center p-10 border rounded-lg shadow-sm">
-          <p className="text-gray-500">
-            No articles found. Start writing your first article!
-          </p>
+          <p className="text-gray-500">No articles found. Start writing your first article!</p>
           <Link
             to="/create-article"
             className="inline-flex items-center mt-4 text-sm font-medium text-blue-600 hover:underline"
@@ -147,7 +144,7 @@ const ExpertArticles: React.FC = () => {
                     {article.title}
                   </CardTitle>
                   <p className="text-sm text-gray-500 line-clamp-3">
-                    {article.content}
+                    {stripHtml(article.content).result}
                   </p>
                 </Link>
               </div>
@@ -173,7 +170,6 @@ const ExpertArticles: React.FC = () => {
                   }}
                 >
                   <Trash2 size={16} />
-                  Delete
                 </Button>
               </div>
             </CardContent>
@@ -181,7 +177,6 @@ const ExpertArticles: React.FC = () => {
         ))}
       </div>
 
-      {/* Reusable Delete Confirmation Modal */}
       <DeleteConfirmationDialog
         isOpen={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}

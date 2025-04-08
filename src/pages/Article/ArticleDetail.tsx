@@ -18,7 +18,6 @@ const ArticleDetail: React.FC = () => {
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch the article by ID
   useEffect(() => {
     const fetchArticle = async () => {
       try {
@@ -71,28 +70,34 @@ const ArticleDetail: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6 max-w-3xl">
-        {/* Back Button */}
-        <Button
-          variant="outline"
-          className="mb-4 flex items-center gap-2"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft size={18} />
-          Back
-        </Button>
+      <Button
+        variant="outline"
+        className="mb-4 flex items-center gap-2"
+        onClick={() => navigate(-1)}
+      >
+        <ArrowLeft size={18} />
+        Back
+      </Button>
 
       {/* Article Image */}
-      <div className="w-full h-64 mb-6">
-        <img
-          src={article.imageUrl}
-          alt={article.title}
-          className="w-full h-full object-cover rounded-lg shadow-sm"
-        />
-      </div>
+      {article.imageUrl && (
+        <div className="w-full h-64 mb-6">
+          <img
+            src={article.imageUrl}
+            alt={article.title}
+            className="w-full h-full object-cover rounded-lg shadow-sm"
+          />
+        </div>
+      )}
 
-      {/* Article Content */}
+      {/* Title */}
       <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
-      <p className="text-gray-700 leading-relaxed">{article.content}</p>
+
+      {/* Rich text content rendering */}
+      <div
+        className="prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: article.content }}
+      />
     </div>
   );
 };
