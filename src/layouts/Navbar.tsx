@@ -157,14 +157,13 @@ const Navbar = () => {
                 key={item.title}
                 to={item.url}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-[#23408e] ",
+                  "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-grey-500 ",
                   isActive
-                  ? "bg-muted text-secondary-foreground text-[#23408e]"
-                  : "hover:bg-secondary/80"
+                    ? "bg-muted text-secondary-foreground text-secondary"
+                    : " hover:text-secondary"
                 )}
               >
-                {item.icon}
-                <span className="text-secondary">{item.title}</span>
+                {item.icon}{item.title}
               </Link>
             );
           })}
@@ -186,32 +185,31 @@ const Navbar = () => {
               key={item.title}
               to={item.url}
               className={cn(
-                "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-[#23408e] ",
+                "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-grey-500 ",
                 isActive
-                  ? "bg-muted text-secondary-foreground text-[#23408e]"
-                  : "hover:bg-secondary/80"
+                  ? "bg-muted text-secondary-foreground text-secondary"
+                  : " hover:text-secondary"
               )}
               {...(item?.isExternal && {
                 target: "_blank",
                 rel: "noopener noreferrer",
               })}
             >
-              {item.icon}
-              <span className="text-secondary">{item.title}</span>
+              {item.icon}{item.title}
             </Link>
           );
         })}
         {!isPublished && (
           <Link
-            to="/profile"
-            className={cn(
-              "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-sky-500",
-              "hover:bg-secondary/80"
-            )}
-          >
-            <img src="images/icons/home/user.png" alt="user_icon" height={20} width={20}/>
-            <span>Complete your profile</span>
-          </Link>
+          to="/profile"
+          className={cn(
+            "flex items-center gap-3 rounded-lg p-2 text-sm transition-colors text-yellow-600",
+            "hover:text-secondary"
+          )}
+        >
+          <User2 className="h-5 w-5" />
+          <span>Complete your profile</span>
+        </Link>
         )}
       </nav>
     );
@@ -234,10 +232,10 @@ const Navbar = () => {
 
         {/* Only show logout for logged in users */}
         {user && (
-          <div className="flex flex-col items-start gap-2 mt-auto ">
-            <Button onClick={signOut} variant="ghost" size="sm">
-              <LogOut className="h-4 w-4 text-[#23408e]" />
-              <span className="text-sky-500">Logout</span>
+          <div className="flex flex-col items-start gap-2 mt-auto">
+            <Button onClick={signOut} variant="ghost" size="sm" className=" text-grey-500  hover:text-secondary">
+              <LogOut className="h-4 w-4 "/>
+              Logout
             </Button>
           </div>
         )}
@@ -260,9 +258,9 @@ const Navbar = () => {
           <NavContent />
           {user && (
           <div className="flex flex-col items-start gap-2 mt-auto">
-            <Button onClick={signOut} variant="ghost" size="sm">
-              <LogOut className="h-4 w-4 text-[#23408e]" />
-              <span className="text-sky-500">Logout</span>
+            <Button onClick={signOut} variant="ghost" size="sm" className=" text-grey-500  hover:text-secondary">
+              <LogOut className="h-4 w-4" />
+              Logout
             </Button>
           </div>
         )}

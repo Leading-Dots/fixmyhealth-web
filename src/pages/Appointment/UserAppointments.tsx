@@ -187,8 +187,8 @@ const UserAppointments: React.FC = () => {
                         className={`${
                           isUpcoming(appointment.appointmentDateTime) &&
                           appointment.concernStatus === "PENDING"
-                            ? "bg-green-500 text-white"
-                            : "bg-gray-500 text-white"
+                            ? "bg-green-500 text-white hover:bg-green-500"
+                            : "bg-gray-500 text-white hover:bg-gray-500"
                         }`}
                       >
                         {isUpcoming(appointment.appointmentDateTime) &&
