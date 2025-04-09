@@ -163,8 +163,11 @@ export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -195,8 +198,11 @@ export const listAppointments = /* GraphQL */ `query ListAppointments(
       location
       meetingLink
       phoneNumber
+      title
+      description
       createdAt
       updatedAt
+      healthConcernID
       expertID
       userId
       __typename
@@ -208,6 +214,48 @@ export const listAppointments = /* GraphQL */ `query ListAppointments(
 ` as GeneratedQuery<
   APITypes.ListAppointmentsQueryVariables,
   APITypes.ListAppointmentsQuery
+>;
+export const appointmentsByHealthConcernID = /* GraphQL */ `query AppointmentsByHealthConcernID(
+  $healthConcernID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelAppointmentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  appointmentsByHealthConcernID(
+    healthConcernID: $healthConcernID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      concernType
+      concernStatus
+      appointmentDateTime
+      startTime
+      endTime
+      status
+      location
+      meetingLink
+      phoneNumber
+      title
+      description
+      createdAt
+      updatedAt
+      healthConcernID
+      expertID
+      userId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.AppointmentsByHealthConcernIDQueryVariables,
+  APITypes.AppointmentsByHealthConcernIDQuery
 >;
 export const appointmentsByExpertID = /* GraphQL */ `query AppointmentsByExpertID(
   $expertID: ID!
@@ -234,8 +282,11 @@ export const appointmentsByExpertID = /* GraphQL */ `query AppointmentsByExpertI
       location
       meetingLink
       phoneNumber
+      title
+      description
       createdAt
       updatedAt
+      healthConcernID
       expertID
       userId
       __typename
@@ -275,6 +326,12 @@ export const listArticles = /* GraphQL */ `query ListArticles(
       title
       content
       imageUrl
+      expert {
+        id
+        firstName
+        lastName
+        profilePictureUrl
+      }
       createdAt
       updatedAt
       expertID
@@ -560,26 +617,6 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     weeklySchedule {
       dayOfWeek
       isAvailable
-      inClinicSlots {
-        startTime
-        endTime
-        __typename
-      }
-      audioCallSlots {
-        startTime
-        endTime
-        __typename
-      }
-      videoCallSlots {
-        startTime
-        endTime
-        __typename
-      }
-      breakSlots {
-        startTime
-        endTime
-        __typename
-      }
       __typename
     }
     appointments {
@@ -653,6 +690,8 @@ export const getHealthConcern = /* GraphQL */ `query GetHealthConcern($id: ID!) 
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename
@@ -706,6 +745,8 @@ export const listHealthConcerns = /* GraphQL */ `query ListHealthConcerns(
       attachments
       createdAt
       userID
+      preferredDate
+      preferredTimeSlot
       concernType
       updatedAt
       healthConcernHealthConcernExpertId
@@ -741,6 +782,8 @@ export const healthConcernsByUserID = /* GraphQL */ `query HealthConcernsByUserI
       attachments
       createdAt
       userID
+      preferredDate
+      preferredTimeSlot
       concernType
       updatedAt
       healthConcernHealthConcernExpertId

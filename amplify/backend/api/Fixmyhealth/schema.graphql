@@ -20,8 +20,11 @@ type Appointment @model @auth(rules: [{allow: public}]) {
   location: String
   meetingLink: String
   phoneNumber: String
+  title: String
+  description: String
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
+  healthConcernID: ID @index(name: "byHealthConcern")
   expertID: ID! @index(name: "byExpert")
   reports: [Report] @hasMany(indexName: "byAppointment", fields: ["id"])
   userId: String
@@ -141,7 +144,9 @@ type HealthConcern @model @auth(rules: [{allow: public}]) {
   concernStatus: ConcernStatus
   attachments: String
   createdAt: AWSDateTime
-  userID: ID! @index(name: "byUser")
+  userID: ID! @index(name: "byUser")  
+  preferredDate: AWSDate
+  preferredTimeSlot: String
   HealthConcernResponses: [Response] @hasMany(indexName: "byHealthConcern", fields: ["id"])
   HealthConcernExpert: Expert @hasOne
   concernType: ConcernType

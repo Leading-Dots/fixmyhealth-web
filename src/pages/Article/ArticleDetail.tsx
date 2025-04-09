@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "@/lib/apiClient";
-import { getArticle } from "@/graphql/queries";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { getArticle, getExpert } from "@/graphql/queries";
+import { UserCircle } from "lucide-react";
 
 interface Article {
   id: string;
   title: string;
   content: string;
   imageUrl: string;
+  expertID: string;
+}
+
+interface Expert {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePictureUrl?: string;
 }
 
 const ArticleDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>() as { id: string };
   const navigate = useNavigate();
   const [article, setArticle] = useState<Article | null>(null);
+  const [expert, setExpert] = useState<Expert | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchArticle = async () => {
+    const fetchArticleAndExpert = async () => {
       try {
         const response = await client.graphql({
           query: getArticle,
@@ -28,28 +36,43 @@ const ArticleDetail: React.FC = () => {
 
         const fetchedArticle = response.data.getArticle;
 
-        if (fetchedArticle) {
-          setArticle({
-            id: fetchedArticle.id,
-            title: fetchedArticle.title || "",
-            content: fetchedArticle.content || "",
-            imageUrl: fetchedArticle.imageUrl || "",
-          });
-        } else {
+        if (!fetchedArticle) {
           console.error("Article not found");
           navigate("/");
+          return;
+        }
+
+        const articleData: Article = {
+          id: fetchedArticle.id,
+          title: fetchedArticle.title || "",
+          content: fetchedArticle.content || "",
+          imageUrl: fetchedArticle.imageUrl || "",
+          expertID: fetchedArticle.expertID || "",
+        };
+
+        setArticle(articleData);
+
+        // Fetch expert details
+        if (fetchedArticle.expertID) {
+          const expertRes = await client.graphql({
+            query: getExpert,
+            variables: { id: fetchedArticle.expertID },
+          });
+
+          const expertData = expertRes.data.getExpert;
+          if (expertData) {
+            setExpert(expertData as Expert);
+          }
         }
       } catch (error) {
-        console.error("Error fetching article:", error);
+        console.error("Error fetching article or expert:", error);
         navigate("/");
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      fetchArticle();
-    }
+    if (id) fetchArticleAndExpert();
   }, [id, navigate]);
 
   if (loading) {
@@ -70,15 +93,6 @@ const ArticleDetail: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6 max-w-3xl">
-      <Button
-        variant="outline"
-        className="mb-4 flex items-center gap-2"
-        onClick={() => navigate(-1)}
-      >
-        <ArrowLeft size={18} />
-        Back
-      </Button>
-
       {/* Article Image */}
       {article.imageUrl && (
         <div className="w-full h-64 mb-6">
@@ -91,7 +105,25 @@ const ArticleDetail: React.FC = () => {
       )}
 
       {/* Title */}
-      <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+      <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
+
+      {/* Expert Info */}
+      {expert && (
+        <div className="flex items-center gap-3 mb-6">
+          {expert.profilePictureUrl ? (
+            <img
+              src={expert.profilePictureUrl}
+              alt={`${expert.firstName} ${expert.lastName}`}
+              className="w-10 h-10 rounded-full border"
+            />
+          ) : (
+            <UserCircle className="w-10 h-10 text-gray-400" />
+          )}
+          <span className="text-base text-gray-700 font-medium">
+            Dr. {expert.firstName} {expert.lastName}
+          </span>
+        </div>
+      )}
 
       {/* Rich text content rendering */}
       <div

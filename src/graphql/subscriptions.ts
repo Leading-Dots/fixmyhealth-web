@@ -76,8 +76,11 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -105,8 +108,11 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -134,8 +140,11 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -487,6 +496,8 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename
@@ -537,6 +548,8 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename
@@ -587,6 +600,8 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename

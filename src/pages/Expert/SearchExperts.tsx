@@ -12,41 +12,44 @@ import {
 } from "lucide-react"; // Import Lucide icons
 import { listExperts } from "@/graphql/queries";
 import client from "@/lib/apiClient";
-import { Expert } from "@/API";
+import { Expert, Specialization } from "@/API";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-// Fetch all experts
-const fetchExperts = async (): Promise<Expert[]> => {
-  try {
-    const response = await client.graphql({
-      query: listExperts,
-    });
-
-    return response.data.listExperts.items || [];
-  } catch (error) {
-    console.error("Error fetching experts:", error);
-    return [];
-  }
-};
 
 export default function SearchExperts() {
   const [experts, setExperts] = useState<Expert[]>([]);
   const [filteredExperts, setFilteredExperts] = useState<Expert[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     async function getExperts() {
       try {
-        const data = await fetchExperts();
-        setExperts(data);
-        setFilteredExperts(data);
+        const queryParams = new URLSearchParams(location.search);
+        const specializationParam = queryParams.get("specialization");
+
+        const response = await client.graphql({
+          query: listExperts,
+          variables: specializationParam
+            ? {
+                filter: {
+                  Specialization: { eq: specializationParam as Specialization },
+                },
+              }
+            : {},
+        });
+
+        const fetchedExperts = response.data.listExperts.items || [];
+        setExperts(fetchedExperts);
+        setFilteredExperts(fetchedExperts); // initial search filter base
       } catch (error) {
         console.error("Error fetching experts:", error);
       }
     }
+
     getExperts();
-  }, []);
+  }, [location.search]);
 
   // Filter experts based on search query
   useEffect(() => {

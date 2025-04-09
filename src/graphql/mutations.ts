@@ -86,8 +86,11 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -116,8 +119,11 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -146,8 +152,11 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
     location
     meetingLink
     phoneNumber
+    title
+    description
     createdAt
     updatedAt
+    healthConcernID
     expertID
     reports {
       nextToken
@@ -536,6 +545,8 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename
@@ -587,6 +598,8 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename
@@ -638,6 +651,8 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
     attachments
     createdAt
     userID
+    preferredDate
+    preferredTimeSlot
     HealthConcernResponses {
       nextToken
       __typename
