@@ -182,6 +182,27 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -201,6 +222,27 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -220,6 +262,27 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }

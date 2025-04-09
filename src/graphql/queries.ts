@@ -308,6 +308,27 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -326,15 +347,14 @@ export const listArticles = /* GraphQL */ `query ListArticles(
       title
       content
       imageUrl
+      createdAt
+      updatedAt
+      expertID      
       expert {
-        id
         firstName
         lastName
         profilePictureUrl
       }
-      createdAt
-      updatedAt
-      expertID
       __typename
     }
     nextToken

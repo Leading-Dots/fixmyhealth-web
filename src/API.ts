@@ -261,244 +261,7 @@ export type Article = {
   createdAt?: string | null,
   updatedAt?: string | null,
   expertID?: string | null,
-};
-
-export type UpdateArticleInput = {
-  id: string,
-  title?: string | null,
-  content?: string | null,
-  imageUrl?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  expertID?: string | null,
-};
-
-export type DeleteArticleInput = {
-  id: string,
-};
-
-export type CreateReviewInput = {
-  id?: string | null,
-  responseId: string,
-  rating: number,
-  feedback?: string | null,
-  createdAt?: string | null,
-  userID: string,
-  expertID: string,
-};
-
-export type ModelReviewConditionInput = {
-  responseId?: ModelStringInput | null,
-  rating?: ModelFloatInput | null,
-  feedback?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  userID?: ModelIDInput | null,
-  expertID?: ModelIDInput | null,
-  and?: Array< ModelReviewConditionInput | null > | null,
-  or?: Array< ModelReviewConditionInput | null > | null,
-  not?: ModelReviewConditionInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type Review = {
-  __typename: "Review",
-  id: string,
-  responseId: string,
-  rating: number,
-  feedback?: string | null,
-  createdAt?: string | null,
-  userID: string,
-  expertID: string,
-  updatedAt: string,
-};
-
-export type UpdateReviewInput = {
-  id: string,
-  responseId?: string | null,
-  rating?: number | null,
-  feedback?: string | null,
-  createdAt?: string | null,
-  userID?: string | null,
-  expertID?: string | null,
-};
-
-export type DeleteReviewInput = {
-  id: string,
-};
-
-export type CreateResponseInput = {
-  id?: string | null,
-  responseText?: string | null,
-  responseStatus?: ResponseStatus | null,
-  createdAt?: string | null,
-  healthconcernID: string,
-  expertID: string,
-  responseResponseReviewId?: string | null,
-};
-
-export enum ResponseStatus {
-  DRAFT = "DRAFT",
-  SUBMITTED = "SUBMITTED",
-  REVIEWED = "REVIEWED",
-}
-
-
-export type ModelResponseConditionInput = {
-  responseText?: ModelStringInput | null,
-  responseStatus?: ModelResponseStatusInput | null,
-  createdAt?: ModelStringInput | null,
-  healthconcernID?: ModelIDInput | null,
-  expertID?: ModelIDInput | null,
-  and?: Array< ModelResponseConditionInput | null > | null,
-  or?: Array< ModelResponseConditionInput | null > | null,
-  not?: ModelResponseConditionInput | null,
-  updatedAt?: ModelStringInput | null,
-  responseResponseReviewId?: ModelIDInput | null,
-};
-
-export type ModelResponseStatusInput = {
-  eq?: ResponseStatus | null,
-  ne?: ResponseStatus | null,
-};
-
-export type Response = {
-  __typename: "Response",
-  id: string,
-  responseText?: string | null,
-  responseStatus?: ResponseStatus | null,
-  createdAt?: string | null,
-  healthconcernID: string,
-  expertID: string,
-  ResponseReview?: Review | null,
-  updatedAt: string,
-  responseResponseReviewId?: string | null,
-};
-
-export type UpdateResponseInput = {
-  id: string,
-  responseText?: string | null,
-  responseStatus?: ResponseStatus | null,
-  createdAt?: string | null,
-  healthconcernID?: string | null,
-  expertID?: string | null,
-  responseResponseReviewId?: string | null,
-};
-
-export type DeleteResponseInput = {
-  id: string,
-};
-
-export type CreateExpertInput = {
-  id?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
-  email: string,
-  mobile?: string | null,
-  education?: string | null,
-  introduction?: string | null,
-  profilePictureUrl?: string | null,
-  experience?: string | null,
-  averageRating?: number | null,
-  totalReviews?: number | null,
-  weeklySchedule?: Array< DayScheduleInput | null > | null,
-  profileStatus?: ProfileStatus | null,
-  Specialization?: Specialization | null,
-  ConsultationFee?: number | null,
-  LanguageSpoken?: string | null,
-  clinicLocation?: string | null,
-};
-
-export type DayScheduleInput = {
-  dayOfWeek: number,
-  inClinicSlots?: Array< TimeSlotInput | null > | null,
-  audioCallSlots?: Array< TimeSlotInput | null > | null,
-  videoCallSlots?: Array< TimeSlotInput | null > | null,
-  breakSlots?: Array< TimeSlotInput | null > | null,
-  isAvailable?: boolean | null,
-};
-
-export type TimeSlotInput = {
-  startTime: string,
-  endTime: string,
-};
-
-export enum ProfileStatus {
-  PENDING = "PENDING",
-  PUBLISHED = "PUBLISHED",
-  REJECTED = "REJECTED",
-}
-
-
-export enum Specialization {
-  CARDIOLOGIST = "CARDIOLOGIST",
-  PEDIATRICIAN = "PEDIATRICIAN",
-  GYNECOLOGIST = "GYNECOLOGIST",
-  ORTHOPEDIC = "ORTHOPEDIC",
-  DERMATOLOGIST = "DERMATOLOGIST",
-  NEUROLOGIST = "NEUROLOGIST",
-  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
-  ENT_SPECIALIST = "ENT_SPECIALIST",
-  PSYCHIATRIST = "PSYCHIATRIST",
-  DIABETOLOGIST = "DIABETOLOGIST",
-  DIETICIAN = "DIETICIAN",
-}
-
-
-export type ModelExpertConditionInput = {
-  firstName?: ModelStringInput | null,
-  lastName?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  mobile?: ModelStringInput | null,
-  education?: ModelStringInput | null,
-  introduction?: ModelStringInput | null,
-  profilePictureUrl?: ModelStringInput | null,
-  experience?: ModelStringInput | null,
-  averageRating?: ModelFloatInput | null,
-  totalReviews?: ModelIntInput | null,
-  profileStatus?: ModelProfileStatusInput | null,
-  Specialization?: ModelSpecializationInput | null,
-  ConsultationFee?: ModelIntInput | null,
-  LanguageSpoken?: ModelStringInput | null,
-  clinicLocation?: ModelStringInput | null,
-  and?: Array< ModelExpertConditionInput | null > | null,
-  or?: Array< ModelExpertConditionInput | null > | null,
-  not?: ModelExpertConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelProfileStatusInput = {
-  eq?: ProfileStatus | null,
-  ne?: ProfileStatus | null,
-};
-
-export type ModelSpecializationInput = {
-  eq?: Specialization | null,
-  ne?: Specialization | null,
+  expert?: Expert | null,
 };
 
 export type Expert = {
@@ -556,16 +319,254 @@ export type ModelResponseConnection = {
   nextToken?: string | null,
 };
 
+export type Response = {
+  __typename: "Response",
+  id: string,
+  responseText?: string | null,
+  responseStatus?: ResponseStatus | null,
+  createdAt?: string | null,
+  healthconcernID: string,
+  expertID: string,
+  ResponseReview?: Review | null,
+  updatedAt: string,
+  responseResponseReviewId?: string | null,
+};
+
+export enum ResponseStatus {
+  DRAFT = "DRAFT",
+  SUBMITTED = "SUBMITTED",
+  REVIEWED = "REVIEWED",
+}
+
+
+export type Review = {
+  __typename: "Review",
+  id: string,
+  responseId: string,
+  rating: number,
+  feedback?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  expertID: string,
+  updatedAt: string,
+};
+
 export type ModelReviewConnection = {
   __typename: "ModelReviewConnection",
   items:  Array<Review | null >,
   nextToken?: string | null,
 };
 
+export enum ProfileStatus {
+  PENDING = "PENDING",
+  PUBLISHED = "PUBLISHED",
+  REJECTED = "REJECTED",
+}
+
+
 export type ModelArticleConnection = {
   __typename: "ModelArticleConnection",
   items:  Array<Article | null >,
   nextToken?: string | null,
+};
+
+export enum Specialization {
+  CARDIOLOGIST = "CARDIOLOGIST",
+  PEDIATRICIAN = "PEDIATRICIAN",
+  GYNECOLOGIST = "GYNECOLOGIST",
+  ORTHOPEDIC = "ORTHOPEDIC",
+  DERMATOLOGIST = "DERMATOLOGIST",
+  NEUROLOGIST = "NEUROLOGIST",
+  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
+  ENT_SPECIALIST = "ENT_SPECIALIST",
+  PSYCHIATRIST = "PSYCHIATRIST",
+  DIABETOLOGIST = "DIABETOLOGIST",
+  DIETICIAN = "DIETICIAN",
+}
+
+
+export type UpdateArticleInput = {
+  id: string,
+  title?: string | null,
+  content?: string | null,
+  imageUrl?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  expertID?: string | null,
+};
+
+export type DeleteArticleInput = {
+  id: string,
+};
+
+export type CreateReviewInput = {
+  id?: string | null,
+  responseId: string,
+  rating: number,
+  feedback?: string | null,
+  createdAt?: string | null,
+  userID: string,
+  expertID: string,
+};
+
+export type ModelReviewConditionInput = {
+  responseId?: ModelStringInput | null,
+  rating?: ModelFloatInput | null,
+  feedback?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
+  and?: Array< ModelReviewConditionInput | null > | null,
+  or?: Array< ModelReviewConditionInput | null > | null,
+  not?: ModelReviewConditionInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateReviewInput = {
+  id: string,
+  responseId?: string | null,
+  rating?: number | null,
+  feedback?: string | null,
+  createdAt?: string | null,
+  userID?: string | null,
+  expertID?: string | null,
+};
+
+export type DeleteReviewInput = {
+  id: string,
+};
+
+export type CreateResponseInput = {
+  id?: string | null,
+  responseText?: string | null,
+  responseStatus?: ResponseStatus | null,
+  createdAt?: string | null,
+  healthconcernID: string,
+  expertID: string,
+  responseResponseReviewId?: string | null,
+};
+
+export type ModelResponseConditionInput = {
+  responseText?: ModelStringInput | null,
+  responseStatus?: ModelResponseStatusInput | null,
+  createdAt?: ModelStringInput | null,
+  healthconcernID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
+  and?: Array< ModelResponseConditionInput | null > | null,
+  or?: Array< ModelResponseConditionInput | null > | null,
+  not?: ModelResponseConditionInput | null,
+  updatedAt?: ModelStringInput | null,
+  responseResponseReviewId?: ModelIDInput | null,
+};
+
+export type ModelResponseStatusInput = {
+  eq?: ResponseStatus | null,
+  ne?: ResponseStatus | null,
+};
+
+export type UpdateResponseInput = {
+  id: string,
+  responseText?: string | null,
+  responseStatus?: ResponseStatus | null,
+  createdAt?: string | null,
+  healthconcernID?: string | null,
+  expertID?: string | null,
+  responseResponseReviewId?: string | null,
+};
+
+export type DeleteResponseInput = {
+  id: string,
+};
+
+export type CreateExpertInput = {
+  id?: string | null,
+  firstName?: string | null,
+  lastName?: string | null,
+  email: string,
+  mobile?: string | null,
+  education?: string | null,
+  introduction?: string | null,
+  profilePictureUrl?: string | null,
+  experience?: string | null,
+  averageRating?: number | null,
+  totalReviews?: number | null,
+  weeklySchedule?: Array< DayScheduleInput | null > | null,
+  profileStatus?: ProfileStatus | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
+  clinicLocation?: string | null,
+};
+
+export type DayScheduleInput = {
+  dayOfWeek: number,
+  inClinicSlots?: Array< TimeSlotInput | null > | null,
+  audioCallSlots?: Array< TimeSlotInput | null > | null,
+  videoCallSlots?: Array< TimeSlotInput | null > | null,
+  breakSlots?: Array< TimeSlotInput | null > | null,
+  isAvailable?: boolean | null,
+};
+
+export type TimeSlotInput = {
+  startTime: string,
+  endTime: string,
+};
+
+export type ModelExpertConditionInput = {
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  mobile?: ModelStringInput | null,
+  education?: ModelStringInput | null,
+  introduction?: ModelStringInput | null,
+  profilePictureUrl?: ModelStringInput | null,
+  experience?: ModelStringInput | null,
+  averageRating?: ModelFloatInput | null,
+  totalReviews?: ModelIntInput | null,
+  profileStatus?: ModelProfileStatusInput | null,
+  Specialization?: ModelSpecializationInput | null,
+  ConsultationFee?: ModelIntInput | null,
+  LanguageSpoken?: ModelStringInput | null,
+  clinicLocation?: ModelStringInput | null,
+  and?: Array< ModelExpertConditionInput | null > | null,
+  or?: Array< ModelExpertConditionInput | null > | null,
+  not?: ModelExpertConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelProfileStatusInput = {
+  eq?: ProfileStatus | null,
+  ne?: ProfileStatus | null,
+};
+
+export type ModelSpecializationInput = {
+  eq?: Specialization | null,
+  ne?: Specialization | null,
 };
 
 export type UpdateExpertInput = {
@@ -1362,6 +1363,27 @@ export type CreateArticleMutation = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 
@@ -1380,6 +1402,27 @@ export type UpdateArticleMutation = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 
@@ -1398,6 +1441,27 @@ export type DeleteArticleMutation = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 
@@ -2313,6 +2377,27 @@ export type GetArticleQuery = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 
@@ -3063,6 +3148,27 @@ export type OnCreateArticleSubscription = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 
@@ -3080,6 +3186,27 @@ export type OnUpdateArticleSubscription = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 
@@ -3097,6 +3224,27 @@ export type OnDeleteArticleSubscription = {
     createdAt?: string | null,
     updatedAt?: string | null,
     expertID?: string | null,
+    expert?:  {
+      __typename: "Expert",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      email: string,
+      mobile?: string | null,
+      education?: string | null,
+      introduction?: string | null,
+      profilePictureUrl?: string | null,
+      experience?: string | null,
+      averageRating?: number | null,
+      totalReviews?: number | null,
+      profileStatus?: ProfileStatus | null,
+      Specialization?: Specialization | null,
+      ConsultationFee?: number | null,
+      LanguageSpoken?: string | null,
+      clinicLocation?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
   } | null,
 };
 

@@ -12,6 +12,11 @@ interface Article {
   title: string;
   description: string;
   image: string;
+  expert: {
+    firstName: string;
+    lastName: string;
+    profilePictureUrl: string;
+  };
 }
 
 const AllArticles: React.FC = () => {
@@ -24,7 +29,7 @@ const AllArticles: React.FC = () => {
     const fetchArticles = async () => {
       try {
         const response = await client.graphql({
-          query: listArticles, 
+          query: listArticles,
         });
 
         const items = response.data?.listArticles?.items || [];
@@ -35,6 +40,11 @@ const AllArticles: React.FC = () => {
             title: article.title || "No Title",
             description: article.content || "No Description",
             image: article.imageUrl || "/images/icons/default.jpg",
+            expert: {
+              firstName: article?.expert?.firstName,
+              lastName: article?.expert?.lastName,
+              profilePictureUrl: article?.expert?.profilePictureUrl,
+            },
           }));
 
         setArticles(formattedArticles);
@@ -63,7 +73,9 @@ const AllArticles: React.FC = () => {
         <p className="text-gray-500 text-center">Loading articles...</p>
       ) : articles.length === 0 ? (
         <div className="text-center p-10 border rounded-lg shadow-sm">
-          <p className="text-gray-500">No articles found. Please check back later.</p>
+          <p className="text-gray-500">
+            No articles found. Please check back later.
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -84,9 +96,23 @@ const AllArticles: React.FC = () => {
                 <CardTitle className="text-lg font-semibold truncate">
                   {article.title}
                 </CardTitle>
+                <div className="flex items-center gap-2 mb-2 mt-2">
+                  {article.expert.profilePictureUrl ? (
+                    <img
+                      src={article.expert.profilePictureUrl}
+                      alt={`${article.expert.firstName} ${article.expert.lastName}`}
+                      className="w-8 h-8 rounded-full border"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full border bg-gray-200" />
+                  )}
+                  <span className="text-sm text-gray-600">
+                    Dr. {article.expert.firstName} {article.expert.lastName}
+                  </span>
+                </div>
                 <p className="text-sm text-gray-500 line-clamp-3">
-                    {stripHtml(article.description).result}
-                  </p>
+                  {stripHtml(article.description).result}
+                </p>
               </CardContent>
             </Card>
           ))}
@@ -96,12 +122,11 @@ const AllArticles: React.FC = () => {
       {/* Back to Home Button */}
       <div className="flex justify-center mt-8">
         <Button
-          variant="outline"
           onClick={() => navigate("/")}
           className="flex items-center gap-2 hover:bg-sky-500"
         >
-        <ArrowLeft size={18} />
-        Back to Home
+          <ArrowLeft size={18} />
+          Back to Home
         </Button>
       </div>
     </div>

@@ -167,6 +167,27 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -183,6 +204,27 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -199,6 +241,27 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
     createdAt
     updatedAt
     expertID
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }

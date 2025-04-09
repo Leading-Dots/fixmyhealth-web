@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import client from "@/lib/apiClient";
-import { listArticles, getExpert } from "@/graphql/queries";
+import { listArticles } from "@/graphql/queries";
 import { Link, useNavigate } from "react-router-dom";
+import { UserCircle } from "lucide-react";
 
 interface Article {
   id: string;
   title: string;
   imageUrl: string;
   expertID: string;
-}
-
-interface Expert {
-  id: string;
-  firstName: string;
-  lastName: string;
+  expert: {
+    firstName?: string;
+    lastName?: string;
+  } | null;
 }
 
 const ArticleCarousel: React.FC = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState<Article[]>([]);
-  const [expertNames, setExpertNames] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -32,6 +35,7 @@ const ArticleCarousel: React.FC = () => {
         });
 
         const items = response.data?.listArticles?.items || [];
+
         const formattedArticles = items
           .filter((article: any) => article !== null)
           .map((article: any) => ({
@@ -39,27 +43,15 @@ const ArticleCarousel: React.FC = () => {
             title: article.title || "No Title",
             imageUrl: article.imageUrl || "/images/icons/login/loginbg.jpg",
             expertID: article.expertID,
+            expert: article.expert
+              ? {
+                  firstName: article.expert.firstName || "",
+                  lastName: article.expert.lastName || "",
+                }
+              : null,
           }));
 
         setArticles(formattedArticles.slice(0, 3));
-
-        // Fetch expert names for the first 3 articles
-        for (const article of formattedArticles.slice(0, 3)) {
-          if (article.expertID && !expertNames[article.expertID]) {
-            const expertRes = await client.graphql({
-              query: getExpert,
-              variables: { id: article.expertID },
-            });
-
-            const expert = expertRes.data?.getExpert;
-            if (expert) {
-              setExpertNames((prev) => ({
-                ...prev,
-                [expert.id]: `${expert.firstName} ${expert.lastName}`,
-              }));
-            }
-          }
-        }
       } catch (error) {
         console.error("Error fetching articles or experts:", error);
       } finally {
@@ -112,11 +104,12 @@ const ArticleCarousel: React.FC = () => {
                 <Link to={`/article/${article.id}`}>
                   <CardTitle className="text-lg">{article.title}</CardTitle>
                 </Link>
-                <div className="mt-auto pt-2">
-                  <p className="text-sm text-muted-foreground">
-                    Dr. {expertNames[article.expertID] || "Expert"}
-                  </p>
-                </div>
+                {/* Expert Name */}
+                  <div className="mt-3 flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      Dr. {article?.expert?.firstName} {article?.expert?.lastName}
+                    </span>
+                  </div>
               </CardContent>
             </Card>
           ))}

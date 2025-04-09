@@ -14,8 +14,8 @@ interface Article {
 
 interface Expert {
   id: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   profilePictureUrl?: string;
 }
 
@@ -34,7 +34,7 @@ const ArticleDetail: React.FC = () => {
           variables: { id },
         });
 
-        const fetchedArticle = response.data.getArticle;
+        const fetchedArticle = response.data?.getArticle;
 
         if (!fetchedArticle) {
           console.error("Article not found");
@@ -42,26 +42,29 @@ const ArticleDetail: React.FC = () => {
           return;
         }
 
-        const articleData: Article = {
+        setArticle({
           id: fetchedArticle.id,
-          title: fetchedArticle.title || "",
+          title: fetchedArticle.title || "Untitled",
           content: fetchedArticle.content || "",
-          imageUrl: fetchedArticle.imageUrl || "",
+          imageUrl: fetchedArticle.imageUrl || "/images/icons/login/loginbg.jpg",
           expertID: fetchedArticle.expertID || "",
-        };
+        });
 
-        setArticle(articleData);
-
-        // Fetch expert details
+        // Fetch expert if expertID exists
         if (fetchedArticle.expertID) {
           const expertRes = await client.graphql({
             query: getExpert,
             variables: { id: fetchedArticle.expertID },
           });
 
-          const expertData = expertRes.data.getExpert;
+          const expertData = expertRes.data?.getExpert;
           if (expertData) {
-            setExpert(expertData as Expert);
+            setExpert({
+              id: expertData.id,
+              firstName: expertData.firstName || "",
+              lastName: expertData.lastName || "",
+              profilePictureUrl: expertData.profilePictureUrl || "",
+            });
           }
         }
       } catch (error) {
@@ -125,7 +128,7 @@ const ArticleDetail: React.FC = () => {
         </div>
       )}
 
-      {/* Rich text content rendering */}
+      {/* Rich content */}
       <div
         className="prose max-w-none"
         dangerouslySetInnerHTML={{ __html: article.content }}
