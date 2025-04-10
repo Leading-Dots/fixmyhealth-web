@@ -62,7 +62,7 @@ const AllArticles: React.FC = () => {
     <div className="container mx-auto p-6 max-w-5xl">
       {/* Page Header */}
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold">All Health Articles</h2>
+        <h2 className="text-3xl">All Health Articles</h2>
         <p className="text-gray-500 mt-1">
           Explore expert health articles and tips.
         </p>

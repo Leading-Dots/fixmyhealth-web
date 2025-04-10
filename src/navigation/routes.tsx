@@ -24,6 +24,7 @@ import UserAppointments from "@/pages/Appointment/UserAppointments";
 import ReportsPage from "@/pages/Reports/ReportPage";
 import FamilyMembersPage from "@/pages/FamilyMember/FamilyMember";
 import AddFamilyMember from "@/pages/FamilyMember/AddFamilyMember";
+import PublicHealthConcern from "@/components/home/PublicHealhConcern";
 
 const routes = [
   {
@@ -123,6 +124,14 @@ const routes = [
     element: (
       <DashboardLayout>
         <ConsultExpert/>
+      </DashboardLayout>
+    ),
+  },  
+  {
+    path: "/public/ask-concern",
+    element: (
+      <DashboardLayout>
+        <PublicHealthConcern/>
       </DashboardLayout>
     ),
   },  

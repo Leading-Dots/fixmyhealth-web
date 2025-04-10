@@ -6,21 +6,20 @@ import { Specialization } from "@/API";
 import { useNavigate } from "react-router-dom";
 
 const specializationImages: { [key in Specialization]: string } = {
-  [Specialization.CARDIOLOGIST]: "/images/cardio.png",
-  [Specialization.PEDIATRICIAN]: "/images/pediatrician.png",
-  [Specialization.GYNECOLOGIST]: "/images/gynecologist.png",
-  [Specialization.ORTHOPEDIC]: "/images/orthopedic.png",
-  [Specialization.DERMATOLOGIST]: "/images/dermatologist.png",
-  [Specialization.NEUROLOGIST]: "/images/neurologist.png",
-  [Specialization.GENERAL_PHYSICIAN]: "/images/general_physician.png",
-  [Specialization.ENT_SPECIALIST]: "/images/ent.png",
-  [Specialization.PSYCHIATRIST]: "/images/psychiatrist.png",
-  [Specialization.DIABETOLOGIST]: "/images/diabetologist.png",
-  [Specialization.DIETICIAN]: "/images/dietician.png",
+  [Specialization.CARDIOLOGIST]: "/images/Speciality/Cardiology.jpg",
+  [Specialization.PEDIATRICIAN]: "/images/Speciality/Pediatrician.jpg",
+  [Specialization.GYNECOLOGIST]: "/images/Speciality/Gyneology.jpg",
+  [Specialization.ORTHOPEDIC]: "/images/Speciality/Orthopedist.jpg",
+  [Specialization.DERMATOLOGIST]: "/images/Speciality/Dermatology.jpg",
+  [Specialization.NEUROLOGIST]: "/images/Speciality/Neutrology.jpg",
+  [Specialization.GENERAL_PHYSICIAN]: "/images/Speciality/Physician.jpg",
+  [Specialization.ENT_SPECIALIST]: "/images/Speciality/Ent.jpg",
+  [Specialization.PSYCHIATRIST]: "/images/Speciality/Phychiatry.jpg",
+  [Specialization.DIABETOLOGIST]: "/images/Speciality/Diabetology.jpg",
+  [Specialization.DIETICIAN]: "/images/Speciality/Dietician.jpg",
 };
 
 const SpecializationSection = () => {
-
   const navigate = useNavigate();
   const specializations = Object.values(Specialization);
   const [startIndex, setStartIndex] = useState(0);
@@ -47,26 +46,28 @@ const SpecializationSection = () => {
 
       <div className="relative">
         {/* Left Arrow */}
-        <Button
-          variant="ghost"
-          onClick={handlePrev}
-          disabled={startIndex === 0}
-          className="absolute left-[-24px] top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2"
-          size="icon"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </Button>
+        {startIndex > 0 && (
+          <Button
+            variant="ghost"
+            onClick={handlePrev}
+            className="absolute left-[-24px] top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2"
+            size="icon"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </Button>
+        )}
 
         {/* Right Arrow */}
-        <Button
-          variant="ghost"
-          onClick={handleNext}
-          disabled={startIndex + visibleCount >= specializations.length}
-          className="absolute right-[-24px] top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2"
-          size="icon"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </Button>
+        {startIndex + visibleCount < specializations.length && (
+          <Button
+            variant="ghost"
+            onClick={handleNext}
+            className="absolute right-[-24px] top-1/2 -translate-y-1/2 z-10 bg-white shadow-md rounded-full p-2"
+            size="icon"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </Button>
+        )}
 
         {/* Specializations Grid */}
         <div className="grid grid-cols-5 gap-4">
@@ -80,7 +81,7 @@ const SpecializationSection = () => {
                 <img
                   src={specializationImages[spec]}
                   alt={spec}
-                  className="w-16 h-16 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <div className="bg-secondary text-secondary-foreground text-center py-2 rounded-b-xl text-sm font-medium">

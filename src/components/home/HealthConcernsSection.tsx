@@ -53,7 +53,7 @@ const HealthConcernsSection = () => {
         <Button
           variant="outline"
           className="text-secondary border-sky-400 hover:bg-sky-50"
-          onClick={() => navigate("/ask-concern")}
+          onClick={() => navigate("/public/ask-concern")}
         >
           Ask Your Health Concern
         </Button>
