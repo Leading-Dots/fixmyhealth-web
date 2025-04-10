@@ -96,6 +96,27 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
       nextToken
       __typename
     }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     userId
     __typename
   }
@@ -129,6 +150,27 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
       nextToken
       __typename
     }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     userId
     __typename
   }
@@ -160,6 +202,27 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
     expertID
     reports {
       nextToken
+      __typename
+    }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
       __typename
     }
     userId

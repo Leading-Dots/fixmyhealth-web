@@ -173,6 +173,27 @@ export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
       nextToken
       __typename
     }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     userId
     __typename
   }
@@ -204,7 +225,12 @@ export const listAppointments = /* GraphQL */ `query ListAppointments(
       updatedAt
       healthConcernID
       expertID
-      userId
+      userId      
+      expert {
+        firstName
+        lastName
+        profilePictureUrl    
+      }
       __typename
     }
     nextToken
@@ -637,6 +663,26 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     weeklySchedule {
       dayOfWeek
       isAvailable
+      inClinicSlots {
+        startTime
+        endTime
+        __typename
+      }
+      audioCallSlots {
+        startTime
+        endTime
+        __typename
+      }
+      videoCallSlots {
+        startTime
+        endTime
+        __typename
+      }
+      breakSlots {
+        startTime
+        endTime
+        __typename
+      }
       __typename
     }
     appointments {

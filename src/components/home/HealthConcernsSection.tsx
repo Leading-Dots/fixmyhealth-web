@@ -55,7 +55,7 @@ const HealthConcernsSection = () => {
           className="text-secondary border-sky-400 hover:bg-sky-50"
           onClick={() => navigate("/public/ask-concern")}
         >
-          Ask Your Health Concern
+          Ask a Health Concern
         </Button>
       </div>
 
@@ -63,13 +63,14 @@ const HealthConcernsSection = () => {
       <div className="flex flex-row gap-4 overflow-x-auto">
         {concerns.length === 0 ? (
           <div className="text-sm text-muted-foreground">
-            No pending health concerns.
+            You haven’t raised any health concerns yet.
           </div>
         ) : (
           concerns.map((concern) => (
             <Card
               key={concern.id}
               className="min-w-[250px] max-w-[300px] h-20 border-2 border-grey rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between"
+              onClick={() => navigate(`/my-health-concerns`)}
             >
               <p className="font-medium text-sm truncate">{concern.title}</p>
               <p className="text-xs text-muted-foreground truncate">

@@ -13,7 +13,6 @@ import {
   BadgeCheck,
   Languages,
   DollarSign,
-  ArrowLeft,
   MapPin,
   LogIn,
 } from "lucide-react";
@@ -86,16 +85,7 @@ const ExpertDetail: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-5">
-      {/* Back Button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center text-blue-500 mb-5"
-      >
-        <ArrowLeft className="h-5 w-5 mr-2" />
-        Back
-      </button>
-
+    <div className="mx-auto">
       {/* Expert Profile Card */}
       <Card className="shadow-lg hover:shadow-xl transition rounded-xl">
         <CardHeader className="flex justify-between items-start w-full mb-4">

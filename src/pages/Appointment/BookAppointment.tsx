@@ -238,8 +238,9 @@ const BookAppointment: React.FC = () => {
     setIsSubmitting(true);
 
     // Format appointmentDateTime
-    const selectedDateTime = new Date(`${formData.appointmentDateTime}T${formData.startTime}:00Z`).toISOString();
-
+    const selectedDateTime = new Date(
+      `${formData.appointmentDateTime}T${formData.startTime}:00Z`
+    ).toISOString();
 
     try {
       // Generate meeting link if required
@@ -274,20 +275,9 @@ const BookAppointment: React.FC = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-5">
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center text-blue-500 mb-5"
-      >
-        <ArrowLeft className="h-5 w-5 mr-2" />
-        Back
-      </button>
-
+    <div className="max-w-5xl mx-auto">
       <Card className="shadow-lg hover:shadow-xl transition rounded-xl">
-        <CardHeader>
-          <CardTitle className="text-xl">Book an Appointment</CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {/* Date Carousel */}
           <div className="flex overflow-x-scroll gap-3 mb-5 scrollbar-hide">
             {futureDates.map((date) => (
@@ -295,7 +285,7 @@ const BookAppointment: React.FC = () => {
                 key={date}
                 className={`p-3 w-24 text-center rounded-lg cursor-pointer border transition-all duration-300 ${
                   selectedDate === date
-                    ? "bg-blue-500 text-white"
+                    ? "bg-secondary text-white"
                     : "bg-gray-100"
                 }`}
                 onClick={() => handleDateSelect(date)}
@@ -328,12 +318,23 @@ const BookAppointment: React.FC = () => {
               handleConcernTypeChange(value as ConcernType)
             }
           >
-            <TabsList className="w-full flex justify-between mb-5">
-              <TabsTrigger value={ConcernType.IN_CLINIC}>IN CLINIC</TabsTrigger>
-              <TabsTrigger value={ConcernType.AUDIO_CALL}>
+            <TabsList className="inline-flex items-center gap-3 p-1 bg-muted rounded-full mx-auto mb-5">
+              <TabsTrigger
+                value={ConcernType.IN_CLINIC}
+                className="px-4 py-1 text-sm rounded-full data-[state=active]:bg-secondary data-[state=active]:text-white"
+              >
+                IN CLINIC
+              </TabsTrigger>
+              <TabsTrigger
+                value={ConcernType.AUDIO_CALL}
+                className="px-4 py-1 text-sm rounded-full data-[state=active]:bg-secondary data-[state=active]:text-white"
+              >
                 AUDIO CALL
               </TabsTrigger>
-              <TabsTrigger value={ConcernType.VIDEO_CALL}>
+              <TabsTrigger
+                value={ConcernType.VIDEO_CALL}
+                className="px-4 py-1 text-sm rounded-full data-[state=active]:bg-secondary data-[state=active]:text-white"
+              >
                 VIDEO CALL
               </TabsTrigger>
             </TabsList>

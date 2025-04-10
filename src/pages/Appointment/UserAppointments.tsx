@@ -8,6 +8,7 @@ import { listAppointments } from "@/graphql/queries";
 import { updateAppointment } from "@/graphql/mutations";
 import { useAuth } from "@/hooks/useAuth";
 import { ConcernStatus } from "@/API";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Appointment = {
   id: string;
@@ -24,6 +25,11 @@ type Appointment = {
   updatedAt?: string | null;
   expertID?: string | null;
   userId?: string | null;
+  expert: {
+    firstName?: string;
+    lastName?: string;
+    profilePictureUrl?: string;
+  } | null;
 };
 
 const UserAppointments: React.FC = () => {
@@ -67,6 +73,14 @@ const UserAppointments: React.FC = () => {
         updatedAt: item.updatedAt || "",
         expertID: item.expertID || "",
         userId: item.userId || "",
+        expert: item.expert
+          ? {
+              firstName: item.expert.firstName || "",
+              lastName: item.expert.lastName || "",
+              profilePictureUrl: item.expert.profilePictureUrl || "",
+            }
+          : null,
+        __typename: "Appointment",
       }));
 
       setAppointments(mappedItems);
@@ -115,15 +129,15 @@ const UserAppointments: React.FC = () => {
   });
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-5">
+    <div className="mx-auto ">
       <div className="flex justify-between items-center mb-4">
         <div className="space-x-2">
           <button
             onClick={() => setTab("upcoming")}
             className={`px-4 py-2 rounded ${
               tab === "upcoming"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700"
+                ? "bg-secondary text-white"
+                : "bg-gray-200 text-gray-600"
             }`}
           >
             Upcoming
@@ -132,8 +146,8 @@ const UserAppointments: React.FC = () => {
             onClick={() => setTab("history")}
             className={`px-4 py-2 rounded ${
               tab === "history"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700"
+                ? "bg-secondary text-white"
+                : "bg-gray-200 text-gray-600"
             }`}
           >
             History
@@ -153,10 +167,7 @@ const UserAppointments: React.FC = () => {
       </div>
 
       <Card className="shadow-lg rounded-xl">
-        <CardHeader>
-          <CardTitle className="text-xl">My Appointments</CardTitle>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {isLoading ? (
             <p className="text-gray-500">Loading appointments...</p>
           ) : filteredAppointments.length === 0 ? (
@@ -179,7 +190,27 @@ const UserAppointments: React.FC = () => {
 
                 return (
                   <div key={appointment.id} className={cardClasses}>
-                    <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage
+                          src={appointment.expert?.profilePictureUrl}
+                          alt="Doctor"
+                        />
+                        <AvatarFallback>
+                          {appointment.expert?.firstName?.[0] ?? "D"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="text-sm">
+                        <p className="font-semibold">Appointment with:</p>
+                        <p>
+                          Dr.{" "}
+                          {appointment.expert
+                            ? `${appointment.expert.firstName} ${appointment.expert.lastName}`
+                            : "Doctor"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center mb-2 mt-2">
                       <h3 className="text-lg font-semibold capitalize">
                         {appointment.concernType?.replace("_", " ") || "N/A"}
                       </h3>

@@ -86,6 +86,27 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
       nextToken
       __typename
     }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     userId
     __typename
   }
@@ -118,6 +139,27 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
       nextToken
       __typename
     }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
+      __typename
+    }
     userId
     __typename
   }
@@ -148,6 +190,27 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
     expertID
     reports {
       nextToken
+      __typename
+    }
+    expert {
+      id
+      firstName
+      lastName
+      email
+      mobile
+      education
+      introduction
+      profilePictureUrl
+      experience
+      averageRating
+      totalReviews
+      profileStatus
+      Specialization
+      ConsultationFee
+      LanguageSpoken
+      clinicLocation
+      createdAt
+      updatedAt
       __typename
     }
     userId

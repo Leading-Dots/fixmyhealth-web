@@ -1,4 +1,5 @@
 import { DialogLoader } from "@/components/common/DialogLoader";
+import AppointmentSection from "@/components/home/AppointmnetSection";
 import ArticleSection from "@/components/home/ArticleSection";
 import HealthConcernsSection from "@/components/home/HealthConcernsSection";
 import SpecializationsSection from "@/components/home/SpecializationSection";
@@ -14,6 +15,9 @@ const Home = () => {
     <main className="container p-2 space-y-5">
       <div className="max-w-3xl mx-auto">
         <HealthConcernsSection />
+      </div>
+      <div className="max-w-3xl mx-auto">
+        <AppointmentSection />
       </div>
       <div className="max-w-3xl mx-auto">
         <SpecializationsSection />

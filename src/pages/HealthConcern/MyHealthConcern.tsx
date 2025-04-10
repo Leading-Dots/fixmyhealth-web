@@ -58,9 +58,7 @@ const MyHealthConcern: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ConcernStatus>(
     ConcernStatus.PENDING
   );
-  const [expandedConcernId, setExpandedConcernId] = useState<string | null>(
-    null
-  );
+  const [expandedExpertId, setExpandedExpertId] = useState<string | null>(null);
   const [expertDetails, setExpertDetails] = useState<{
     [key: string]: ExpertDetails | null;
   }>({});
@@ -98,7 +96,9 @@ const MyHealthConcern: React.FC = () => {
   // Fetch response by health concern ID
   const fetchResponseByConcernId = async (concernId: string) => {
     if (responses[concernId]) {
-      setExpandedConcernId(expandedConcernId === concernId ? null : concernId);
+      setExpandedResponseId(
+        expandedResponseId === concernId ? null : concernId
+      );
       return;
     }
 
@@ -114,7 +114,7 @@ const MyHealthConcern: React.FC = () => {
         result.data.responsesByHealthconcernID.items?.[0] || null;
 
       setResponses((prev) => ({ ...prev, [concernId]: response }));
-      setExpandedConcernId(concernId);
+      setExpandedResponseId(concernId);
     } catch (error) {
       console.error("Error fetching response:", error);
       toast.error("Failed to load response.");
@@ -148,7 +148,7 @@ const MyHealthConcern: React.FC = () => {
   // Fetch expert details by ID
   const fetchExpertDetails = async (expertId: string, concernId: string) => {
     if (expertDetails[concernId]) {
-      setExpandedConcernId(expandedConcernId === concernId ? null : concernId);
+      setExpandedExpertId(expandedExpertId === concernId ? null : concernId);
       return; // If already loaded, just toggle
     }
 
@@ -163,7 +163,7 @@ const MyHealthConcern: React.FC = () => {
         [concernId]: result.data.getExpert || null,
       }));
 
-      setExpandedConcernId(concernId);
+      setExpandedExpertId(concernId);
     } catch (error) {
       console.error("Error fetching expert details:", error);
       toast.error("Failed to load expert details.");
@@ -176,11 +176,7 @@ const MyHealthConcern: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-5">
-      <h1 className="text-2xl font-bold text-center mb-5">
-        My Health Concerns
-      </h1>
-
+    <div className="mx-auto">
       {/* Tabs Navigation */}
       <Tabs
         defaultValue="PENDING"
@@ -222,15 +218,22 @@ const MyHealthConcern: React.FC = () => {
                       </p>
                     </div>
                     {/* Status Badge */}
-                    <Badge
-                      className={`px-2 py-1 text-xs font-medium rounded-full border ${getBadgeColor(
-                        concern.concernStatus
-                      )}`}
-                    >
-                      {concern.concernStatus === ConcernStatus.PENDING
-                        ? "Pending"
-                        : "Reviewed"}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        className={`px-2 py-1 text-xs font-medium rounded-full border ${getBadgeColor(
+                          concern.concernStatus
+                        )}`}
+                      >
+                        {concern.concernStatus === ConcernStatus.PENDING
+                          ? "Pending"
+                          : "Reviewed"}
+                      </Badge>
+                      {!concern?.healthConcernHealthConcernExpertId && (
+                        <Badge className="bg-gray-200 text-gray-700 border border-gray-400">
+                          Unassigned
+                        </Badge>
+                      )}
+                    </div>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <p className="text-sm text-gray-700">
@@ -249,7 +252,7 @@ const MyHealthConcern: React.FC = () => {
                     )}
 
                     {/* Button to View Expert Details */}
-                    {concern.healthConcernHealthConcernExpertId && (
+                    {concern?.healthConcernHealthConcernExpertId && (
                       <Button
                         variant="outline"
                         className="w-full"
@@ -260,14 +263,14 @@ const MyHealthConcern: React.FC = () => {
                           )
                         }
                       >
-                        {expandedConcernId === concern.id
+                        {expandedExpertId === concern.id
                           ? "Hide Expert"
                           : "View Expert"}
                       </Button>
                     )}
 
                     {/* Expert Details Section */}
-                    {expandedConcernId === concern.id &&
+                    {expandedExpertId === concern.id &&
                       expertDetails[concern.id] && (
                         <div
                           className="bg-gray-50 p-4 mt-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition"
@@ -314,13 +317,13 @@ const MyHealthConcern: React.FC = () => {
                         className="w-full mt-2"
                         onClick={() => fetchResponseByConcernId(concern.id)}
                       >
-                        {expandedConcernId === concern.id
+                        {expandedResponseId === concern.id
                           ? "Hide Response"
                           : "View Response"}
                       </Button>
                     )}
                     {/* Show response if expanded */}
-                    {expandedConcernId === concern.id &&
+                    {expandedResponseId === concern.id &&
                       responses[concern.id] && (
                         <div className="bg-gray-100 p-4 rounded-lg mt-4 border">
                           <h4 className="text-md font-semibold">
