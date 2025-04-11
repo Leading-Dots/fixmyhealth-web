@@ -64,7 +64,7 @@ const PublicHealthConcern: React.FC = () => {
         preferredDate: formData.preferredDate || undefined,
         preferredTimeSlot: formData.preferredTimeSlot || undefined,
         userID: user?.id,
-        expertId: ""
+        expertId: null
       };
 
       await client.graphql({
@@ -72,7 +72,7 @@ const PublicHealthConcern: React.FC = () => {
         variables: { input },
       });
 
-      navigate("-1");
+      navigate("/home");
     } catch (error) {
       console.error("Failed to submit health concern:", error);
     } finally {

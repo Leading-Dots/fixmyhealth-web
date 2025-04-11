@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { UserCheck } from "lucide-react";
 import { ConcernStatus } from "@/API";
+import { useNavigate } from "react-router-dom";
 
 interface HealthConcern {
   id: string;
@@ -27,6 +28,8 @@ interface HealthConcern {
 }
 
 const UnassignedHealthConcerns: React.FC = () => {
+
+  const navigate = useNavigate();
   const [concerns, setConcerns] = useState<HealthConcern[]>([]);
 
   useEffect(() => {
@@ -77,6 +80,7 @@ const UnassignedHealthConcerns: React.FC = () => {
         <Card
           key={concern.id}
           className="flex items-center justify-between px-4 py-3 shadow-sm"
+          onClick={ () => navigate(`/concern-details/${concern?.id}`)}
         >
           <div className="flex items-center gap-4">
             <Avatar className="h-12 w-12">

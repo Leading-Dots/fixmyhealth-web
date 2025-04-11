@@ -25,6 +25,7 @@ import ReportsPage from "@/pages/Reports/ReportPage";
 import FamilyMembersPage from "@/pages/FamilyMember/FamilyMember";
 import AddFamilyMember from "@/pages/FamilyMember/AddFamilyMember";
 import PublicHealthConcern from "@/components/home/PublicHealhConcern";
+import ConcernDetail from "@/pages/HealthConcern/ConcernDetail";
 
 const routes = [
   {
@@ -156,6 +157,14 @@ const routes = [
     element: (
       <DashboardLayout>
         <ReviewConcern/>
+      </DashboardLayout>
+    ),
+  },    
+  {
+    path: "/concern-details/:id",
+    element: (
+      <DashboardLayout>
+        <ConcernDetail/>
       </DashboardLayout>
     ),
   },  
