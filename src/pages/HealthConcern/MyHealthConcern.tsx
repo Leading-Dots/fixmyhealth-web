@@ -137,11 +137,11 @@ const MyHealthConcern: React.FC = () => {
   const getBadgeColor = (status: ConcernStatus) => {
     switch (status) {
       case ConcernStatus.PENDING:
-        return "bg-yellow-100 text-yellow-700 border-yellow-400"; // Yellow for pending
+        return "bg-yellow-100 text-yellow-700 border-yellow-400 hover:bg-yelllow-100"; // Yellow for pending
       case ConcernStatus.ANSWERED:
-        return "bg-green-100 text-green-700 border-green-400"; // Green for reviewed
+        return "bg-green-100 text-green-700 border-green-400 hover:bg-green-100"; // Green for reviewed
       default:
-        return "bg-gray-100 text-gray-700 border-gray-400"; // Default for other statuses
+        return "bg-gray-100 text-gray-700 border-gray-400 hover:bg-gray-100"; // Default for other statuses
     }
   };
 
@@ -229,7 +229,7 @@ const MyHealthConcern: React.FC = () => {
                           : "Reviewed"}
                       </Badge>
                       {!concern?.healthConcernHealthConcernExpertId && (
-                        <Badge className="bg-gray-200 text-gray-700 border border-gray-400">
+                        <Badge className="bg-gray-200 text-gray-700 border border-gray-400 hover:bg-gray-200">
                           Unassigned
                         </Badge>
                       )}

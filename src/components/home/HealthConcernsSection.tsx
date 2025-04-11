@@ -7,6 +7,7 @@ import { ConcernStatus, HealthConcern } from "@/API";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
+import { LogIn } from "lucide-react";
 
 const HealthConcernsSection = () => {
   const { user } = useAuth();
@@ -37,13 +38,31 @@ const HealthConcernsSection = () => {
   const getBadgeColor = (status: ConcernStatus) => {
     switch (status) {
       case ConcernStatus.PENDING:
-        return "bg-yellow-100 text-yellow-700 border-yellow-400";
+        return "bg-yellow-100 text-yellow-700 border-yellow-400 hover:bg-yelllow-100";
       case ConcernStatus.ANSWERED:
-        return "bg-green-100 text-green-700 border-green-400";
+        return "bg-green-100 text-green-700 border-green-400 hover:bg-green-100";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-400";
+        return "bg-gray-100 text-gray-700 border-gray-400 hover:bg-gray-100";
     }
   };
+
+  if (!user) {
+    return (
+      <div className=" border border-[2px] border-gray-100 p-6 rounded-xl text-center shadow-md">
+        <h2 className="text-xl font-semibold mb-2">
+          Login to Ask Health Concerns
+        </h2>
+        <Button
+          variant="outline"
+          className="text-secondary border-sky-400 hover:bg-sky-50"
+          onClick={() => navigate(`/login`)}
+        >
+          <LogIn className="h-5 w-5 mr-2" />
+          Go to Login
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -79,7 +98,7 @@ const HealthConcernsSection = () => {
                     concern.concernStatus as ConcernStatus
                   )}`}
                 >
-                  {concern.concernStatus}
+                  {concern.concernStatus === "PENDING" ? "Pending" : "Reviewed"}
                 </Badge>
               </p>
             </Card>

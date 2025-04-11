@@ -360,7 +360,7 @@ const BookAppointment: React.FC = () => {
                       }
                       className={`transition-all duration-300 ${
                         formData.startTime === slot.startTime
-                          ? "bg-blue-500 text-white hover:bg-blue-600"
+                          ? "bg-secondary text-white hover:bg-secondary"
                           : "hover:bg-gray-200"
                       }`}
                     >

@@ -122,7 +122,7 @@ const AllArticles: React.FC = () => {
       {/* Back to Home Button */}
       <div className="flex justify-center mt-8">
         <Button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
           className="flex items-center gap-2 hover:bg-sky-500"
         >
           <ArrowLeft size={18} />

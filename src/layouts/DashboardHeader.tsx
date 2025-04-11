@@ -1,35 +1,69 @@
 import { useAuth } from "@/hooks/useAuth";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { Inbox } from "lucide-react";
+import { Inbox, User, UserPlus, ShieldCheck } from "lucide-react";
+import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+
+type UserRole = "guest" | "patient" | "doctor";
 
 const DashboardHeader = () => {
   const location = useLocation();
   const { user } = useAuth();
-  const formatHeaderTitle = (pathname: string) => {
-    // Get the first part of the path (e.g., 'profile' from 'profile/steps')
-    const firstPath = pathname.split("/").filter(Boolean)[0] || "";
 
-    // Split by hyphens and format only the first part
+  const formatHeaderTitle = (pathname: string) => {
+    const firstPath = pathname.split("/").filter(Boolean)[0] || "";
     const path = firstPath
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-
     useDocumentTitle(path);
     return path;
   };
+
+  // Determine user role
+  const rawRole = user?.role;
+  const role: UserRole =
+    rawRole === "patient" || rawRole === "doctor" ? rawRole : "guest";
+
+    const roleDisplay = useMemo(() => ({
+      guest: {
+        label: "Guest",
+        icon: <UserPlus size={16} />,
+        color: "bg-sky-100 text-primary",
+      },
+      patient: {
+        label: "Patient",
+        icon: <User size={16} />,
+        color: "bg-sky-100 text-primary",
+      },
+      doctor: {
+        label: "Expert",
+        icon: <ShieldCheck size={16} />,
+        color: "bg-sky-100 text-primary",
+      },
+    }), []);
+
+  const { label, icon, color } = roleDisplay[role] || roleDisplay["guest"];
 
   return (
     <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
       <h1 className="text-2xl font-semibold text-[#23408e]">
         {formatHeaderTitle(location.pathname)}
       </h1>
+
       <div className="flex flex-1 justify-end items-center gap-3">
-        
+        {/* Role Badge */}
+        <div
+          className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${color}`}
+        >
+          {icon}
+          <span>{label}</span>
+        </div>
+
+        {/* Inbox Icon */}
         {user && (
           <Link to="/inbox">
-            <div className="flex items-center  cursor-pointer">
+            <div className="flex items-center cursor-pointer">
               <Inbox size={24} />
             </div>
           </Link>
