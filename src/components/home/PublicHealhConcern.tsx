@@ -29,6 +29,7 @@ const PublicHealthConcern: React.FC = () => {
     concernType: ConcernType.TEXT,
     preferredDate: "",
     preferredTimeSlot: "",
+    expertId: "",
   });
   
   const [submitting, setSubmitting] = useState(false);
@@ -63,6 +64,7 @@ const PublicHealthConcern: React.FC = () => {
         preferredDate: formData.preferredDate || undefined,
         preferredTimeSlot: formData.preferredTimeSlot || undefined,
         userID: user?.id,
+        expertId: ""
       };
 
       await client.graphql({

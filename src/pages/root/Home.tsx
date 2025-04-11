@@ -3,6 +3,7 @@ import AppointmentSection from "@/components/home/AppointmnetSection";
 import ArticleSection from "@/components/home/ArticleSection";
 import HealthConcernsSection from "@/components/home/HealthConcernsSection";
 import SpecializationsSection from "@/components/home/SpecializationSection";
+import UnassignedHealthConcerns from "@/components/home/UnassignedHealthConcerns";
 import { useAuth } from "@/hooks/useAuth";
 import React from "react";
 
@@ -27,6 +28,13 @@ const Home = () => {
         <div>
           <AppointmentSection />
         </div>
+      )}
+
+      {/* Show only for doctor */}
+      {(role === "doctor") && (
+      <div>
+        <UnassignedHealthConcerns />
+      </div>
       )}
 
       {/* Show for patient or guest */}

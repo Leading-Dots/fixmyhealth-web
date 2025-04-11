@@ -108,6 +108,23 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
       __typename
     }
     userId
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -161,6 +178,23 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
       __typename
     }
     userId
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -214,6 +248,23 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
       __typename
     }
     userId
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -502,6 +553,10 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
       nextToken
       __typename
     }
+    HealthConcerns {
+      nextToken
+      __typename
+    }
     Specialization
     ConsultationFee
     LanguageSpoken
@@ -547,6 +602,10 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
     }
     profileStatus
     ExpertArticles {
+      nextToken
+      __typename
+    }
+    HealthConcerns {
       nextToken
       __typename
     }
@@ -598,6 +657,10 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
       nextToken
       __typename
     }
+    HealthConcerns {
+      nextToken
+      __typename
+    }
     Specialization
     ConsultationFee
     LanguageSpoken
@@ -624,11 +687,29 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
     userID
     preferredDate
     preferredTimeSlot
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     HealthConcernResponses {
       nextToken
       __typename
     }
-    HealthConcernExpert {
+    expertId
+    Expert {
       id
       firstName
       lastName
@@ -655,7 +736,6 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       __typename
     }
     updatedAt
-    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -676,11 +756,29 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
     userID
     preferredDate
     preferredTimeSlot
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     HealthConcernResponses {
       nextToken
       __typename
     }
-    HealthConcernExpert {
+    expertId
+    Expert {
       id
       firstName
       lastName
@@ -707,7 +805,6 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       __typename
     }
     updatedAt
-    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -728,11 +825,29 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
     userID
     preferredDate
     preferredTimeSlot
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     HealthConcernResponses {
       nextToken
       __typename
     }
-    HealthConcernExpert {
+    expertId
+    Expert {
       id
       firstName
       lastName
@@ -759,7 +874,6 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       __typename
     }
     updatedAt
-    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -860,6 +974,10 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
       nextToken
       __typename
     }
+    appointments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -899,6 +1017,10 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       nextToken
       __typename
     }
+    appointments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -935,6 +1057,10 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     profilePictureUrl
     profileStatus
     UserReports {
+      nextToken
+      __typename
+    }
+    appointments {
       nextToken
       __typename
     }

@@ -24,7 +24,7 @@ type HealthConcern = {
   attachments?: string | null;
   createdAt: string;
   updatedAt: string;
-  healthConcernHealthConcernExpertId?: string | null; // Expert ID
+  expertId?: string | null; 
 };
 // Type definitions for responses
 type Response = {
@@ -228,7 +228,7 @@ const MyHealthConcern: React.FC = () => {
                           ? "Pending"
                           : "Reviewed"}
                       </Badge>
-                      {!concern?.healthConcernHealthConcernExpertId && (
+                      {!concern?.expertId && (
                         <Badge className="bg-gray-200 text-gray-700 border border-gray-400 hover:bg-gray-200">
                           Unassigned
                         </Badge>
@@ -252,13 +252,13 @@ const MyHealthConcern: React.FC = () => {
                     )}
 
                     {/* Button to View Expert Details */}
-                    {concern?.healthConcernHealthConcernExpertId && (
+                    {concern?.expertId && (
                       <Button
                         variant="outline"
                         className="w-full"
                         onClick={() =>
                           fetchExpertDetails(
-                            concern.healthConcernHealthConcernExpertId!,
+                            concern.expertId!,
                             concern.id
                           )
                         }

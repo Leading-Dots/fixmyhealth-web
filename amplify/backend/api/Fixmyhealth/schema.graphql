@@ -28,7 +28,9 @@ type Appointment @model @auth(rules: [{allow: public}]) {
   expertID: ID! @index(name: "byExpert")
   reports: [Report] @hasMany(indexName: "byAppointment", fields: ["id"])  
   expert: Expert @belongsTo(fields: ["expertID"])
-  userId: String
+  userId: ID! @index(name: "byUser")
+  user: User @belongsTo(fields: ["userId"])
+
 }
 
 enum ConcernType {
@@ -127,6 +129,7 @@ type Expert @model @auth(rules: [{allow: public}]) {
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
   profileStatus: ProfileStatus
   ExpertArticles: [Article] @hasMany(indexName: "byExpert", fields: ["id"])
+  HealthConcerns: [HealthConcern] @hasMany(indexName: "byExpert", fields: ["id"])
   Specialization: Specialization
   ConsultationFee: Int
   LanguageSpoken: String
@@ -149,8 +152,10 @@ type HealthConcern @model @auth(rules: [{allow: public}]) {
   userID: ID! @index(name: "byUser")  
   preferredDate: AWSDate
   preferredTimeSlot: String
+  user: User @belongsTo(fields: ["userID"])
   HealthConcernResponses: [Response] @hasMany(indexName: "byHealthConcern", fields: ["id"])
-  HealthConcernExpert: Expert @hasOne
+  expertId: ID @index(name: "byExpert")
+  Expert: Expert @belongsTo(fields: ["expertId"])
   concernType: ConcernType
   reports: [Report] @hasMany(indexName: "byHealthConcern", fields: ["id"])
 }
@@ -188,6 +193,7 @@ type User @model @auth(rules: [{allow: public}]) {
   UserReviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
   profilePictureUrl: String
   profileStatus: ProfileStatus
-  UserReports: [Report] @hasMany(indexName: "byUser", fields: ["id"])
+  UserReports: [Report] @hasMany(indexName: "byUser", fields: ["id"])  
+  appointments: [Appointment] @hasMany(indexName: "byUser", fields: ["id"])
 }
  

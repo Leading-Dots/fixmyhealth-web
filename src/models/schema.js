@@ -896,7 +896,7 @@ export const schema = {
                             "id"
                         ],
                         "targetNames": [
-                            "healthConcernHealthConcernExpertId"
+                            "expertId"
                         ]
                     }
                 },
@@ -933,8 +933,8 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "healthConcernHealthConcernExpertId": {
-                    "name": "healthConcernHealthConcernExpertId",
+                "expertId": {
+                    "name": "expertId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,

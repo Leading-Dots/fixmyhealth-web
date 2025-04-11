@@ -118,6 +118,23 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
       __typename
     }
     userId
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -172,6 +189,23 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
       __typename
     }
     userId
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -226,6 +260,23 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
       __typename
     }
     userId
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     __typename
   }
 }
@@ -544,6 +595,10 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
       nextToken
       __typename
     }
+    HealthConcerns {
+      nextToken
+      __typename
+    }
     Specialization
     ConsultationFee
     LanguageSpoken
@@ -592,6 +647,10 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
     }
     profileStatus
     ExpertArticles {
+      nextToken
+      __typename
+    }
+    HealthConcerns {
       nextToken
       __typename
     }
@@ -646,6 +705,10 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
       nextToken
       __typename
     }
+    HealthConcerns {
+      nextToken
+      __typename
+    }
     Specialization
     ConsultationFee
     LanguageSpoken
@@ -673,11 +736,29 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
     userID
     preferredDate
     preferredTimeSlot
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     HealthConcernResponses {
       nextToken
       __typename
     }
-    HealthConcernExpert {
+    expertId
+    Expert {
       id
       firstName
       lastName
@@ -704,7 +785,6 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       __typename
     }
     updatedAt
-    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -726,11 +806,29 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
     userID
     preferredDate
     preferredTimeSlot
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     HealthConcernResponses {
       nextToken
       __typename
     }
-    HealthConcernExpert {
+    expertId
+    Expert {
       id
       firstName
       lastName
@@ -757,7 +855,6 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       __typename
     }
     updatedAt
-    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -779,11 +876,29 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
     userID
     preferredDate
     preferredTimeSlot
+    user {
+      id
+      firstName
+      lastName
+      email
+      dob
+      mobile
+      address
+      height
+      weight
+      subscriptionStatus
+      profilePictureUrl
+      profileStatus
+      createdAt
+      updatedAt
+      __typename
+    }
     HealthConcernResponses {
       nextToken
       __typename
     }
-    HealthConcernExpert {
+    expertId
+    Expert {
       id
       firstName
       lastName
@@ -810,7 +925,6 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       __typename
     }
     updatedAt
-    healthConcernHealthConcernExpertId
     __typename
   }
 }
@@ -917,6 +1031,10 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
       nextToken
       __typename
     }
+    appointments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -959,6 +1077,10 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
       nextToken
       __typename
     }
+    appointments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -998,6 +1120,10 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     profilePictureUrl
     profileStatus
     UserReports {
+      nextToken
+      __typename
+    }
+    appointments {
       nextToken
       __typename
     }

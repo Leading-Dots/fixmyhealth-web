@@ -29,6 +29,11 @@ type Appointment = {
     firstName?: string;
     lastName?: string;
     profilePictureUrl?: string;
+  } | null;  
+  user: {
+    firstName?: string;
+    lastName?: string;
+    profilePictureUrl?: string;
   } | null;
 };
 
@@ -80,6 +85,13 @@ const UserAppointments: React.FC = () => {
               profilePictureUrl: item.expert.profilePictureUrl || "",
             }
           : null,
+        user: item.user
+        ? {
+            firstName: item.user.firstName || "",
+            lastName: item.user.lastName || "",
+            profilePictureUrl: item.user.profilePictureUrl || "",
+          }
+        : null,
         __typename: "Appointment",
       }));
 
@@ -175,7 +187,9 @@ const UserAppointments: React.FC = () => {
           ) : (
             <div className="space-y-4">
               {filteredAppointments.map((appointment) => {
-                const upcoming = isUpcoming(appointment.appointmentDateTime);
+                const upcoming = isUpcoming(appointment.appointmentDateTime);                
+                const isDoctor = user?.role === "doctor";
+                const person = isDoctor ? appointment?.user : appointment?.expert;
 
                 let cardClasses = "p-4 rounded-lg border transition ";
                 if (appointment.concernStatus === "PENDING") {
@@ -193,23 +207,23 @@ const UserAppointments: React.FC = () => {
                     <div className="flex items-center gap-3">
                       <Avatar className="h-10 w-10">
                         <AvatarImage
-                          src={appointment.expert?.profilePictureUrl}
+                          src={person?.profilePictureUrl}
                           alt="Doctor"
                         />
                         <AvatarFallback>
-                          {appointment.expert?.firstName?.[0] ?? "D"}
+                          {person?.firstName?.[0] ?? "D"}
                         </AvatarFallback>
                       </Avatar>
                       <div className="text-sm">
-                        <p className="font-semibold">Appointment with:</p>
-                        <p>
-                          Dr.{" "}
-                          {appointment.expert
-                            ? `${appointment.expert.firstName} ${appointment.expert.lastName}`
-                            : "Doctor"}
-                        </p>
+                      {user?.role === "doctor" ? "Patient:" : "Appointment with:"}
+                      <p>
+                      {user?.role === "doctor"
+                        ? `${appointment.user?.firstName} ${appointment.user?.lastName}`
+                        : `Dr. ${appointment.expert?.firstName} ${appointment.expert?.lastName}`}
+                    </p>
                       </div>
                     </div>
+
                     <div className="flex justify-between items-center mb-2 mt-2">
                       <h3 className="text-lg font-semibold capitalize">
                         {appointment.concernType?.replace("_", " ") || "N/A"}

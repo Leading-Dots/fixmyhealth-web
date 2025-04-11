@@ -46,7 +46,7 @@ const ConsultExpert: React.FC = () => {
             description: concern,
             attachments: attachmentUrl,
             userID: user?.id,
-            healthConcernHealthConcernExpertId: id,
+            expertId: id,
             concernStatus: ConcernStatus.PENDING, // Default status
           },
         },

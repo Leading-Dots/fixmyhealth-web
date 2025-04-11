@@ -76,11 +76,11 @@ const AssignedConcerns: React.FC = () => {
     try {
       const filter = status
         ? {
-            healthConcernHealthConcernExpertId: { eq: user.id },
+          expertId: { eq: user.id },
             concernStatus: { eq: status },
           }
         : {
-            healthConcernHealthConcernExpertId: { eq: user.id },
+          expertId: { eq: user.id },
           };
 
       const result: any = await client.graphql({

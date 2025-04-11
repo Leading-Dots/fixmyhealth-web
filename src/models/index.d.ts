@@ -352,7 +352,7 @@ type EagerHealthConcern = {
   readonly concernType?: ConcernType | keyof typeof ConcernType | null;
   readonly reports?: (Report | null)[] | null;
   readonly updatedAt?: string | null;
-  readonly healthConcernHealthConcernExpertId?: string | null;
+  readonly expertId?: string | null;
 }
 
 type LazyHealthConcern = {
@@ -372,7 +372,7 @@ type LazyHealthConcern = {
   readonly concernType?: ConcernType | keyof typeof ConcernType | null;
   readonly reports: AsyncCollection<Report>;
   readonly updatedAt?: string | null;
-  readonly healthConcernHealthConcernExpertId?: string | null;
+  readonly expertId?: string | null;
 }
 
 export declare type HealthConcern = LazyLoading extends LazyLoadingDisabled ? EagerHealthConcern : LazyHealthConcern
