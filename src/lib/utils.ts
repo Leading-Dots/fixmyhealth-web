@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 import { DoctorProfileFormValues, PatientProfileFormValues } from "@/lib/zod";
-import { DayScheduleInput } from "@/API";
+import { ConcernType, DayScheduleInput } from "@/API";
 
 type ProfileData = DoctorProfileFormValues | PatientProfileFormValues | null;
 
@@ -140,4 +140,16 @@ export const calculateAge = (dob: string): number => {
   }
   return age;
 };
+
+export const generateMeetingLink = async (concernType: ConcernType): Promise<string> => {
+  if (
+    concernType === ConcernType.AUDIO_CALL ||
+    concernType === ConcernType.VIDEO_CALL
+  ) {
+    const type = concernType === ConcernType.AUDIO_CALL ? "audio" : "video";
+    return `https://meeting.example.com/${type}/${Date.now()}`;
+  }
+  return "";
+};
+
 

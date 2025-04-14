@@ -13,6 +13,7 @@ import { createAppointment } from "@/graphql/mutations";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { showToast } from "@/lib/toast";
+import { generateMeetingLink } from "@/lib/utils";
 
 // Enum for concern types
 enum ConcernType {
@@ -214,22 +215,6 @@ const BookAppointment: React.FC = () => {
       startTime,
       endTime,
     }));
-  };
-
-  // Generate meeting link dynamically
-  const generateMeetingLink = async (
-    concernType: ConcernType
-  ): Promise<string> => {
-    if (
-      concernType === ConcernType.AUDIO_CALL ||
-      concernType === ConcernType.VIDEO_CALL
-    ) {
-      // Simulate meeting link generation
-      const meetingType =
-        concernType === ConcernType.AUDIO_CALL ? "audio" : "video";
-      return `https://meeting.example.com/${meetingType}/${Date.now()}`;
-    }
-    return "";
   };
 
   // Submit appointment

@@ -193,13 +193,13 @@ const UserAppointments: React.FC = () => {
 
                 let cardClasses = "p-4 rounded-lg border transition ";
                 if (appointment.concernStatus === "PENDING") {
-                  cardClasses += "bg-yellow-100 border-yellow-400";
+                  cardClasses += "border-yellow-400";
                 } else if (appointment.concernStatus === "ANSWERED") {
-                  cardClasses += "bg-green-100 border-green-400";
+                  cardClasses += "border-green-400";
                 } else if (appointment.concernStatus === "CLOSED") {
-                  cardClasses += "bg-gray-100 border-gray-400";
+                  cardClasses += "border-gray-400";
                 } else {
-                  cardClasses += "bg-white border-gray-300";
+                  cardClasses += "border-gray-300";
                 }
 
                 return (

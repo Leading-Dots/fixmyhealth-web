@@ -178,7 +178,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  //Todo: This is not working and will be used for switching roles for the same user in the future
   const switchUserRole = async () => {
     try {
       setLoading(true);

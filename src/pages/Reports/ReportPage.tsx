@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { reportsByUserID } from "@/graphql/queries";
-import { deleteReport } from "@/graphql/mutations";
+import { createReport, deleteReport, updateReport } from "@/graphql/mutations";
 import {
   Table,
   TableHeader,
@@ -13,10 +13,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import client from "@/lib/apiClient";
 import { useAuth } from "@/hooks/useAuth";
-import { Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import DeleteConfirmationDialog from "@/components/common/DeleteConfirmationDialog";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { uploadPatientReports } from "@/lib/storage";
 interface Report {
   id: string;
   fileUrl: string;
@@ -32,6 +39,11 @@ const UserReports = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
+  const [editingReportId, setEditingReportId] = useState<string | null>(null);
+  const [editedFileName, setEditedFileName] = useState<string>("");
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [renameLoadingId, setRenameLoadingId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -68,7 +80,9 @@ const UserReports = () => {
       });
 
       // Remove deleted report from state
-      setReports((prevReports) => prevReports.filter((r) => r.id !== selectedReportId));
+      setReports((prevReports) =>
+        prevReports.filter((r) => r.id !== selectedReportId)
+      );
       toast.success("Report deleted successfully!");
     } catch (error) {
       console.error("Error deleting report:", error);
@@ -81,10 +95,98 @@ const UserReports = () => {
 
   if (loading) return <p>Loading reports...</p>;
 
+  const handleUpload = async () => {
+    if (!selectedFile || !userID) return;
+
+    try {
+      const fileUrl = await uploadPatientReports(selectedFile, user?.id);
+      const fileName = selectedFile.name;
+      const fileType = selectedFile.type;
+
+      await client.graphql({
+        query: createReport,
+        variables: {
+          input: {
+            fileUrl,
+            fileName,
+            fileType,
+            userID,
+          },
+        },
+      });
+
+      toast.success("Report uploaded successfully!");
+      setUploadModalOpen(false);
+      setSelectedFile(null);
+
+      // Refresh the report list
+      const response: any = await client.graphql({
+        query: reportsByUserID,
+        variables: { userID },
+      });
+      setReports(response.data.reportsByUserID.items || []);
+    } catch (error) {
+      console.error("Upload failed:", error);
+      toast.error("Failed to upload report.");
+    }
+  };
+
+  const handleRename = async (reportId: string) => {
+    if (!editedFileName.trim()) {
+      toast.error("File name cannot be empty.");
+      return;
+    }
+
+    if (
+      reports.find((r) => r.id === reportId)?.fileName === editedFileName.trim()
+    ) {
+      setEditingReportId(null); // No change
+      return;
+    }
+
+    try {
+      setRenameLoadingId(reportId);
+      await client.graphql({
+        query: updateReport,
+        variables: {
+          input: {
+            id: reportId,
+            fileName: editedFileName.trim(),
+          },
+        },
+      });
+
+      // Optimistically update state
+      setReports((prev) =>
+        prev.map((report) =>
+          report.id === reportId
+            ? { ...report, fileName: editedFileName.trim() }
+            : report
+        )
+      );
+
+      toast.success("Report name updated!");
+    } catch (error) {
+      console.error("Rename failed:", error);
+      toast.error("Failed to rename report.");
+    } finally {
+      setRenameLoadingId(null);
+      setEditingReportId(null);
+    }
+  };
+
   return (
     <Card>
       <CardContent>
-        <h2 className="text-xl font-semibold mb-4">My Reports</h2>
+        <div className="flex justify-end  mb-4 mt-4">
+          <Button
+            variant="outline"
+            className="text-secondary border-sky-400 hover:bg-sky-50"
+            onClick={() => setUploadModalOpen(true)}
+          >
+            <Plus className="mr-1 h-4 w-4" /> Upload Report
+          </Button>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -98,23 +200,47 @@ const UserReports = () => {
             {reports.length > 0 ? (
               reports.map((report) => (
                 <TableRow key={report.id}>
-                  <TableCell>
-                    <a
-                      href={report.fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      {report.fileName}
-                    </a>
+                  <TableCell
+                    onClick={() => {
+                      if (!renameLoadingId) {
+                        setEditingReportId(report.id);
+                        setEditedFileName(report.fileName);
+                      }
+                    }}
+                  >
+                    {editingReportId === report.id ? (
+                      <input
+                        autoFocus
+                        type="text"
+                        value={editedFileName}
+                        onChange={(e) => setEditedFileName(e.target.value)}
+                        onBlur={() => handleRename(report.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") e.currentTarget.blur();
+                          if (e.key === "Escape") setEditingReportId(null);
+                        }}
+                        className="w-full border px-2 py-1 rounded text-sm"
+                      />
+                    ) : renameLoadingId === report.id ? (
+                      <Loader2 className="animate-spin text-muted-foreground w-4 h-4" />
+                    ) : (
+                      <span className="text-blue-600 hover:underline cursor-pointer">
+                        {report.fileName}
+                      </span>
+                    )}
                   </TableCell>
+
                   <TableCell>{report.fileType}</TableCell>
                   <TableCell>
                     {new Date(report.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="flex gap-2">
-                    <Button asChild className="hover:bg-secondary">
-                      <a href={report.fileUrl} target="_blank" rel="noopener noreferrer">
+                    <Button asChild className=" bg-secondary hover:bg-sky-400">
+                      <a
+                        href={report.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         View Report
                       </a>
                     </Button>
@@ -145,6 +271,30 @@ const UserReports = () => {
         onClose={() => setDeleteModalOpen(false)}
         onConfirm={handleDelete}
       />
+      {/* Upload Modal */}
+      <Dialog open={uploadModalOpen} onOpenChange={setUploadModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Upload Report</DialogTitle>
+          </DialogHeader>
+          <Input
+            type="file"
+            onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+          />
+          <div className="mt-4 flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setUploadModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleUpload}
+              className="bg-primary hover:bg-secondary text-white"
+              disabled={!selectedFile}
+            >
+              Upload
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };

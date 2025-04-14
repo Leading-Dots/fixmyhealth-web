@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import client from "@/lib/apiClient";
-import { healthConcernsByUserID } from "@/graphql/queries";
+import { healthConcernsByExpertId, healthConcernsByUserID } from "@/graphql/queries";
 import { ConcernStatus, HealthConcern } from "@/API";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,15 +17,29 @@ const HealthConcernsSection = () => {
   useEffect(() => {
     const fetchConcerns = async () => {
       try {
-        const res: any = await client.graphql({
-          query: healthConcernsByUserID,
-          variables: {
-            userID: user?.id,
-            limit: 3,
-          },
-        });
-
-        setConcerns(res.data.healthConcernsByUserID.items || []);
+        if(user?.role === "patient")
+        {
+          const res: any = await client.graphql({
+            query: healthConcernsByUserID,
+            variables: {
+              userID: user?.id,
+              limit: 4,
+            },
+          });
+  
+          setConcerns(res.data.healthConcernsByUserID.items || []);
+                  
+        }else if(user?.role === "doctor")
+        {
+          const res: any = await client.graphql({
+            query: healthConcernsByExpertId,
+            variables: {
+              expertId: user?.id,
+              limit: 4,
+            },
+          });
+          setConcerns(res.data.healthConcernsByExpertId.items || []);
+        }
       } catch (error) {
         console.error("Error fetching concerns", error);
       }
@@ -68,21 +82,21 @@ const HealthConcernsSection = () => {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Your Recent Health Concerns</h2>
+        <h2 className="text-xl font-semibold">{user?.role === "patient" ? "Your Recent Health Concerns" : "Health Concerns Assigned to You"}</h2>
+        {user?.role === "patient" && (
         <Button
           variant="outline"
           className="text-secondary border-sky-400 hover:bg-sky-50"
           onClick={() => navigate("/public/ask-concern")}
         >
           Ask a Health Concern
-        </Button>
+        </Button>)}
       </div>
-
       {/* Horizontal Row of Cards */}
       <div className="flex flex-row gap-4 overflow-x-auto">
         {concerns.length === 0 ? (
           <div className="text-sm text-muted-foreground">
-            You haven’t raised any health concerns yet.
+           {user?.role === "patient" ?  "You haven’t raised any health concerns yet." : "You haven’t been assigned any health concerns yet."}
           </div>
         ) : (
           concerns.map((concern) => (

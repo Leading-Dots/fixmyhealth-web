@@ -47,7 +47,7 @@ const ConsultExpert: React.FC = () => {
             attachments: attachmentUrl,
             userID: user?.id,
             expertId: id,
-            concernStatus: ConcernStatus.PENDING, // Default status
+            concernStatus: ConcernStatus.PENDING, 
           },
         },
       });

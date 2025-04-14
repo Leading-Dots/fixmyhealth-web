@@ -6,8 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { UserCheck } from "lucide-react";
-import { ConcernStatus } from "@/API";
+import { ConcernStatus, ConcernType } from "@/API";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "@/lib/toast";
+import { createAppointment, deleteHealthConcern, updateHealthConcern } from "@/graphql/mutations";
+import { generateMeetingLink } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
+import { del } from "aws-amplify/api";
+import { ConfirmModal } from "../common/ConfirmModal";
 
 interface HealthConcern {
   id: string;
@@ -29,8 +35,12 @@ interface HealthConcern {
 
 const UnassignedHealthConcerns: React.FC = () => {
 
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const [concerns, setConcerns] = useState<HealthConcern[]>([]);
+  const [concerns, setConcerns] = useState<HealthConcern[]>([]);  
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedConcern, setSelectedConcern] = useState<HealthConcern | null>(null);
+
 
   useEffect(() => {
     fetchConcerns();
@@ -73,9 +83,94 @@ const UnassignedHealthConcerns: React.FC = () => {
     }
   };
 
+  const handleAssignToSelf = async (concern: HealthConcern) => {
+    setShowConfirm(true);
+    try {  
+      if (
+        concern.concernType === "AUDIO_CALL" ||
+        concern.concernType === "VIDEO_CALL"
+      ) {
+
+        const meetingLink = await generateMeetingLink(
+          concern.concernType as ConcernType
+        );
+
+        let startTime = "";
+        let endTime = "";
+
+        if (concern?.preferredTimeSlot && concern?.preferredTimeSlot.includes(" - ")) {
+          const [start, end] = concern?.preferredTimeSlot.split(" - ");
+          startTime = start.trim();
+          endTime = end.trim();
+        }
+
+        const appointmentDateTime = new Date(
+          `${concern.preferredDate}T${startTime}:00Z`
+        ).toISOString();  
+  
+        const input = {
+          appointmentDateTime,
+          concernType: concern.concernType as ConcernType,
+          title: concern.title,
+          description: concern.description,
+          expertID: user.id,
+          userId: concern.userID,
+          status: ConcernStatus.PENDING,
+          phoneNumber: "",
+          location: user?.clinicLocation || "", 
+          meetingLink,
+          healthConcernID: concern.id,
+          startTime,
+          endTime
+        };
+  
+        const response = await client.graphql({
+          query: createAppointment,
+          variables: { input },
+        });
+  
+        if (response.data.createAppointment) {
+          await deleteHealthConcernById(concern.id);
+          showToast( "Appointment created.", "success");
+          navigate("/my-appointments");
+        }
+      }else if (concern.concernType === "TEXT") {
+        // Only update expertId to assign the concern
+        await client.graphql({
+          query: updateHealthConcern,
+          variables: {
+            input: {
+              id: concern.id,
+              expertId: user.id,
+            },
+          },
+        });  
+        showToast("Health concern assigned to you successfully.", "success");
+        navigate("/assigned-concerns");
+      }
+    } catch (error) {
+      console.error("Assign to self error:", error);
+      showToast("Failed to assign concern.","error");
+    }finally{
+      setShowConfirm(false);
+    }
+  };
+  
+  const deleteHealthConcernById = async (id: string) => {
+    try {
+      await client.graphql({
+        query: deleteHealthConcern,
+        variables: { input: { id } },
+      });
+    } catch (err) {
+      console.error("Error deleting concern:", err);
+    }
+  };
+  
+
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Public Concerns</h2>
+      <h2 className="text-xl font-semibold">Public Health Concerns</h2>
       {concerns.map((concern) => (
         <Card
           key={concern.id}
@@ -96,7 +191,7 @@ const UnassignedHealthConcerns: React.FC = () => {
               <p className="font-semibold text-lg">
                 {concern.user?.firstName} {concern.user?.lastName}
               </p>
-              <p className="text-sm text-gray-600">{concern.title}</p>
+              <p className="text-sm text-gray-600">{concern.title} | {concern.concernType}</p>
               <div className="text-sm text-primary">
                 <p className="font-medium">
                   {concern.preferredDate &&
@@ -108,7 +203,11 @@ const UnassignedHealthConcerns: React.FC = () => {
               </div>
             </div>
           </div>
-          <Button variant="outline">
+          <Button variant="outline" onClick={(e) => {
+            e.stopPropagation();
+            setShowConfirm(true);
+            setSelectedConcern(concern);
+          }}>
             <UserCheck /> Assign to Self
           </Button>
         </Card>
@@ -117,6 +216,16 @@ const UnassignedHealthConcerns: React.FC = () => {
       {concerns.length === 0 && (
         <p className="text-center text-gray-500">No Public concerns found.</p>
       )}
+      <ConfirmModal
+      open={showConfirm}
+      onClose={() => setShowConfirm(false)}
+      onConfirm={() => {
+        if (selectedConcern) {
+          handleAssignToSelf(selectedConcern);
+        }
+      }}
+      title="Confirm Action"
+      />
     </div>
   );
 };

@@ -61,9 +61,9 @@ const Navbar = () => {
       icon: <HomeIcon className="h-5 w-5" />,
     },
     {
-      title: "Profile",
-      url: "/profile",
-      icon: <User2 className="h-5 w-5"/>,
+      title: "My Appointments",
+      url: "/my-appointments",
+      icon: <BriefcaseMedical className="h-5 w-5" />,
     },
     {
       title: "Assigned Concerns",
@@ -74,11 +74,6 @@ const Navbar = () => {
       title: "My Articles",
       url: "/articles",
       icon: <Newspaper className="h-5 w-5" />,
-    },
-    {
-      title: "My Appointments",
-      url: "/my-appointments",
-      icon: <BriefcaseMedical className="h-5 w-5" />,
     },
     {
       title: "Reviews & Ratings",
@@ -97,11 +92,6 @@ const Navbar = () => {
       title: "Home",
       url: "/home",
       icon: <HomeIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Profile",
-      url: "/profile",
-      icon: <User2 className="h-5 w-5"/>,
     },
     {
       title: "Search Experts",

@@ -70,14 +70,13 @@ const FamilyMembersPage = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-4">
       <Card>
         <CardHeader className="flex items-center justify-end">
           <div className="w-full flex justify-end items-center mb-4">
-            <Button
-              onClick={() => navigate("/add-family-member")}
-              size="sm"
-              className="bg-primary text-white hover:bg-secondary"
+            <Button            
+              variant="outline"
+              className="text-secondary border-sky-400 hover:bg-sky-50"
+              onClick={() => navigate("/add-family-member")}              
             >
               <Plus className="mr-1 h-4 w-4" /> Add Family Member
             </Button>
@@ -119,7 +118,7 @@ const FamilyMembersPage = () => {
                           )}`
                         )
                       }
-                      className="bg-primary text-white hover:bg-secondary"
+                      className="bg-secondary text-white hover:bg-sky-400 hover:text-white"
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
@@ -139,13 +138,12 @@ const FamilyMembersPage = () => {
             </div>
           )}
         </CardContent>
+        <DeleteConfirmationDialog
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={handleDelete}
+        />
       </Card>
-      <DeleteConfirmationDialog
-        isOpen={deleteModalOpen}
-        onClose={() => setDeleteModalOpen(false)}
-        onConfirm={handleDelete}
-      />
-    </div>
   );
 };
 

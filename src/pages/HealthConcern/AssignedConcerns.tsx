@@ -172,11 +172,11 @@ const AssignedConcerns: React.FC = () => {
   const getBadgeColor = (status: ConcernStatus) => {
     switch (status) {
       case ConcernStatus.PENDING:
-        return "bg-yellow-100 text-yellow-700 border-yellow-400";
+        return "text-yellow-700 border-yellow-400";
       case ConcernStatus.ANSWERED:
-        return "bg-green-100 text-green-700 border-green-400";
+        return "text-green-700 border-green-400";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-400";
+        return "text-gray-700 border-gray-400";
     }
   };
 
@@ -297,7 +297,7 @@ const AssignedConcerns: React.FC = () => {
                     {/* Show patient details if expanded */}
                     {expandedConcernId === concern.id &&
                       patientDetails[concern.id] && (
-                        <div className="bg-gray-100 p-4 rounded-lg mt-4 border">
+                        <div className="p-4 rounded-lg mt-4 border">
                           <h4 className="text-md font-semibold">
                             Patient Details:
                           </h4>
@@ -319,7 +319,7 @@ const AssignedConcerns: React.FC = () => {
                     {/* Show response if expanded */}
                     {expandedConcernId === concern.id &&
                       responses[concern.id] && (
-                        <div className="bg-gray-100 p-4 rounded-lg mt-4 border">
+                        <div className="p-4 rounded-lg mt-4 border">
                           <h4 className="text-md font-semibold">
                             Your Response:
                           </h4>

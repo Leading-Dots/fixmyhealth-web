@@ -229,7 +229,7 @@ const MyHealthConcern: React.FC = () => {
                           : "Reviewed"}
                       </Badge>
                       {!concern?.expertId && (
-                        <Badge className="bg-gray-200 text-gray-700 border border-gray-400 hover:bg-gray-200">
+                        <Badge className="text-gray-700 border border-gray-400 hover:bg-gray-200">
                           Unassigned
                         </Badge>
                       )}
@@ -273,7 +273,7 @@ const MyHealthConcern: React.FC = () => {
                     {expandedExpertId === concern.id &&
                       expertDetails[concern.id] && (
                         <div
-                          className="bg-gray-50 p-4 mt-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+                          className="p-4 mt-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition"
                           onClick={() =>
                             handleExpertClick(expertDetails[concern.id]!.id)
                           }
@@ -325,7 +325,7 @@ const MyHealthConcern: React.FC = () => {
                     {/* Show response if expanded */}
                     {expandedResponseId === concern.id &&
                       responses[concern.id] && (
-                        <div className="bg-gray-100 p-4 rounded-lg mt-4 border">
+                        <div className="p-4 rounded-lg mt-4 border">
                           <h4 className="text-md font-semibold">
                             Expert's Response:
                           </h4>

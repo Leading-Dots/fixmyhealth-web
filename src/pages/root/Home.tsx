@@ -16,13 +16,9 @@ const Home = () => {
 
   return (
     <main className="max-w-7xl mx-auto p-4 space-y-5">
-      {/* Show for patient or guest */}
-      {(role === "patient" || !user) && (
         <div>
           <HealthConcernsSection />
         </div>
-      )}
-
       {/* Show only for patient and doctor */}
       {(role === "patient" || role === "doctor") && (
         <div>
