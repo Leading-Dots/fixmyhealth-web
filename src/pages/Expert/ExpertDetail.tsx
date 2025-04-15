@@ -117,7 +117,7 @@ const ExpertDetail: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <Button
                   onClick={() => navigate(`/ask-concern/${expert.id}`)}
-                  className="bg-primary hover:bg-secondary"
+                  className="bg-primary text-primary-foreground hover:bg-secondary"
                 >
                   Ask Concern
                 </Button>
@@ -221,8 +221,8 @@ const DetailItem: React.FC<{
   label: string;
   value: string | number;
 }> = ({ icon, label, value }) => (
-  <div className="flex items-center gap-3 border p-3 rounded-lg hover:bg-gray-50 transition">
-    {icon}
+  <div className="flex items-center gap-3 border p-3 rounded-lg">
+    <div className="shrink-0 mt-1">{icon}</div>
     <div>
       <p className="text-sm font-semibold">{label}</p>
       <p className="text-sm text-gray-600">{value}</p>

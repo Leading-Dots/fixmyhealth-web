@@ -86,7 +86,7 @@ const HealthConcernsSection = () => {
         {user?.role === "patient" && (
         <Button
           variant="outline"
-          className="text-secondary border-sky-400 hover:bg-sky-50"
+          className="text-secondary border-sky-400 hover:bg-sky-100 dark:hover:bg-sky-900 hover:text-secondary-foreground transition" 
           onClick={() => navigate("/public/ask-concern")}
         >
           Ask a Health Concern

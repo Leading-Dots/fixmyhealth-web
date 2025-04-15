@@ -167,7 +167,8 @@ const UserAppointments: React.FC = () => {
         </div>
 
         <select
-          className="border px-2 py-1 rounded"
+          className="border border-border px-2 py-1 rounded bg-background text-foreground"
+ 
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
         >

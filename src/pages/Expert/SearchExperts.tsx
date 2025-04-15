@@ -121,22 +121,22 @@ export default function SearchExperts() {
               </CardHeader>
               <CardContent>
                 {/* Experience */}
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                  <Briefcase className="h-4 w-4 text-blue-500" />
+                <div className="flex items-start gap-2 text-sm text-gray-600 mb-2">
+                <div className="shrink-0 mt-1"><Briefcase className="h-4 w-4 text-blue-500" /></div> 
                   {expert?.experience
                     ? `${expert.experience} years of experience`
                     : "Experience not provided"}
                 </div>
 
                 {/* Specialization */}
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                  <Layers className="h-4 w-4 text-green-500" />
+                <div className="flex items-start gap-2 text-sm text-gray-600 mb-2">
+                <div className="shrink-0 mt-1"> <Layers className="h-4 w-4 text-green-500" /></div> 
                   {expert?.Specialization || "Specialization not provided"}
                 </div>
 
                 {/* Education */}
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <GraduationCap className="h-4 w-4 text-purple-500" />
+                <div className="flex items-start gap-2 text-sm text-gray-600">
+                <div className="shrink-0 mt-1"><GraduationCap className="h-4 w-4 text-purple-500" /></div>                  
                   {expert?.education || "Education not provided"}
                 </div>
               </CardContent>
