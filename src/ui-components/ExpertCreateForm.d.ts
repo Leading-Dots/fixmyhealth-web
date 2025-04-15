@@ -32,11 +32,12 @@ export declare type ExpertCreateFormInputValues = {
     experience?: string;
     averageRating?: number;
     totalReviews?: number;
-    profileStatus?: string;
     Specialization?: string;
     ConsultationFee?: number;
     LanguageSpoken?: string;
     clinicLocation?: string;
+    firebaseToken?: string;
+    profileStatus?: string;
 };
 export declare type ExpertCreateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -49,11 +50,12 @@ export declare type ExpertCreateFormValidationValues = {
     experience?: ValidationFunction<string>;
     averageRating?: ValidationFunction<number>;
     totalReviews?: ValidationFunction<number>;
-    profileStatus?: ValidationFunction<string>;
     Specialization?: ValidationFunction<string>;
     ConsultationFee?: ValidationFunction<number>;
     LanguageSpoken?: ValidationFunction<string>;
     clinicLocation?: ValidationFunction<string>;
+    firebaseToken?: ValidationFunction<string>;
+    profileStatus?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ExpertCreateFormOverridesProps = {
@@ -68,11 +70,12 @@ export declare type ExpertCreateFormOverridesProps = {
     experience?: PrimitiveOverrideProps<TextFieldProps>;
     averageRating?: PrimitiveOverrideProps<TextFieldProps>;
     totalReviews?: PrimitiveOverrideProps<TextFieldProps>;
-    profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;
     Specialization?: PrimitiveOverrideProps<SelectFieldProps>;
     ConsultationFee?: PrimitiveOverrideProps<TextFieldProps>;
     LanguageSpoken?: PrimitiveOverrideProps<TextFieldProps>;
     clinicLocation?: PrimitiveOverrideProps<TextFieldProps>;
+    firebaseToken?: PrimitiveOverrideProps<TextFieldProps>;
+    profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type ExpertCreateFormProps = React.PropsWithChildren<{
     overrides?: ExpertCreateFormOverridesProps | undefined | null;

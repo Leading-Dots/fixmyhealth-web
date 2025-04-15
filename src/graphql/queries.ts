@@ -151,6 +151,126 @@ export const reportsByHealthConcernID = /* GraphQL */ `query ReportsByHealthConc
   APITypes.ReportsByHealthConcernIDQueryVariables,
   APITypes.ReportsByHealthConcernIDQuery
 >;
+export const getNotification = /* GraphQL */ `query GetNotification($id: ID!) {
+  getNotification(id: $id) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetNotificationQueryVariables,
+  APITypes.GetNotificationQuery
+>;
+export const listNotifications = /* GraphQL */ `query ListNotifications(
+  $filter: ModelNotificationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userID
+      expertID
+      title
+      body
+      type
+      fcmToken
+      isSent
+      isRead
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListNotificationsQueryVariables,
+  APITypes.ListNotificationsQuery
+>;
+export const notificationsByUserID = /* GraphQL */ `query NotificationsByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationsByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userID
+      expertID
+      title
+      body
+      type
+      fcmToken
+      isSent
+      isRead
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.NotificationsByUserIDQueryVariables,
+  APITypes.NotificationsByUserIDQuery
+>;
+export const notificationsByExpertID = /* GraphQL */ `query NotificationsByExpertID(
+  $expertID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationsByExpertID(
+    expertID: $expertID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userID
+      expertID
+      title
+      body
+      type
+      fcmToken
+      isSent
+      isRead
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.NotificationsByExpertIDQueryVariables,
+  APITypes.NotificationsByExpertIDQuery
+>;
 export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
   getAppointment(id: $id) {
     id
@@ -185,11 +305,12 @@ export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -205,6 +326,7 @@ export const getAppointment = /* GraphQL */ `query GetAppointment($id: ID!) {
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -415,6 +537,8 @@ export const getArticle = /* GraphQL */ `query GetArticle($id: ID!) {
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -724,6 +848,10 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     experience
     averageRating
     totalReviews
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
     weeklySchedule {
       dayOfWeek
       isAvailable
@@ -770,10 +898,10 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -798,11 +926,12 @@ export const listExperts = /* GraphQL */ `query ListExperts(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -836,6 +965,7 @@ export const getHealthConcern = /* GraphQL */ `query GetHealthConcern($id: ID!) 
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -860,11 +990,12 @@ export const getHealthConcern = /* GraphQL */ `query GetHealthConcern($id: ID!) 
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -1082,6 +1213,7 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -1102,6 +1234,10 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }
@@ -1127,6 +1263,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus

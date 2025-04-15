@@ -27,6 +27,7 @@ import AddFamilyMember from "@/pages/FamilyMember/AddFamilyMember";
 import PublicHealthConcern from "@/components/home/PublicHealhConcern";
 import ConcernDetail from "@/pages/HealthConcern/ConcernDetail";
 import SettingsPage from "@/pages/root/SettingsPage";
+import NotificationsPage from "@/pages/root/NotificationsPage";
 
 const routes = [
   {
@@ -214,6 +215,14 @@ const routes = [
     element: (
       <DashboardLayout>
         <SettingsPage/>
+      </DashboardLayout>
+    ),
+  },
+  {
+    path: "/notifications",
+    element: (
+      <DashboardLayout>
+        <NotificationsPage/>
       </DashboardLayout>
     ),
   },

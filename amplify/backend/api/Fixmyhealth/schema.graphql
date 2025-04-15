@@ -9,6 +9,18 @@ type Report @model @auth(rules: [{allow: public}]) {
   healthConcernID: ID @index(name: "byHealthConcern")
 }
 
+type Notification @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userID: ID @index(name: "byUser")
+  expertID: ID @index(name: "byExpert")
+  title: String
+  body: String
+  type: String
+  fcmToken: String
+  isSent: Boolean
+  isRead: Boolean
+}
+
 type Appointment @model @auth(rules: [{allow: public}]) {
   id: ID!
   concernType: ConcernType
@@ -124,16 +136,18 @@ type Expert @model @auth(rules: [{allow: public}]) {
   averageRating: Float
   totalReviews: Int
   weeklySchedule: [DaySchedule]
+  Specialization: Specialization
+  ConsultationFee: Int
+  LanguageSpoken: String
+  clinicLocation: String  
+  firebaseToken: String
   appointments: [Appointment] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertResponse: [Response] @hasMany(indexName: "byExpert", fields: ["id"])
   ExpertReview: [Review] @hasMany(indexName: "byExpert", fields: ["id"])
   profileStatus: ProfileStatus
   ExpertArticles: [Article] @hasMany(indexName: "byExpert", fields: ["id"])
   HealthConcerns: [HealthConcern] @hasMany(indexName: "byExpert", fields: ["id"])
-  Specialization: Specialization
-  ConsultationFee: Int
-  LanguageSpoken: String
-  clinicLocation: String
+  Notifications: [Notification] @hasMany(indexName: "byExpert", fields: ["id"])
 }
 
 enum ConcernStatus {
@@ -187,6 +201,7 @@ type User @model @auth(rules: [{allow: public}]) {
   address: String
   height: Float
   weight: Float
+  firebaseToken: String
   subscriptionStatus: SubscriptionStatus
   UserFamilyMembers: [FamilyMember] @hasMany(indexName: "byUser", fields: ["id"])
   UserHealthConcerns: [HealthConcern] @hasMany(indexName: "byUser", fields: ["id"])
@@ -194,6 +209,7 @@ type User @model @auth(rules: [{allow: public}]) {
   profilePictureUrl: String
   profileStatus: ProfileStatus
   UserReports: [Report] @hasMany(indexName: "byUser", fields: ["id"])  
-  appointments: [Appointment] @hasMany(indexName: "byUser", fields: ["id"])
+  appointments: [Appointment] @hasMany(indexName: "byUser", fields: ["id"])  
+  Notifications: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
 }
  

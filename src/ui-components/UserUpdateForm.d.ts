@@ -31,6 +31,7 @@ export declare type UserUpdateFormInputValues = {
     address?: string;
     height?: number;
     weight?: number;
+    firebaseToken?: string;
     subscriptionStatus?: string;
     profilePictureUrl?: string;
     profileStatus?: string;
@@ -44,6 +45,7 @@ export declare type UserUpdateFormValidationValues = {
     address?: ValidationFunction<string>;
     height?: ValidationFunction<number>;
     weight?: ValidationFunction<number>;
+    firebaseToken?: ValidationFunction<string>;
     subscriptionStatus?: ValidationFunction<string>;
     profilePictureUrl?: ValidationFunction<string>;
     profileStatus?: ValidationFunction<string>;
@@ -59,6 +61,7 @@ export declare type UserUpdateFormOverridesProps = {
     address?: PrimitiveOverrideProps<TextFieldProps>;
     height?: PrimitiveOverrideProps<TextFieldProps>;
     weight?: PrimitiveOverrideProps<TextFieldProps>;
+    firebaseToken?: PrimitiveOverrideProps<TextFieldProps>;
     subscriptionStatus?: PrimitiveOverrideProps<SelectFieldProps>;
     profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
     profileStatus?: PrimitiveOverrideProps<SelectFieldProps>;

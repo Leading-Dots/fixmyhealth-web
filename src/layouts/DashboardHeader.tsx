@@ -1,7 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { Inbox, User, UserPlus, ShieldCheck } from "lucide-react";
+import { User, UserPlus, ShieldCheck, Bell } from "lucide-react";
 import { useMemo } from "react";
+import { useNotifications } from "@/context/notificationStore";
 import { Link, useLocation } from "react-router-dom";
 
 type UserRole = "guest" | "patient" | "doctor";
@@ -9,6 +10,7 @@ type UserRole = "guest" | "patient" | "doctor";
 const DashboardHeader = () => {
   const location = useLocation();
   const { user } = useAuth();
+  const {notificationCount} = useNotifications();
 
   const formatHeaderTitle = (pathname: string) => {
     const firstPath = pathname.split("/").filter(Boolean)[0] || "";
@@ -59,12 +61,15 @@ const DashboardHeader = () => {
           {icon}
           <span>{label}</span>
         </div>
-
-        {/* Inbox Icon */}
         {user && (
-          <Link to="/inbox">
+          <Link to="/notifications" className="relative">
             <div className="flex items-center cursor-pointer">
-              <Inbox size={24} />
+              <Bell size={24} />
+              {notificationCount > 0 && (
+                <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 flex items-center justify-center">
+                  <span className="text-white text-xs">{notificationCount}</span>
+                </div>
+              )}
             </div>
           </Link>
         )}

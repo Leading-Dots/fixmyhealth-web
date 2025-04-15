@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import client from "@/lib/apiClient";
 import { getExpert } from "@/graphql/queries";
 import { createAppointment } from "@/graphql/mutations";
-import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { showToast } from "@/lib/toast";
 import { generateMeetingLink } from "@/lib/utils";
+import { sendNotification } from "@/lib/firebase/messaging";
 
 // Enum for concern types
 enum ConcernType {
@@ -242,15 +242,34 @@ const BookAppointment: React.FC = () => {
         meetingLink,
       };
 
-      const response = await client.graphql({
+      const {data, errors}  = await client.graphql({
         query: createAppointment,
         variables: { input },
       });
 
-      if (response.data.createAppointment) {
-        showToast("Appointment booked successfully!", "success");
+      if (data) {
+      
+      //   // Notify Patient
+      //  sendNotification({
+      //     title: "Appointment Confirmed",
+      //     body: `Your appointment with the expert has been successfully booked for ${selectedDate} at ${formData.startTime}.`,
+      //     recipientId: user?.id,
+      //     recipientRole: "patient",
+      //   });
+      
+      //   // Notify Expert
+      //  sendNotification({
+      //     title: "New Appointment",
+      //     body: `${user?.name || "A patient"} has booked an appointment for ${selectedDate} at ${formData.startTime}.`,
+      //     recipientId: id, // expert ID
+      //     recipientRole: "doctor",
+      //   });
+      
         navigate(`/expert-detail/${id}`);
+        showToast("Appointment booked successfully!", "success");
       }
+      
+
     } catch (error) {
       console.error("Error creating appointment:", error);
       showToast("Failed to book appointment. Please try again.", "error");

@@ -62,6 +62,72 @@ export const onDeleteReport = /* GraphQL */ `subscription OnDeleteReport($filter
   APITypes.OnDeleteReportSubscriptionVariables,
   APITypes.OnDeleteReportSubscription
 >;
+export const onCreateNotification = /* GraphQL */ `subscription OnCreateNotification(
+  $filter: ModelSubscriptionNotificationFilterInput
+) {
+  onCreateNotification(filter: $filter) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateNotificationSubscriptionVariables,
+  APITypes.OnCreateNotificationSubscription
+>;
+export const onUpdateNotification = /* GraphQL */ `subscription OnUpdateNotification(
+  $filter: ModelSubscriptionNotificationFilterInput
+) {
+  onUpdateNotification(filter: $filter) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateNotificationSubscriptionVariables,
+  APITypes.OnUpdateNotificationSubscription
+>;
+export const onDeleteNotification = /* GraphQL */ `subscription OnDeleteNotification(
+  $filter: ModelSubscriptionNotificationFilterInput
+) {
+  onDeleteNotification(filter: $filter) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteNotificationSubscriptionVariables,
+  APITypes.OnDeleteNotificationSubscription
+>;
 export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointment(
   $filter: ModelSubscriptionAppointmentFilterInput
 ) {
@@ -98,11 +164,12 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -118,6 +185,7 @@ export const onCreateAppointment = /* GraphQL */ `subscription OnCreateAppointme
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -168,11 +236,12 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -188,6 +257,7 @@ export const onUpdateAppointment = /* GraphQL */ `subscription OnUpdateAppointme
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -238,11 +308,12 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -258,6 +329,7 @@ export const onDeleteAppointment = /* GraphQL */ `subscription OnDeleteAppointme
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -293,11 +365,12 @@ export const onCreateArticle = /* GraphQL */ `subscription OnCreateArticle($filt
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -330,11 +403,12 @@ export const onUpdateArticle = /* GraphQL */ `subscription OnUpdateArticle($filt
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -367,11 +441,12 @@ export const onDeleteArticle = /* GraphQL */ `subscription OnDeleteArticle($filt
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -536,6 +611,11 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
       isAvailable
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
+    firebaseToken
     appointments {
       nextToken
       __typename
@@ -557,10 +637,10 @@ export const onCreateExpert = /* GraphQL */ `subscription OnCreateExpert($filter
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -588,6 +668,11 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
       isAvailable
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
+    firebaseToken
     appointments {
       nextToken
       __typename
@@ -609,10 +694,10 @@ export const onUpdateExpert = /* GraphQL */ `subscription OnUpdateExpert($filter
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -640,6 +725,11 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
       isAvailable
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
+    firebaseToken
     appointments {
       nextToken
       __typename
@@ -661,10 +751,10 @@ export const onDeleteExpert = /* GraphQL */ `subscription OnDeleteExpert($filter
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -697,6 +787,7 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -721,11 +812,12 @@ export const onCreateHealthConcern = /* GraphQL */ `subscription OnCreateHealthC
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -766,6 +858,7 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -790,11 +883,12 @@ export const onUpdateHealthConcern = /* GraphQL */ `subscription OnUpdateHealthC
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -835,6 +929,7 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -859,11 +954,12 @@ export const onDeleteHealthConcern = /* GraphQL */ `subscription OnDeleteHealthC
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -955,6 +1051,7 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -975,6 +1072,10 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }
@@ -998,6 +1099,7 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -1018,6 +1120,10 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }
@@ -1041,6 +1147,7 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -1061,6 +1168,10 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }

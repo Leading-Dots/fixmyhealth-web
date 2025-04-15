@@ -37,6 +37,7 @@ export default function UserCreateForm(props) {
     address: "",
     height: "",
     weight: "",
+    firebaseToken: "",
     subscriptionStatus: "",
     profilePictureUrl: "",
     profileStatus: "",
@@ -49,6 +50,9 @@ export default function UserCreateForm(props) {
   const [address, setAddress] = React.useState(initialValues.address);
   const [height, setHeight] = React.useState(initialValues.height);
   const [weight, setWeight] = React.useState(initialValues.weight);
+  const [firebaseToken, setFirebaseToken] = React.useState(
+    initialValues.firebaseToken
+  );
   const [subscriptionStatus, setSubscriptionStatus] = React.useState(
     initialValues.subscriptionStatus
   );
@@ -68,6 +72,7 @@ export default function UserCreateForm(props) {
     setAddress(initialValues.address);
     setHeight(initialValues.height);
     setWeight(initialValues.weight);
+    setFirebaseToken(initialValues.firebaseToken);
     setSubscriptionStatus(initialValues.subscriptionStatus);
     setProfilePictureUrl(initialValues.profilePictureUrl);
     setProfileStatus(initialValues.profileStatus);
@@ -82,6 +87,7 @@ export default function UserCreateForm(props) {
     address: [],
     height: [],
     weight: [],
+    firebaseToken: [],
     subscriptionStatus: [],
     profilePictureUrl: [],
     profileStatus: [],
@@ -120,6 +126,7 @@ export default function UserCreateForm(props) {
           address,
           height,
           weight,
+          firebaseToken,
           subscriptionStatus,
           profilePictureUrl,
           profileStatus,
@@ -193,6 +200,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -227,6 +235,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -261,6 +270,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -296,6 +306,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -330,6 +341,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -364,6 +376,7 @@ export default function UserCreateForm(props) {
               address: value,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -402,6 +415,7 @@ export default function UserCreateForm(props) {
               address,
               height: value,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -440,6 +454,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight: value,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus,
@@ -456,6 +471,41 @@ export default function UserCreateForm(props) {
         errorMessage={errors.weight?.errorMessage}
         hasError={errors.weight?.hasError}
         {...getOverrideProps(overrides, "weight")}
+      ></TextField>
+      <TextField
+        label="Firebase token"
+        isRequired={false}
+        isReadOnly={false}
+        value={firebaseToken}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              dob,
+              mobile,
+              address,
+              height,
+              weight,
+              firebaseToken: value,
+              subscriptionStatus,
+              profilePictureUrl,
+              profileStatus,
+            };
+            const result = onChange(modelFields);
+            value = result?.firebaseToken ?? value;
+          }
+          if (errors.firebaseToken?.hasError) {
+            runValidationTasks("firebaseToken", value);
+          }
+          setFirebaseToken(value);
+        }}
+        onBlur={() => runValidationTasks("firebaseToken", firebaseToken)}
+        errorMessage={errors.firebaseToken?.errorMessage}
+        hasError={errors.firebaseToken?.hasError}
+        {...getOverrideProps(overrides, "firebaseToken")}
       ></TextField>
       <SelectField
         label="Subscription status"
@@ -474,6 +524,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus: value,
               profilePictureUrl,
               profileStatus,
@@ -526,6 +577,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl: value,
               profileStatus,
@@ -562,6 +614,7 @@ export default function UserCreateForm(props) {
               address,
               height,
               weight,
+              firebaseToken,
               subscriptionStatus,
               profilePictureUrl,
               profileStatus: value,

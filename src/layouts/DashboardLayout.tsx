@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth"; // Assuming you have an auth hook
 import Navbar from "./Navbar";
 import DashboardHeader from "./DashboardHeader";
 import { ProfileStatus } from "@/API";
+import { NotificationProvider } from "@/context/notificationStore";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -22,14 +23,15 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   }
 
   return (
-    <div className="flex min-h-screen flex-col md:flex-row flex-1 max-w-7xl mx-auto">
-      <Navbar />
-
-      <main className="flex-1">
-        <DashboardHeader />
-        <div className="p-4">{children}</div>
-      </main>
-    </div>
+    <NotificationProvider>
+      <div className="flex min-h-screen flex-col md:flex-row flex-1 max-w-7xl mx-auto">
+        <Navbar />
+        <main className="flex-1">
+          <DashboardHeader />
+          <div className="p-4">{children}</div>
+        </main>
+      </div>
+    </NotificationProvider>
   );
 };
 

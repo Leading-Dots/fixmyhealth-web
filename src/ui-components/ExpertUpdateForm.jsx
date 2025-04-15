@@ -41,11 +41,12 @@ export default function ExpertUpdateForm(props) {
     experience: "",
     averageRating: "",
     totalReviews: "",
-    profileStatus: "",
     Specialization: "",
     ConsultationFee: "",
     LanguageSpoken: "",
     clinicLocation: "",
+    firebaseToken: "",
+    profileStatus: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -65,9 +66,6 @@ export default function ExpertUpdateForm(props) {
   const [totalReviews, setTotalReviews] = React.useState(
     initialValues.totalReviews
   );
-  const [profileStatus, setProfileStatus] = React.useState(
-    initialValues.profileStatus
-  );
   const [Specialization, setSpecialization] = React.useState(
     initialValues.Specialization
   );
@@ -79,6 +77,12 @@ export default function ExpertUpdateForm(props) {
   );
   const [clinicLocation, setClinicLocation] = React.useState(
     initialValues.clinicLocation
+  );
+  const [firebaseToken, setFirebaseToken] = React.useState(
+    initialValues.firebaseToken
+  );
+  const [profileStatus, setProfileStatus] = React.useState(
+    initialValues.profileStatus
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -95,11 +99,12 @@ export default function ExpertUpdateForm(props) {
     setExperience(cleanValues.experience);
     setAverageRating(cleanValues.averageRating);
     setTotalReviews(cleanValues.totalReviews);
-    setProfileStatus(cleanValues.profileStatus);
     setSpecialization(cleanValues.Specialization);
     setConsultationFee(cleanValues.ConsultationFee);
     setLanguageSpoken(cleanValues.LanguageSpoken);
     setClinicLocation(cleanValues.clinicLocation);
+    setFirebaseToken(cleanValues.firebaseToken);
+    setProfileStatus(cleanValues.profileStatus);
     setErrors({});
   };
   const [expertRecord, setExpertRecord] = React.useState(expertModelProp);
@@ -129,11 +134,12 @@ export default function ExpertUpdateForm(props) {
     experience: [],
     averageRating: [],
     totalReviews: [],
-    profileStatus: [],
     Specialization: [],
     ConsultationFee: [],
     LanguageSpoken: [],
     clinicLocation: [],
+    firebaseToken: [],
+    profileStatus: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -171,11 +177,12 @@ export default function ExpertUpdateForm(props) {
           experience: experience ?? null,
           averageRating: averageRating ?? null,
           totalReviews: totalReviews ?? null,
-          profileStatus: profileStatus ?? null,
           Specialization: Specialization ?? null,
           ConsultationFee: ConsultationFee ?? null,
           LanguageSpoken: LanguageSpoken ?? null,
           clinicLocation: clinicLocation ?? null,
+          firebaseToken: firebaseToken ?? null,
+          profileStatus: profileStatus ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -246,11 +253,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -284,11 +292,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -322,11 +331,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -360,11 +370,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.mobile ?? value;
@@ -398,11 +409,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.education ?? value;
@@ -436,11 +448,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.introduction ?? value;
@@ -474,11 +487,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.profilePictureUrl ?? value;
@@ -514,11 +528,12 @@ export default function ExpertUpdateForm(props) {
               experience: value,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.experience ?? value;
@@ -556,11 +571,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating: value,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.averageRating ?? value;
@@ -598,11 +614,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews: value,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.totalReviews ?? value;
@@ -617,60 +634,6 @@ export default function ExpertUpdateForm(props) {
         hasError={errors.totalReviews?.hasError}
         {...getOverrideProps(overrides, "totalReviews")}
       ></TextField>
-      <SelectField
-        label="Profile status"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={profileStatus}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              mobile,
-              education,
-              introduction,
-              profilePictureUrl,
-              experience,
-              averageRating,
-              totalReviews,
-              profileStatus: value,
-              Specialization,
-              ConsultationFee,
-              LanguageSpoken,
-              clinicLocation,
-            };
-            const result = onChange(modelFields);
-            value = result?.profileStatus ?? value;
-          }
-          if (errors.profileStatus?.hasError) {
-            runValidationTasks("profileStatus", value);
-          }
-          setProfileStatus(value);
-        }}
-        onBlur={() => runValidationTasks("profileStatus", profileStatus)}
-        errorMessage={errors.profileStatus?.errorMessage}
-        hasError={errors.profileStatus?.hasError}
-        {...getOverrideProps(overrides, "profileStatus")}
-      >
-        <option
-          children="Pending"
-          value="PENDING"
-          {...getOverrideProps(overrides, "profileStatusoption0")}
-        ></option>
-        <option
-          children="Published"
-          value="PUBLISHED"
-          {...getOverrideProps(overrides, "profileStatusoption1")}
-        ></option>
-        <option
-          children="Rejected"
-          value="REJECTED"
-          {...getOverrideProps(overrides, "profileStatusoption2")}
-        ></option>
-      </SelectField>
       <SelectField
         label="Specialization"
         placeholder="Please select an option"
@@ -690,11 +653,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization: value,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.Specialization ?? value;
@@ -788,11 +752,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee: value,
               LanguageSpoken,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.ConsultationFee ?? value;
@@ -826,11 +791,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken: value,
               clinicLocation,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.LanguageSpoken ?? value;
@@ -864,11 +830,12 @@ export default function ExpertUpdateForm(props) {
               experience,
               averageRating,
               totalReviews,
-              profileStatus,
               Specialization,
               ConsultationFee,
               LanguageSpoken,
               clinicLocation: value,
+              firebaseToken,
+              profileStatus,
             };
             const result = onChange(modelFields);
             value = result?.clinicLocation ?? value;
@@ -883,6 +850,100 @@ export default function ExpertUpdateForm(props) {
         hasError={errors.clinicLocation?.hasError}
         {...getOverrideProps(overrides, "clinicLocation")}
       ></TextField>
+      <TextField
+        label="Firebase token"
+        isRequired={false}
+        isReadOnly={false}
+        value={firebaseToken}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
+              clinicLocation,
+              firebaseToken: value,
+              profileStatus,
+            };
+            const result = onChange(modelFields);
+            value = result?.firebaseToken ?? value;
+          }
+          if (errors.firebaseToken?.hasError) {
+            runValidationTasks("firebaseToken", value);
+          }
+          setFirebaseToken(value);
+        }}
+        onBlur={() => runValidationTasks("firebaseToken", firebaseToken)}
+        errorMessage={errors.firebaseToken?.errorMessage}
+        hasError={errors.firebaseToken?.hasError}
+        {...getOverrideProps(overrides, "firebaseToken")}
+      ></TextField>
+      <SelectField
+        label="Profile status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={profileStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              mobile,
+              education,
+              introduction,
+              profilePictureUrl,
+              experience,
+              averageRating,
+              totalReviews,
+              Specialization,
+              ConsultationFee,
+              LanguageSpoken,
+              clinicLocation,
+              firebaseToken,
+              profileStatus: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.profileStatus ?? value;
+          }
+          if (errors.profileStatus?.hasError) {
+            runValidationTasks("profileStatus", value);
+          }
+          setProfileStatus(value);
+        }}
+        onBlur={() => runValidationTasks("profileStatus", profileStatus)}
+        errorMessage={errors.profileStatus?.errorMessage}
+        hasError={errors.profileStatus?.hasError}
+        {...getOverrideProps(overrides, "profileStatus")}
+      >
+        <option
+          children="Pending"
+          value="PENDING"
+          {...getOverrideProps(overrides, "profileStatusoption0")}
+        ></option>
+        <option
+          children="Published"
+          value="PUBLISHED"
+          {...getOverrideProps(overrides, "profileStatusoption1")}
+        ></option>
+        <option
+          children="Rejected"
+          value="REJECTED"
+          {...getOverrideProps(overrides, "profileStatusoption2")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

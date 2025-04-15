@@ -111,6 +111,72 @@ export type DeleteReportInput = {
   id: string,
 };
 
+export type CreateNotificationInput = {
+  id?: string | null,
+  userID?: string | null,
+  expertID?: string | null,
+  title?: string | null,
+  body?: string | null,
+  type?: string | null,
+  fcmToken?: string | null,
+  isSent?: boolean | null,
+  isRead?: boolean | null,
+};
+
+export type ModelNotificationConditionInput = {
+  userID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  body?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  fcmToken?: ModelStringInput | null,
+  isSent?: ModelBooleanInput | null,
+  isRead?: ModelBooleanInput | null,
+  and?: Array< ModelNotificationConditionInput | null > | null,
+  or?: Array< ModelNotificationConditionInput | null > | null,
+  not?: ModelNotificationConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type Notification = {
+  __typename: "Notification",
+  id: string,
+  userID?: string | null,
+  expertID?: string | null,
+  title?: string | null,
+  body?: string | null,
+  type?: string | null,
+  fcmToken?: string | null,
+  isSent?: boolean | null,
+  isRead?: boolean | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateNotificationInput = {
+  id: string,
+  userID?: string | null,
+  expertID?: string | null,
+  title?: string | null,
+  body?: string | null,
+  type?: string | null,
+  fcmToken?: string | null,
+  isSent?: boolean | null,
+  isRead?: boolean | null,
+};
+
+export type DeleteNotificationInput = {
+  id: string,
+};
+
 export type CreateAppointmentInput = {
   id?: string | null,
   concernType?: ConcernType | null,
@@ -222,16 +288,18 @@ export type Expert = {
   averageRating?: number | null,
   totalReviews?: number | null,
   weeklySchedule?:  Array<DaySchedule | null > | null,
+  Specialization?: Specialization | null,
+  ConsultationFee?: number | null,
+  LanguageSpoken?: string | null,
+  clinicLocation?: string | null,
+  firebaseToken?: string | null,
   appointments?: ModelAppointmentConnection | null,
   ExpertResponse?: ModelResponseConnection | null,
   ExpertReview?: ModelReviewConnection | null,
   profileStatus?: ProfileStatus | null,
   ExpertArticles?: ModelArticleConnection | null,
   HealthConcerns?: ModelHealthConcernConnection | null,
-  Specialization?: Specialization | null,
-  ConsultationFee?: number | null,
-  LanguageSpoken?: string | null,
-  clinicLocation?: string | null,
+  Notifications?: ModelNotificationConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -251,6 +319,21 @@ export type TimeSlot = {
   startTime: string,
   endTime: string,
 };
+
+export enum Specialization {
+  CARDIOLOGIST = "CARDIOLOGIST",
+  PEDIATRICIAN = "PEDIATRICIAN",
+  GYNECOLOGIST = "GYNECOLOGIST",
+  ORTHOPEDIC = "ORTHOPEDIC",
+  DERMATOLOGIST = "DERMATOLOGIST",
+  NEUROLOGIST = "NEUROLOGIST",
+  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
+  ENT_SPECIALIST = "ENT_SPECIALIST",
+  PSYCHIATRIST = "PSYCHIATRIST",
+  DIABETOLOGIST = "DIABETOLOGIST",
+  DIETICIAN = "DIETICIAN",
+}
+
 
 export type ModelAppointmentConnection = {
   __typename: "ModelAppointmentConnection",
@@ -364,6 +447,7 @@ export type User = {
   address?: string | null,
   height?: number | null,
   weight?: number | null,
+  firebaseToken?: string | null,
   subscriptionStatus?: SubscriptionStatus | null,
   UserFamilyMembers?: ModelFamilyMemberConnection | null,
   UserHealthConcerns?: ModelHealthConcernConnection | null,
@@ -372,6 +456,7 @@ export type User = {
   profileStatus?: ProfileStatus | null,
   UserReports?: ModelReportConnection | null,
   appointments?: ModelAppointmentConnection | null,
+  Notifications?: ModelNotificationConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -403,20 +488,11 @@ export type FamilyMember = {
   updatedAt: string,
 };
 
-export enum Specialization {
-  CARDIOLOGIST = "CARDIOLOGIST",
-  PEDIATRICIAN = "PEDIATRICIAN",
-  GYNECOLOGIST = "GYNECOLOGIST",
-  ORTHOPEDIC = "ORTHOPEDIC",
-  DERMATOLOGIST = "DERMATOLOGIST",
-  NEUROLOGIST = "NEUROLOGIST",
-  GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN",
-  ENT_SPECIALIST = "ENT_SPECIALIST",
-  PSYCHIATRIST = "PSYCHIATRIST",
-  DIABETOLOGIST = "DIABETOLOGIST",
-  DIETICIAN = "DIETICIAN",
-}
-
+export type ModelNotificationConnection = {
+  __typename: "ModelNotificationConnection",
+  items:  Array<Notification | null >,
+  nextToken?: string | null,
+};
 
 export type UpdateAppointmentInput = {
   id: string,
@@ -582,11 +658,12 @@ export type CreateExpertInput = {
   averageRating?: number | null,
   totalReviews?: number | null,
   weeklySchedule?: Array< DayScheduleInput | null > | null,
-  profileStatus?: ProfileStatus | null,
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
   clinicLocation?: string | null,
+  firebaseToken?: string | null,
+  profileStatus?: ProfileStatus | null,
 };
 
 export type DayScheduleInput = {
@@ -614,11 +691,12 @@ export type ModelExpertConditionInput = {
   experience?: ModelStringInput | null,
   averageRating?: ModelFloatInput | null,
   totalReviews?: ModelIntInput | null,
-  profileStatus?: ModelProfileStatusInput | null,
   Specialization?: ModelSpecializationInput | null,
   ConsultationFee?: ModelIntInput | null,
   LanguageSpoken?: ModelStringInput | null,
   clinicLocation?: ModelStringInput | null,
+  firebaseToken?: ModelStringInput | null,
+  profileStatus?: ModelProfileStatusInput | null,
   and?: Array< ModelExpertConditionInput | null > | null,
   or?: Array< ModelExpertConditionInput | null > | null,
   not?: ModelExpertConditionInput | null,
@@ -638,14 +716,14 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type ModelProfileStatusInput = {
-  eq?: ProfileStatus | null,
-  ne?: ProfileStatus | null,
-};
-
 export type ModelSpecializationInput = {
   eq?: Specialization | null,
   ne?: Specialization | null,
+};
+
+export type ModelProfileStatusInput = {
+  eq?: ProfileStatus | null,
+  ne?: ProfileStatus | null,
 };
 
 export type UpdateExpertInput = {
@@ -661,11 +739,12 @@ export type UpdateExpertInput = {
   averageRating?: number | null,
   totalReviews?: number | null,
   weeklySchedule?: Array< DayScheduleInput | null > | null,
-  profileStatus?: ProfileStatus | null,
   Specialization?: Specialization | null,
   ConsultationFee?: number | null,
   LanguageSpoken?: string | null,
   clinicLocation?: string | null,
+  firebaseToken?: string | null,
+  profileStatus?: ProfileStatus | null,
 };
 
 export type DeleteExpertInput = {
@@ -772,6 +851,7 @@ export type CreateUserInput = {
   address?: string | null,
   height?: number | null,
   weight?: number | null,
+  firebaseToken?: string | null,
   subscriptionStatus?: SubscriptionStatus | null,
   profilePictureUrl?: string | null,
   profileStatus?: ProfileStatus | null,
@@ -786,6 +866,7 @@ export type ModelUserConditionInput = {
   address?: ModelStringInput | null,
   height?: ModelFloatInput | null,
   weight?: ModelFloatInput | null,
+  firebaseToken?: ModelStringInput | null,
   subscriptionStatus?: ModelSubscriptionStatusInput | null,
   profilePictureUrl?: ModelStringInput | null,
   profileStatus?: ModelProfileStatusInput | null,
@@ -811,6 +892,7 @@ export type UpdateUserInput = {
   address?: string | null,
   height?: number | null,
   weight?: number | null,
+  firebaseToken?: string | null,
   subscriptionStatus?: SubscriptionStatus | null,
   profilePictureUrl?: string | null,
   profileStatus?: ProfileStatus | null,
@@ -840,6 +922,23 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelNotificationFilterInput = {
+  id?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  expertID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  body?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  fcmToken?: ModelStringInput | null,
+  isSent?: ModelBooleanInput | null,
+  isRead?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelNotificationFilterInput | null > | null,
+  or?: Array< ModelNotificationFilterInput | null > | null,
+  not?: ModelNotificationFilterInput | null,
+};
 
 export type ModelAppointmentFilterInput = {
   id?: ModelIDInput | null,
@@ -917,11 +1016,12 @@ export type ModelExpertFilterInput = {
   experience?: ModelStringInput | null,
   averageRating?: ModelFloatInput | null,
   totalReviews?: ModelIntInput | null,
-  profileStatus?: ModelProfileStatusInput | null,
   Specialization?: ModelSpecializationInput | null,
   ConsultationFee?: ModelIntInput | null,
   LanguageSpoken?: ModelStringInput | null,
   clinicLocation?: ModelStringInput | null,
+  firebaseToken?: ModelStringInput | null,
+  profileStatus?: ModelProfileStatusInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelExpertFilterInput | null > | null,
@@ -979,6 +1079,7 @@ export type ModelUserFilterInput = {
   address?: ModelStringInput | null,
   height?: ModelFloatInput | null,
   weight?: ModelFloatInput | null,
+  firebaseToken?: ModelStringInput | null,
   subscriptionStatus?: ModelSubscriptionStatusInput | null,
   profilePictureUrl?: ModelStringInput | null,
   profileStatus?: ModelProfileStatusInput | null,
@@ -1037,6 +1138,27 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionNotificationFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  userID?: ModelSubscriptionIDInput | null,
+  expertID?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  body?: ModelSubscriptionStringInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  fcmToken?: ModelSubscriptionStringInput | null,
+  isSent?: ModelSubscriptionBooleanInput | null,
+  isRead?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
+  or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
+};
+
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
 };
 
 export type ModelSubscriptionAppointmentFilterInput = {
@@ -1123,11 +1245,12 @@ export type ModelSubscriptionExpertFilterInput = {
   experience?: ModelSubscriptionStringInput | null,
   averageRating?: ModelSubscriptionFloatInput | null,
   totalReviews?: ModelSubscriptionIntInput | null,
-  profileStatus?: ModelSubscriptionStringInput | null,
   Specialization?: ModelSubscriptionStringInput | null,
   ConsultationFee?: ModelSubscriptionIntInput | null,
   LanguageSpoken?: ModelSubscriptionStringInput | null,
   clinicLocation?: ModelSubscriptionStringInput | null,
+  firebaseToken?: ModelSubscriptionStringInput | null,
+  profileStatus?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionExpertFilterInput | null > | null,
@@ -1188,6 +1311,7 @@ export type ModelSubscriptionUserFilterInput = {
   address?: ModelSubscriptionStringInput | null,
   height?: ModelSubscriptionFloatInput | null,
   weight?: ModelSubscriptionFloatInput | null,
+  firebaseToken?: ModelSubscriptionStringInput | null,
   subscriptionStatus?: ModelSubscriptionStringInput | null,
   profilePictureUrl?: ModelSubscriptionStringInput | null,
   profileStatus?: ModelSubscriptionStringInput | null,
@@ -1257,6 +1381,72 @@ export type DeleteReportMutation = {
   } | null,
 };
 
+export type CreateNotificationMutationVariables = {
+  input: CreateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type CreateNotificationMutation = {
+  createNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateNotificationMutationVariables = {
+  input: UpdateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type UpdateNotificationMutation = {
+  updateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteNotificationMutationVariables = {
+  input: DeleteNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type DeleteNotificationMutation = {
+  deleteNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateAppointmentMutationVariables = {
   input: CreateAppointmentInput,
   condition?: ModelAppointmentConditionInput | null,
@@ -1298,11 +1488,12 @@ export type CreateAppointmentMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1318,6 +1509,7 @@ export type CreateAppointmentMutation = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -1368,11 +1560,12 @@ export type UpdateAppointmentMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1388,6 +1581,7 @@ export type UpdateAppointmentMutation = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -1438,11 +1632,12 @@ export type DeleteAppointmentMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1458,6 +1653,7 @@ export type DeleteAppointmentMutation = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -1495,11 +1691,12 @@ export type CreateArticleMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1534,11 +1731,12 @@ export type UpdateArticleMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1573,11 +1771,12 @@ export type DeleteArticleMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1755,6 +1954,11 @@ export type CreateExpertMutation = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -1776,10 +1980,10 @@ export type CreateExpertMutation = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1809,6 +2013,11 @@ export type UpdateExpertMutation = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -1830,10 +2039,10 @@ export type UpdateExpertMutation = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1863,6 +2072,11 @@ export type DeleteExpertMutation = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -1884,10 +2098,10 @@ export type DeleteExpertMutation = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1921,6 +2135,7 @@ export type CreateHealthConcernMutation = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -1945,11 +2160,12 @@ export type CreateHealthConcernMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1990,6 +2206,7 @@ export type UpdateHealthConcernMutation = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -2014,11 +2231,12 @@ export type UpdateHealthConcernMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2059,6 +2277,7 @@ export type DeleteHealthConcernMutation = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -2083,11 +2302,12 @@ export type DeleteHealthConcernMutation = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2180,6 +2400,7 @@ export type CreateUserMutation = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -2201,6 +2422,10 @@ export type CreateUserMutation = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -2225,6 +2450,7 @@ export type UpdateUserMutation = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -2246,6 +2472,10 @@ export type UpdateUserMutation = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -2270,6 +2500,7 @@ export type DeleteUserMutation = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -2291,6 +2522,10 @@ export type DeleteUserMutation = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -2423,6 +2658,112 @@ export type ReportsByHealthConcernIDQuery = {
   } | null,
 };
 
+export type GetNotificationQueryVariables = {
+  id: string,
+};
+
+export type GetNotificationQuery = {
+  getNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListNotificationsQueryVariables = {
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListNotificationsQuery = {
+  listNotifications?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      userID?: string | null,
+      expertID?: string | null,
+      title?: string | null,
+      body?: string | null,
+      type?: string | null,
+      fcmToken?: string | null,
+      isSent?: boolean | null,
+      isRead?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type NotificationsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByUserIDQuery = {
+  notificationsByUserID?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      userID?: string | null,
+      expertID?: string | null,
+      title?: string | null,
+      body?: string | null,
+      type?: string | null,
+      fcmToken?: string | null,
+      isSent?: boolean | null,
+      isRead?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type NotificationsByExpertIDQueryVariables = {
+  expertID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByExpertIDQuery = {
+  notificationsByExpertID?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      userID?: string | null,
+      expertID?: string | null,
+      title?: string | null,
+      body?: string | null,
+      type?: string | null,
+      fcmToken?: string | null,
+      isSent?: boolean | null,
+      isRead?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetAppointmentQueryVariables = {
   id: string,
 };
@@ -2463,11 +2804,12 @@ export type GetAppointmentQuery = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2483,6 +2825,7 @@ export type GetAppointmentQuery = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -2657,11 +3000,12 @@ export type GetArticleQuery = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2938,6 +3282,11 @@ export type GetExpertQuery = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -2959,10 +3308,10 @@ export type GetExpertQuery = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2990,11 +3339,12 @@ export type ListExpertsQuery = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -3029,6 +3379,7 @@ export type GetHealthConcernQuery = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -3053,11 +3404,12 @@ export type GetHealthConcernQuery = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3248,6 +3600,7 @@ export type GetUserQuery = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -3269,6 +3622,10 @@ export type GetUserQuery = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -3296,6 +3653,7 @@ export type ListUsersQuery = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -3363,6 +3721,69 @@ export type OnDeleteReportSubscription = {
   } | null,
 };
 
+export type OnCreateNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnCreateNotificationSubscription = {
+  onCreateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnUpdateNotificationSubscription = {
+  onUpdateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnDeleteNotificationSubscription = {
+  onDeleteNotification?:  {
+    __typename: "Notification",
+    id: string,
+    userID?: string | null,
+    expertID?: string | null,
+    title?: string | null,
+    body?: string | null,
+    type?: string | null,
+    fcmToken?: string | null,
+    isSent?: boolean | null,
+    isRead?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateAppointmentSubscriptionVariables = {
   filter?: ModelSubscriptionAppointmentFilterInput | null,
 };
@@ -3403,11 +3824,12 @@ export type OnCreateAppointmentSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3423,6 +3845,7 @@ export type OnCreateAppointmentSubscription = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -3472,11 +3895,12 @@ export type OnUpdateAppointmentSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3492,6 +3916,7 @@ export type OnUpdateAppointmentSubscription = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -3541,11 +3966,12 @@ export type OnDeleteAppointmentSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3561,6 +3987,7 @@ export type OnDeleteAppointmentSubscription = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -3597,11 +4024,12 @@ export type OnCreateArticleSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3635,11 +4063,12 @@ export type OnUpdateArticleSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3673,11 +4102,12 @@ export type OnDeleteArticleSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3848,6 +4278,11 @@ export type OnCreateExpertSubscription = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -3869,10 +4304,10 @@ export type OnCreateExpertSubscription = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3901,6 +4336,11 @@ export type OnUpdateExpertSubscription = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -3922,10 +4362,10 @@ export type OnUpdateExpertSubscription = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3954,6 +4394,11 @@ export type OnDeleteExpertSubscription = {
       dayOfWeek: number,
       isAvailable?: boolean | null,
     } | null > | null,
+    Specialization?: Specialization | null,
+    ConsultationFee?: number | null,
+    LanguageSpoken?: string | null,
+    clinicLocation?: string | null,
+    firebaseToken?: string | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
       nextToken?: string | null,
@@ -3975,10 +4420,10 @@ export type OnDeleteExpertSubscription = {
       __typename: "ModelHealthConcernConnection",
       nextToken?: string | null,
     } | null,
-    Specialization?: Specialization | null,
-    ConsultationFee?: number | null,
-    LanguageSpoken?: string | null,
-    clinicLocation?: string | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -4011,6 +4456,7 @@ export type OnCreateHealthConcernSubscription = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -4035,11 +4481,12 @@ export type OnCreateHealthConcernSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -4079,6 +4526,7 @@ export type OnUpdateHealthConcernSubscription = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -4103,11 +4551,12 @@ export type OnUpdateHealthConcernSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -4147,6 +4596,7 @@ export type OnDeleteHealthConcernSubscription = {
       address?: string | null,
       height?: number | null,
       weight?: number | null,
+      firebaseToken?: string | null,
       subscriptionStatus?: SubscriptionStatus | null,
       profilePictureUrl?: string | null,
       profileStatus?: ProfileStatus | null,
@@ -4171,11 +4621,12 @@ export type OnDeleteHealthConcernSubscription = {
       experience?: string | null,
       averageRating?: number | null,
       totalReviews?: number | null,
-      profileStatus?: ProfileStatus | null,
       Specialization?: Specialization | null,
       ConsultationFee?: number | null,
       LanguageSpoken?: string | null,
       clinicLocation?: string | null,
+      firebaseToken?: string | null,
+      profileStatus?: ProfileStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -4264,6 +4715,7 @@ export type OnCreateUserSubscription = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -4285,6 +4737,10 @@ export type OnCreateUserSubscription = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -4308,6 +4764,7 @@ export type OnUpdateUserSubscription = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -4329,6 +4786,10 @@ export type OnUpdateUserSubscription = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -4352,6 +4813,7 @@ export type OnDeleteUserSubscription = {
     address?: string | null,
     height?: number | null,
     weight?: number | null,
+    firebaseToken?: string | null,
     subscriptionStatus?: SubscriptionStatus | null,
     UserFamilyMembers?:  {
       __typename: "ModelFamilyMemberConnection",
@@ -4373,6 +4835,10 @@ export type OnDeleteUserSubscription = {
     } | null,
     appointments?:  {
       __typename: "ModelAppointmentConnection",
+      nextToken?: string | null,
+    } | null,
+    Notifications?:  {
+      __typename: "ModelNotificationConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,

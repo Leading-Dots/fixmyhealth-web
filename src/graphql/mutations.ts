@@ -71,6 +71,75 @@ export const deleteReport = /* GraphQL */ `mutation DeleteReport(
   APITypes.DeleteReportMutationVariables,
   APITypes.DeleteReportMutation
 >;
+export const createNotification = /* GraphQL */ `mutation CreateNotification(
+  $input: CreateNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  createNotification(input: $input, condition: $condition) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateNotificationMutationVariables,
+  APITypes.CreateNotificationMutation
+>;
+export const updateNotification = /* GraphQL */ `mutation UpdateNotification(
+  $input: UpdateNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  updateNotification(input: $input, condition: $condition) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateNotificationMutationVariables,
+  APITypes.UpdateNotificationMutation
+>;
+export const deleteNotification = /* GraphQL */ `mutation DeleteNotification(
+  $input: DeleteNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  deleteNotification(input: $input, condition: $condition) {
+    id
+    userID
+    expertID
+    title
+    body
+    type
+    fcmToken
+    isSent
+    isRead
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteNotificationMutationVariables,
+  APITypes.DeleteNotificationMutation
+>;
 export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
   $input: CreateAppointmentInput!
   $condition: ModelAppointmentConditionInput
@@ -108,11 +177,12 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -128,6 +198,7 @@ export const createAppointment = /* GraphQL */ `mutation CreateAppointment(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -179,11 +250,12 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -199,6 +271,7 @@ export const updateAppointment = /* GraphQL */ `mutation UpdateAppointment(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -250,11 +323,12 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -270,6 +344,7 @@ export const deleteAppointment = /* GraphQL */ `mutation DeleteAppointment(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -308,11 +383,12 @@ export const createArticle = /* GraphQL */ `mutation CreateArticle(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -348,11 +424,12 @@ export const updateArticle = /* GraphQL */ `mutation UpdateArticle(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -388,11 +465,12 @@ export const deleteArticle = /* GraphQL */ `mutation DeleteArticle(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -578,6 +656,11 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
       isAvailable
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
+    firebaseToken
     appointments {
       nextToken
       __typename
@@ -599,10 +682,10 @@ export const createExpert = /* GraphQL */ `mutation CreateExpert(
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -633,6 +716,11 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
       isAvailable
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
+    firebaseToken
     appointments {
       nextToken
       __typename
@@ -654,10 +742,10 @@ export const updateExpert = /* GraphQL */ `mutation UpdateExpert(
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -688,6 +776,11 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
       isAvailable
       __typename
     }
+    Specialization
+    ConsultationFee
+    LanguageSpoken
+    clinicLocation
+    firebaseToken
     appointments {
       nextToken
       __typename
@@ -709,10 +802,10 @@ export const deleteExpert = /* GraphQL */ `mutation DeleteExpert(
       nextToken
       __typename
     }
-    Specialization
-    ConsultationFee
-    LanguageSpoken
-    clinicLocation
+    Notifications {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -746,6 +839,7 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -770,11 +864,12 @@ export const createHealthConcern = /* GraphQL */ `mutation CreateHealthConcern(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -816,6 +911,7 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -840,11 +936,12 @@ export const updateHealthConcern = /* GraphQL */ `mutation UpdateHealthConcern(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -886,6 +983,7 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       address
       height
       weight
+      firebaseToken
       subscriptionStatus
       profilePictureUrl
       profileStatus
@@ -910,11 +1008,12 @@ export const deleteHealthConcern = /* GraphQL */ `mutation DeleteHealthConcern(
       experience
       averageRating
       totalReviews
-      profileStatus
       Specialization
       ConsultationFee
       LanguageSpoken
       clinicLocation
+      firebaseToken
+      profileStatus
       createdAt
       updatedAt
       __typename
@@ -1012,6 +1111,7 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -1032,6 +1132,10 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }
@@ -1058,6 +1162,7 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -1078,6 +1183,10 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }
@@ -1104,6 +1213,7 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     address
     height
     weight
+    firebaseToken
     subscriptionStatus
     UserFamilyMembers {
       nextToken
@@ -1124,6 +1234,10 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
       __typename
     }
     appointments {
+      nextToken
+      __typename
+    }
+    Notifications {
       nextToken
       __typename
     }
