@@ -56,7 +56,10 @@ const AssignedConcerns: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("PENDING");
 
   // State to store expanded concern and response
-  const [expandedConcernId, setExpandedConcernId] = useState<string | null>(
+  const [expandedpatientId, setExpandedPatientId] = useState<string | null>(
+    null
+  );
+  const [expandedresponseId, setExpandedResponseId] = useState<string | null>(
     null
   );
   const [responses, setResponses] = useState<{
@@ -122,7 +125,7 @@ const AssignedConcerns: React.FC = () => {
   // Fetch response by health concern ID
   const fetchResponseByConcernId = async (concernId: string) => {
     if (responses[concernId]) {
-      setExpandedConcernId(expandedConcernId === concernId ? null : concernId);
+      setExpandedResponseId(expandedresponseId === concernId ? null : concernId);
       return;
     }
 
@@ -138,7 +141,7 @@ const AssignedConcerns: React.FC = () => {
         result.data.responsesByHealthconcernID.items?.[0] || null;
 
       setResponses((prev) => ({ ...prev, [concernId]: response }));
-      setExpandedConcernId(concernId);
+      setExpandedResponseId(concernId);
     } catch (error) {
       console.error("Error fetching response:", error);
       toast.error("Failed to load response.");
@@ -148,7 +151,7 @@ const AssignedConcerns: React.FC = () => {
   // Fetch patient details by user ID
   const fetchPatientDetails = async (userId: string, concernId: string) => {
     if (patientDetails[concernId]) {
-      setExpandedConcernId(expandedConcernId === concernId ? null : concernId);
+      setExpandedPatientId(expandedpatientId === concernId ? null : concernId);
       return;
     }
 
@@ -161,7 +164,7 @@ const AssignedConcerns: React.FC = () => {
       const patient = result.data.getUser || null;
 
       setPatientDetails((prev) => ({ ...prev, [concernId]: patient }));
-      setExpandedConcernId(concernId);
+      setExpandedPatientId(concernId);
     } catch (error) {
       console.error("Error fetching patient details:", error);
       toast.error("Failed to load patient details.");
@@ -172,11 +175,11 @@ const AssignedConcerns: React.FC = () => {
   const getBadgeColor = (status: ConcernStatus) => {
     switch (status) {
       case ConcernStatus.PENDING:
-        return "text-yellow-700 border-yellow-400";
+        return "bg-yellow-100 text-yellow-700 border-yellow-400 hover:bg-yelllow-100"; 
       case ConcernStatus.ANSWERED:
-        return "text-green-700 border-green-400";
+        return "bg-green-100 text-green-700 border-green-400 hover:bg-green-100";
       default:
-        return "text-gray-700 border-gray-400";
+        return "bg-gray-100 text-gray-700 border-gray-400 hover:bg-gray-100";
     }
   };
 
@@ -276,7 +279,7 @@ const AssignedConcerns: React.FC = () => {
                         fetchPatientDetails(concern.userID, concern.id)
                       }
                     >
-                      {expandedConcernId === concern.id
+                      {expandedpatientId === concern.id
                         ? "Hide Patient"
                         : "View Patient"}
                     </Button>
@@ -288,14 +291,14 @@ const AssignedConcerns: React.FC = () => {
                         className="w-full mt-2"
                         onClick={() => fetchResponseByConcernId(concern.id)}
                       >
-                        {expandedConcernId === concern.id
+                        {expandedresponseId === concern.id
                           ? "Hide Response"
                           : "View Response"}
                       </Button>
                     )}
 
                     {/* Show patient details if expanded */}
-                    {expandedConcernId === concern.id &&
+                    {expandedpatientId === concern.id &&
                       patientDetails[concern.id] && (
                         <div className="p-4 rounded-lg mt-4 border">
                           <h4 className="text-md font-semibold">
@@ -317,7 +320,7 @@ const AssignedConcerns: React.FC = () => {
                       )}
 
                     {/* Show response if expanded */}
-                    {expandedConcernId === concern.id &&
+                    {expandedresponseId === concern.id &&
                       responses[concern.id] && (
                         <div className="p-4 rounded-lg mt-4 border">
                           <h4 className="text-md font-semibold">

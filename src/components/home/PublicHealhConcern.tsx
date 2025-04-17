@@ -26,7 +26,7 @@ const PublicHealthConcern: React.FC = () => {
     title: "",
     description: "",
     attachment: null as File | null,
-    concernType: ConcernType.TEXT,
+    concernType: "" as ConcernType,
     preferredDate: "",
     preferredTimeSlot: "",
     expertId: "",
@@ -59,7 +59,7 @@ const PublicHealthConcern: React.FC = () => {
         title: formData.title,
         description: formData.description,
         concernStatus: ConcernStatus.PENDING,
-        concernType: formData.concernType,
+        concernType: formData?.concernType ? formData?.concernType : ConcernType.TEXT,
         attachments: attachmentUrl,
         preferredDate: formData.preferredDate || undefined,
         preferredTimeSlot: formData.preferredTimeSlot || undefined,
@@ -133,7 +133,7 @@ const PublicHealthConcern: React.FC = () => {
           <SelectTrigger>
             <SelectValue placeholder="Select consultation method" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent>           
             <SelectItem value={ConcernType.TEXT}>Text</SelectItem>
             <SelectItem value={ConcernType.AUDIO_CALL}>Audio Call</SelectItem>
             <SelectItem value={ConcernType.VIDEO_CALL}>Video Call</SelectItem>
