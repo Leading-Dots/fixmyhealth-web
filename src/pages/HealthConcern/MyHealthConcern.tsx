@@ -273,7 +273,7 @@ const MyHealthConcern: React.FC = () => {
                     {expandedExpertId === concern.id &&
                       expertDetails[concern.id] && (
                         <div
-                          className="p-4 mt-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+                          className="p-4 mt-3 rounded-lg border border-gray-200 cursor-pointer"
                           onClick={() =>
                             handleExpertClick(expertDetails[concern.id]!.id)
                           }

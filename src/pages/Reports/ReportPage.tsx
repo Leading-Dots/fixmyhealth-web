@@ -181,7 +181,7 @@ const UserReports = () => {
         <div className="flex justify-end  mb-4 mt-4">
           <Button
             variant="outline"
-            className="text-secondary border-sky-400 hover:bg-sky-100 dark:hover:bg-sky-900 hover:text-secondary-foreground transition"
+            className="text-secondary border-sky-400 hover:bg-sky-200 dark:hover:bg-sky-900 transition"
             onClick={() => setUploadModalOpen(true)}
           >
             <Plus className="mr-1 h-4 w-4" /> Upload Report

@@ -74,7 +74,7 @@ const ArticleCarousel: React.FC = () => {
         </div>
         <Button
           variant="outline"
-          className="text-secondary border-sky-400 hover:bg-sky-100 dark:hover:bg-sky-900 hover:text-secondary-foreground transition"
+          className="text-secondary border-sky-400 hover:bg-sky-200 dark:hover:bg-sky-900 transition"
           onClick={() => navigate("/all-articles")}
         >
           View All Articles

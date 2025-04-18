@@ -68,7 +68,7 @@ const HealthConcernsSection = () => {
         </h2>
         <Button
           variant="outline"
-          className="text-secondary border-sky-400 hover:bg-sky-50"
+          className="text-secondary border-sky-400 hover:bg-sky-200 dark:hover:bg-sky-900 transition"        
           onClick={() => navigate(`/login`)}
         >
           <LogIn className="h-5 w-5 mr-2" />
@@ -86,7 +86,7 @@ const HealthConcernsSection = () => {
         {user?.role === "patient" && (
         <Button
           variant="outline"
-          className="text-secondary border-sky-400 hover:bg-sky-100 dark:hover:bg-sky-900 hover:text-secondary-foreground transition" 
+          className="text-secondary border-sky-400 hover:bg-sky-200 dark:hover:bg-sky-900 transition" 
           onClick={() => navigate("/public/ask-concern")}
         >
           Ask a Health Concern

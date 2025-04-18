@@ -75,7 +75,7 @@ const FamilyMembersPage = () => {
           <div className="w-full flex justify-end items-center mb-4">
             <Button            
               variant="outline"
-              className="text-secondary border-sky-400 hover:bg-sky-100 dark:hover:bg-sky-900 hover:text-secondary-foreground transition"
+              className="text-secondary border-sky-400 hover:bg-sky-200 dark:hover:bg-sky-900 transition"
               onClick={() => navigate("/add-family-member")}              
             >
               <Plus className="mr-1 h-4 w-4" /> Add Family Member
