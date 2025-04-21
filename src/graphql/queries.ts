@@ -49,15 +49,17 @@ export const listReports = /* GraphQL */ `query ListReports(
   APITypes.ListReportsQueryVariables,
   APITypes.ListReportsQuery
 >;
-export const reportsByUserID = /* GraphQL */ `query ReportsByUserID(
+export const reportsByUserIDAndCreatedAt = /* GraphQL */ `query ReportsByUserIDAndCreatedAt(
   $userID: ID!
+  $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelReportFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  reportsByUserID(
+  reportsByUserIDAndCreatedAt(
     userID: $userID
+    createdAt: $createdAt
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -80,8 +82,8 @@ export const reportsByUserID = /* GraphQL */ `query ReportsByUserID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ReportsByUserIDQueryVariables,
-  APITypes.ReportsByUserIDQuery
+  APITypes.ReportsByUserIDAndCreatedAtQueryVariables,
+  APITypes.ReportsByUserIDAndCreatedAtQuery
 >;
 export const reportsByAppointmentID = /* GraphQL */ `query ReportsByAppointmentID(
   $appointmentID: ID!
@@ -852,6 +854,7 @@ export const getExpert = /* GraphQL */ `query GetExpert($id: ID!) {
     ConsultationFee
     LanguageSpoken
     clinicLocation
+    firebaseToken
     weeklySchedule {
       dayOfWeek
       isAvailable

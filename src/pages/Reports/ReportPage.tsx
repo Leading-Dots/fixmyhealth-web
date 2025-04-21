@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { reportsByUserID } from "@/graphql/queries";
+import { reportsByUserIDAndCreatedAt } from "@/graphql/queries";
 import { createReport, deleteReport, updateReport } from "@/graphql/mutations";
 import {
   Table,
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { uploadPatientReports } from "@/lib/storage";
+import { ModelSortDirection } from "@/API";
 interface Report {
   id: string;
   fileUrl: string;
@@ -44,15 +45,19 @@ const UserReports = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [renameLoadingId, setRenameLoadingId] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const fetchReports = async () => {
       try {
         const response: any = await client.graphql({
-          query: reportsByUserID,
-          variables: { userID },
+          query: reportsByUserIDAndCreatedAt,
+          variables: {
+            userID, 
+            sortDirection: ModelSortDirection.DESC
+           },
         });
-        setReports(response.data.reportsByUserID.items || []);
+        setReports(response.data.reportsByUserIDAndCreatedAt.items || []);
       } catch (error) {
         console.error("Error fetching reports:", error);
       } finally {
@@ -97,7 +102,7 @@ const UserReports = () => {
 
   const handleUpload = async () => {
     if (!selectedFile || !userID) return;
-
+    setUploading(true);
     try {
       const fileUrl = await uploadPatientReports(selectedFile, user?.id);
       const fileName = selectedFile.name;
@@ -121,13 +126,18 @@ const UserReports = () => {
 
       // Refresh the report list
       const response: any = await client.graphql({
-        query: reportsByUserID,
-        variables: { userID },
+        query: reportsByUserIDAndCreatedAt,
+        variables: { 
+          userID,
+          sortDirection: ModelSortDirection.DESC
+         },
       });
-      setReports(response.data.reportsByUserID.items || []);
+      setReports(response.data.reportsByUserIDAndCreatedAt.items || []);
     } catch (error) {
       console.error("Upload failed:", error);
       toast.error("Failed to upload report.");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -287,10 +297,10 @@ const UserReports = () => {
             </Button>
             <Button
               onClick={handleUpload}
-              className="bg-primary hover:bg-secondary text-white"
-              disabled={!selectedFile}
+              className="bg-primary hover:bg-secondary  w-[100px] text-white"
+              disabled={!selectedFile || uploading}
             >
-              Upload
+             {uploading ? <Loader2 className="animate-spin h-4 w-4" /> : "Upload"}
             </Button>
           </div>
         </DialogContent>

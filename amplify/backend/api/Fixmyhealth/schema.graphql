@@ -4,7 +4,7 @@ type Report @model @auth(rules: [{allow: public}]) {
   fileName: String
   fileType: String
   createdAt: AWSDateTime
-  userID: ID! @index(name: "byUser")
+  userID: ID! @index(name: "byUser", sortKeyFields: ["createdAt"])
   appointmentID: ID @index(name: "byAppointment")
   healthConcernID: ID @index(name: "byHealthConcern")
 }

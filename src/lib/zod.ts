@@ -96,7 +96,21 @@ export const PatientProfileFormSchema = z.object({
     .or(z.literal("")),
 
   //Step 2
-  dob: z.string().optional().or(z.literal("")),
+  dob: z
+  .string()
+  .optional()
+  .or(z.literal(""))
+  .refine(
+    (val) => {
+      if (!val || val === "") return true; // allow empty value
+      const selectedDate = new Date(val);
+      const today = new Date();
+      return selectedDate <= today;
+    },
+    {
+      message: "Please enter a valid date of birth (not in the future).",
+    }
+  ),
   height: z.preprocess((val) => {
     if (val === "" || val === null || val === undefined) return 0;
     const num = Number(val);

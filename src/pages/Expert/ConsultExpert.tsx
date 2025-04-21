@@ -11,6 +11,7 @@ import client from "@/lib/apiClient";
 import { useAuth } from "@/hooks/useAuth";
 import { ConcernStatus } from "@/API";
 import { uploadPatientReports } from "@/lib/storage";
+import { Loader2 } from "lucide-react";
 
 const ConsultExpert: React.FC = () => {
   const { user } = useAuth();
@@ -148,7 +149,7 @@ const ConsultExpert: React.FC = () => {
                 className="w-full bg-primary hover:bg-secondary text-white"
                 disabled={loading}
               >
-                {loading ? "Submitting..." : "Submit Concern"}
+                {loading ? <Loader2 className="animate-spin h-4 w-4" />: "Submit Concern"}
               </Button>
             </div>
           </form>

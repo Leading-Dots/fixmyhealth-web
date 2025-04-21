@@ -917,6 +917,16 @@ export type ModelReportFilterInput = {
   not?: ModelReportFilterInput | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC",
@@ -2577,16 +2587,17 @@ export type ListReportsQuery = {
   } | null,
 };
 
-export type ReportsByUserIDQueryVariables = {
+export type ReportsByUserIDAndCreatedAtQueryVariables = {
   userID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelReportFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ReportsByUserIDQuery = {
-  reportsByUserID?:  {
+export type ReportsByUserIDAndCreatedAtQuery = {
+  reportsByUserIDAndCreatedAt?:  {
     __typename: "ModelReportConnection",
     items:  Array< {
       __typename: "Report",

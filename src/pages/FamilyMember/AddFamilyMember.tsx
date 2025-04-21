@@ -9,6 +9,8 @@ import client from "@/lib/apiClient";
 import { createFamilyMember, updateFamilyMember } from "@/graphql/mutations";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { PatientProfileFormSchema } from "@/lib/zod";
+import * as z from "zod";
 
 interface AddFamilyMemberProps {
   editData?: {
@@ -21,6 +23,16 @@ interface AddFamilyMemberProps {
     relation?: string;
   };
 }
+const FamilyMemberSchema = PatientProfileFormSchema.pick({
+  firstName: true,
+  lastName: true,
+  dob: true,
+  height: true,
+  weight: true,
+}).extend({
+  relation: z.string().min(1, "Relation is required"),
+});
+
 
 const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
   const { user } = useAuth();
@@ -43,6 +55,7 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
     dob: memberData?.dob || "",
     relation: memberData?.relation || "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,6 +64,24 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+     // Convert numeric strings to numbers before validation
+     const parsedForm = {
+      ...form,
+      height: form.height ? parseFloat(form.height) : undefined,
+      weight: form.weight ? parseFloat(form.weight) : undefined,
+    };
+
+    const result = FamilyMemberSchema.safeParse(parsedForm);
+
+    if (!result.success) {
+      const formErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        formErrors[err.path[0] as string] = err.message;
+      });
+      setErrors(formErrors);
+      return;
+    }
+
     try {
       if (!user?.id) return;
 
@@ -60,9 +91,7 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
           variables: {
             input: {
               id: memberData.id,
-              ...form,
-              weight: parseFloat(form.weight as any),
-              height: parseFloat(form.height as any),
+              ...parsedForm
             },
           },
         });
@@ -71,10 +100,8 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
           query: createFamilyMember,
           variables: {
             input: {
-              ...form,
               userID: user.id,
-              weight: parseFloat(form.weight as any),
-              height: parseFloat(form.height as any),
+              ...parsedForm
             },
           },
         });
@@ -96,40 +123,43 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="firstName">First Name</Label>
+              <Label htmlFor="firstName">First Name <span className="text-red-500 font-bold">*</span></Label>
               <Input
                 name="firstName"
                 value={form.firstName}
                 onChange={handleChange}
                 required
+                error={errors.firstName}
               />
             </div>
             <div>
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="lastName">Last Name <span className="text-red-500 font-bold">*</span></Label>
               <Input
                 name="lastName"
                 value={form.lastName}
                 onChange={handleChange}
                 required
+                error={errors.lastName}
               />
             </div>
             <div>
-              <Label htmlFor="dob">Date of Birth</Label>
+              <Label htmlFor="dob">Date of Birth <span className="text-red-500 font-bold">*</span></Label>
               <Input
                 type="date"
                 name="dob"
                 value={form.dob}
                 onChange={handleChange}
-                required
+                error={errors.dob}
               />
             </div>
             <div>
-              <Label htmlFor="relation">Relation</Label>
+              <Label htmlFor="relation">Relation <span className="text-red-500 font-bold">*</span></Label>
               <Input
                 name="relation"
                 value={form.relation}
                 onChange={handleChange}
                 required
+                error={errors.relation}
               />
             </div>
             <div>
@@ -139,6 +169,7 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
                 type="number"
                 value={form.weight}
                 onChange={handleChange}
+                error={errors.weight}
               />
             </div>
             <div>
@@ -148,6 +179,7 @@ const AddFamilyMember: React.FC<AddFamilyMemberProps> = () => {
                 type="number"
                 value={form.height}
                 onChange={handleChange}
+                error={errors.height}
               />
             </div>
             <div className="flex justify-between gap-4">

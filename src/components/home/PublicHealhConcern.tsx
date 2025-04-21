@@ -17,6 +17,7 @@ import { TimeSlotPicker } from "@/components/ui/time-slot-picker";
 import { ConcernStatus, ConcernType } from "@/API";
 import { useAuth } from "@/hooks/useAuth";
 import { uploadPatientReports } from "@/lib/storage";
+import { Loader2 } from "lucide-react";
 
 const PublicHealthConcern: React.FC = () => {
   const { user } = useAuth();
@@ -173,10 +174,10 @@ const PublicHealthConcern: React.FC = () => {
         </Button>
         <Button
           onClick={handleSubmit}
-          className="w-full bg-primary hover:bg-secondary text-white"
+          className="w-full w-100px bg-primary hover:bg-secondary text-white"
           disabled={submitting}
         >
-          {submitting ? "Submitting..." : "Submit Concern"}
+          {submitting ? <Loader2 className="animate-spin h-4 w-4" /> : "Submit Concern"}
         </Button>
       </div>
     </div>
