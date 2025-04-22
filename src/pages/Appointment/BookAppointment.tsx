@@ -72,8 +72,6 @@ const BookAppointment: React.FC = () => {
   const [dateStatus, setDateStatus] = useState<{ [key: string]: string }>({});
   const [location, setLocation] = useState<string | null>(null);
 
-  console.log("form", formData);
-
   // Fetch expert data and set weekly schedule
   useEffect(() => {
     async function fetchExpertData() {
@@ -276,7 +274,7 @@ const BookAppointment: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  };  
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -395,7 +393,7 @@ const BookAppointment: React.FC = () => {
             <Button
               className="w-full bg-primary hover:bg-secondary"
               onClick={handleSubmit}
-              disabled={isSubmitting}
+              disabled={isSubmitting || availableSlots.length === 0}
             >
               {isSubmitting ? "Booking..." : "Confirm Appointment"}
             </Button>
